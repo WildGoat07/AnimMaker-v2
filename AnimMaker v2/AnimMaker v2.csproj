@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6B7F83BE-4951-456D-9896-42386059B15E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AnimMaker_v2</RootNamespace>
+    <AssemblyName>AnimMaker v2</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AnimMaker_v2.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="sfmlnet-graphics-2">
+      <HintPath>..\..\..\..\Program Files\SFML.Net-2.4\lib\sfmlnet-graphics-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-system-2">
+      <HintPath>..\..\..\..\Program Files\SFML.Net-2.4\lib\sfmlnet-system-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-window-2">
+      <HintPath>..\..\..\..\Program Files\SFML.Net-2.4\lib\sfmlnet-window-2.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WGP.NET-SFDynamicObject">
+      <HintPath>..\..\WGP.NET-SFDynamicObject\WGP.NET-SFDynamicObject\bin\x64\Release\WGP.NET-SFDynamicObject.dll</HintPath>
+    </Reference>
+    <Reference Include="WGP.NET-TEXT">
+      <HintPath>..\..\WGP.NET-TEXT\WGP.NET-TEXT\bin\Release\WGP.NET-TEXT.dll</HintPath>
+    </Reference>
+    <Reference Include="WildGoatPackage.NET">
+      <HintPath>..\..\WGP\WildGoatPackage.NET\bin\x64\Release\WildGoatPackage.NET.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AnimProperties.Designer.cs">
+      <DependentUpon>AnimProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AskForScaling.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AskForScaling.Designer.cs">
+      <DependentUpon>AskForScaling.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BoneProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BoneProperties.Designer.cs">
+      <DependentUpon>BoneProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawingSurface.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawingSurface.Designer.cs">
+      <DependentUpon>DrawingSurface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FunctionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FunctionDialog.Designer.cs">
+      <DependentUpon>FunctionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeyControl.cs" />
+    <Compile Include="KeyListProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="KeyListProperties.Designer.cs">
+      <DependentUpon>KeyListProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeyProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="KeyProperties.Designer.cs">
+      <DependentUpon>KeyProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResProperties.Designer.cs">
+      <DependentUpon>ResProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpriteProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpriteProperties.Designer.cs">
+      <DependentUpon>SpriteProperties.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AnimProperties.resx">
+      <DependentUpon>AnimProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AskForScaling.resx">
+      <DependentUpon>AskForScaling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BoneProperties.resx">
+      <DependentUpon>BoneProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrawingSurface.resx">
+      <DependentUpon>DrawingSurface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FunctionDialog.resx">
+      <DependentUpon>FunctionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeyListProperties.resx">
+      <DependentUpon>KeyListProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeyProperties.resx">
+      <DependentUpon>KeyProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="ResProperties.resx">
+      <DependentUpon>ResProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpriteProperties.resx">
+      <DependentUpon>SpriteProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="font.ttf" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\..\Program Files\SFML.Net-2.4\extlibs\csfml-graphics-2.dll">
+      <Link>csfml-graphics-2.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\..\Program Files\SFML.Net-2.4\extlibs\csfml-system-2.dll">
+      <Link>csfml-system-2.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\..\Program Files\SFML.Net-2.4\extlibs\csfml-window-2.dll">
+      <Link>csfml-window-2.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\addAnim.png" />
+    <Content Include="icons\addBone.png" />
+    <Content Include="icons\addRes.png" />
+    <Content Include="icons\bin.png" />
+    <Content Include="icons\gauss.png" />
+    <Content Include="icons\linear.png" />
+    <Content Include="icons\play_pause.png" />
+    <Content Include="icons\pow.png" />
+    <Content Include="icons\removeAnim.png" />
+    <Content Include="icons\removeBone.png" />
+    <Content Include="icons\removeRes.png" />
+    <Content Include="icons\root.png" />
+    <Content Include="logo.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimMaker v2", "AnimMaker v2\AnimMaker v2.csproj", "{6B7F83BE-4951-456D-9896-42386059B15E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "setup", "setup\setup.csproj", "{62225BE8-BC9D-441D-862A-017884441D47}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6B7F83BE-4951-456D-9896-42386059B15E} = {6B7F83BE-4951-456D-9896-42386059B15E}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B7F83BE-4951-456D-9896-42386059B15E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7F83BE-4951-456D-9896-42386059B15E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B7F83BE-4951-456D-9896-42386059B15E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6B7F83BE-4951-456D-9896-42386059B15E}.Debug|x64.Build.0 = Debug|Any CPU
+		{6B7F83BE-4951-456D-9896-42386059B15E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B7F83BE-4951-456D-9896-42386059B15E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B7F83BE-4951-456D-9896-42386059B15E}.Release|x64.ActiveCfg = Release|x64
+		{6B7F83BE-4951-456D-9896-42386059B15E}.Release|x64.Build.0 = Release|x64
+		{62225BE8-BC9D-441D-862A-017884441D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62225BE8-BC9D-441D-862A-017884441D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62225BE8-BC9D-441D-862A-017884441D47}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{62225BE8-BC9D-441D-862A-017884441D47}.Debug|x64.Build.0 = Debug|Any CPU
+		{62225BE8-BC9D-441D-862A-017884441D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62225BE8-BC9D-441D-862A-017884441D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62225BE8-BC9D-441D-862A-017884441D47}.Release|x64.ActiveCfg = Release|Any CPU
+		{62225BE8-BC9D-441D-862A-017884441D47}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7F9F69D-19EB-4E54-BDC9-38D1F55ECF0E}
+	EndGlobalSection
+EndGlobal
