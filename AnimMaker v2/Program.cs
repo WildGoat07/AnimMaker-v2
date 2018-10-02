@@ -167,7 +167,17 @@ namespace AnimMaker_v2
         {
             Display.SetActive();
             VertexArray segs = new VertexArray(PrimitiveType.Lines);
-
+            var backRect = new RectangleShape(new Vector2f(2000, 2000)) { Origin = new Vector2f(1000, 1000) };
+            Texture backTexture;
+            {
+                var img = new Image(2, 2, new Color(100, 100, 100));
+                img.SetPixel(0, 0, new Color(200, 200, 200));
+                img.SetPixel(1, 1, new Color(200, 200, 200));
+                backTexture = new Texture(img);
+            }
+            backRect.Texture = backTexture;
+            backRect.TextureRect = new IntRect(0, 0, 100, 100);
+            backTexture.Repeated = true;
             while (form.Visible)
             {
                 Display.DispatchEvents();
@@ -253,6 +263,8 @@ namespace AnimMaker_v2
                 }
 
                 Display.Clear(Color.White);
+
+                Display.Draw(backRect);
 
                 Display.Draw(DynamicObject);
 

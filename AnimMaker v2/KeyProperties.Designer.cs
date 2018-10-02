@@ -56,6 +56,18 @@
             this.Opacity = new System.Windows.Forms.NumericUpDown();
             this.OpaFunc = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.keyColor = new System.Windows.Forms.Button();
+            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.keyOColor = new System.Windows.Forms.Button();
+            this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.keyOTh = new System.Windows.Forms.NumericUpDown();
+            this.ColFunc = new System.Windows.Forms.Button();
+            this.OColFunc = new System.Windows.Forms.Button();
+            this.OThFunc = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.time)).BeginInit();
@@ -70,6 +82,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Rotation)).BeginInit();
             this.flowLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Opacity)).BeginInit();
+            this.flowLayoutPanel4.SuspendLayout();
+            this.flowLayoutPanel5.SuspendLayout();
+            this.flowLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.keyOTh)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -79,6 +95,9 @@
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel3);
+            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel4);
+            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel5);
+            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel6);
             this.flowLayoutPanel1.Controls.Add(this.button2);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -130,6 +149,7 @@
             // 
             // time
             // 
+            this.time.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.time.DecimalPlaces = 2;
             this.time.Increment = new decimal(new int[] {
             1,
@@ -153,7 +173,7 @@
             this.groupBox1.Location = new System.Drawing.Point(3, 204);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(255, 152);
+            this.groupBox1.Size = new System.Drawing.Size(255, 166);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Transformations";
@@ -189,15 +209,15 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(249, 133);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(249, 147);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // RotFunc
             // 
             this.RotFunc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RotFunc.Location = new System.Drawing.Point(204, 102);
+            this.RotFunc.Location = new System.Drawing.Point(204, 111);
             this.RotFunc.Name = "RotFunc";
-            this.RotFunc.Size = new System.Drawing.Size(42, 28);
+            this.RotFunc.Size = new System.Drawing.Size(42, 33);
             this.RotFunc.TabIndex = 14;
             this.RotFunc.UseVisualStyleBackColor = true;
             this.RotFunc.Click += new System.EventHandler(this.RotFunc_Click);
@@ -205,9 +225,9 @@
             // ScaFunc
             // 
             this.ScaFunc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ScaFunc.Location = new System.Drawing.Point(204, 69);
+            this.ScaFunc.Location = new System.Drawing.Point(204, 75);
             this.ScaFunc.Name = "ScaFunc";
-            this.ScaFunc.Size = new System.Drawing.Size(42, 27);
+            this.ScaFunc.Size = new System.Drawing.Size(42, 30);
             this.ScaFunc.TabIndex = 13;
             this.ScaFunc.UseVisualStyleBackColor = true;
             this.ScaFunc.Click += new System.EventHandler(this.ScaFunc_Click);
@@ -215,9 +235,9 @@
             // OriFunc
             // 
             this.OriFunc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OriFunc.Location = new System.Drawing.Point(204, 36);
+            this.OriFunc.Location = new System.Drawing.Point(204, 39);
             this.OriFunc.Name = "OriFunc";
-            this.OriFunc.Size = new System.Drawing.Size(42, 27);
+            this.OriFunc.Size = new System.Drawing.Size(42, 30);
             this.OriFunc.TabIndex = 12;
             this.OriFunc.UseVisualStyleBackColor = true;
             this.OriFunc.Click += new System.EventHandler(this.OriFunc_Click);
@@ -228,7 +248,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 33);
+            this.label2.Size = new System.Drawing.Size(61, 36);
             this.label2.TabIndex = 0;
             this.label2.Text = "Position";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -237,9 +257,9 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(3, 33);
+            this.label3.Location = new System.Drawing.Point(3, 36);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 33);
+            this.label3.Size = new System.Drawing.Size(61, 36);
             this.label3.TabIndex = 1;
             this.label3.Text = "Origine";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -248,9 +268,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 66);
+            this.label4.Location = new System.Drawing.Point(3, 72);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 33);
+            this.label4.Size = new System.Drawing.Size(61, 36);
             this.label4.TabIndex = 2;
             this.label4.Text = "Échelle";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -259,18 +279,18 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(3, 99);
+            this.label5.Location = new System.Drawing.Point(3, 108);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(61, 34);
+            this.label5.Size = new System.Drawing.Size(61, 39);
             this.label5.TabIndex = 3;
             this.label5.Text = "Rotation";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PosX
             // 
+            this.PosX.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PosX.DecimalPlaces = 2;
-            this.PosX.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PosX.Location = new System.Drawing.Point(70, 3);
+            this.PosX.Location = new System.Drawing.Point(70, 8);
             this.PosX.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -288,9 +308,9 @@
             // 
             // OriginX
             // 
+            this.OriginX.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.OriginX.DecimalPlaces = 2;
-            this.OriginX.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OriginX.Location = new System.Drawing.Point(70, 36);
+            this.OriginX.Location = new System.Drawing.Point(70, 44);
             this.OriginX.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -308,9 +328,9 @@
             // 
             // PosY
             // 
+            this.PosY.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PosY.DecimalPlaces = 2;
-            this.PosY.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PosY.Location = new System.Drawing.Point(137, 3);
+            this.PosY.Location = new System.Drawing.Point(137, 8);
             this.PosY.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -328,9 +348,9 @@
             // 
             // OriginY
             // 
+            this.OriginY.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.OriginY.DecimalPlaces = 2;
-            this.OriginY.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OriginY.Location = new System.Drawing.Point(137, 36);
+            this.OriginY.Location = new System.Drawing.Point(137, 44);
             this.OriginY.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -348,14 +368,14 @@
             // 
             // ScaleX
             // 
+            this.ScaleX.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ScaleX.DecimalPlaces = 2;
-            this.ScaleX.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ScaleX.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            this.ScaleX.Location = new System.Drawing.Point(70, 69);
+            this.ScaleX.Location = new System.Drawing.Point(70, 80);
             this.ScaleX.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -373,14 +393,14 @@
             // 
             // ScaleY
             // 
+            this.ScaleY.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ScaleY.DecimalPlaces = 2;
-            this.ScaleY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ScaleY.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            this.ScaleY.Location = new System.Drawing.Point(137, 69);
+            this.ScaleY.Location = new System.Drawing.Point(137, 80);
             this.ScaleY.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -398,10 +418,10 @@
             // 
             // Rotation
             // 
+            this.Rotation.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel1.SetColumnSpan(this.Rotation, 2);
             this.Rotation.DecimalPlaces = 2;
-            this.Rotation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Rotation.Location = new System.Drawing.Point(70, 102);
+            this.Rotation.Location = new System.Drawing.Point(70, 117);
             this.Rotation.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -422,7 +442,7 @@
             this.PosFunc.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PosFunc.Location = new System.Drawing.Point(204, 3);
             this.PosFunc.Name = "PosFunc";
-            this.PosFunc.Size = new System.Drawing.Size(42, 27);
+            this.PosFunc.Size = new System.Drawing.Size(42, 30);
             this.PosFunc.TabIndex = 11;
             this.PosFunc.UseVisualStyleBackColor = true;
             this.PosFunc.Click += new System.EventHandler(this.PosFunc_Click);
@@ -432,7 +452,7 @@
             this.flowLayoutPanel3.Controls.Add(this.label6);
             this.flowLayoutPanel3.Controls.Add(this.Opacity);
             this.flowLayoutPanel3.Controls.Add(this.OpaFunc);
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 362);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 376);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(255, 41);
             this.flowLayoutPanel3.TabIndex = 8;
@@ -474,13 +494,148 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(3, 409);
+            this.button2.Location = new System.Drawing.Point(3, 560);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(127, 23);
             this.button2.TabIndex = 7;
             this.button2.Text = "Supprimer";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // flowLayoutPanel4
+            // 
+            this.flowLayoutPanel4.Controls.Add(this.label7);
+            this.flowLayoutPanel4.Controls.Add(this.keyColor);
+            this.flowLayoutPanel4.Controls.Add(this.ColFunc);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 423);
+            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(255, 39);
+            this.flowLayoutPanel4.TabIndex = 9;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(3, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(43, 39);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Couleur";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // keyColor
+            // 
+            this.keyColor.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.keyColor.Location = new System.Drawing.Point(52, 8);
+            this.keyColor.Name = "keyColor";
+            this.keyColor.Size = new System.Drawing.Size(75, 23);
+            this.keyColor.TabIndex = 1;
+            this.keyColor.UseVisualStyleBackColor = true;
+            this.keyColor.Click += new System.EventHandler(this.keyColor_Click);
+            // 
+            // flowLayoutPanel5
+            // 
+            this.flowLayoutPanel5.Controls.Add(this.label8);
+            this.flowLayoutPanel5.Controls.Add(this.keyOColor);
+            this.flowLayoutPanel5.Controls.Add(this.OColFunc);
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 468);
+            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(255, 40);
+            this.flowLayoutPanel5.TabIndex = 10;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label8.Location = new System.Drawing.Point(3, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(81, 39);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Couleur externe";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // keyOColor
+            // 
+            this.keyOColor.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.keyOColor.Location = new System.Drawing.Point(90, 8);
+            this.keyOColor.Name = "keyOColor";
+            this.keyOColor.Size = new System.Drawing.Size(75, 23);
+            this.keyOColor.TabIndex = 1;
+            this.keyOColor.UseVisualStyleBackColor = true;
+            this.keyOColor.Click += new System.EventHandler(this.keyOColor_Click);
+            // 
+            // flowLayoutPanel6
+            // 
+            this.flowLayoutPanel6.Controls.Add(this.label9);
+            this.flowLayoutPanel6.Controls.Add(this.keyOTh);
+            this.flowLayoutPanel6.Controls.Add(this.OThFunc);
+            this.flowLayoutPanel6.Location = new System.Drawing.Point(3, 514);
+            this.flowLayoutPanel6.Name = "flowLayoutPanel6";
+            this.flowLayoutPanel6.Size = new System.Drawing.Size(255, 40);
+            this.flowLayoutPanel6.TabIndex = 11;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(3, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(91, 39);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Épaisseur externe";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // keyOTh
+            // 
+            this.keyOTh.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.keyOTh.DecimalPlaces = 2;
+            this.keyOTh.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.keyOTh.Location = new System.Drawing.Point(100, 9);
+            this.keyOTh.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.keyOTh.Minimum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            -2147483648});
+            this.keyOTh.Name = "keyOTh";
+            this.keyOTh.Size = new System.Drawing.Size(77, 20);
+            this.keyOTh.TabIndex = 1;
+            this.keyOTh.ValueChanged += new System.EventHandler(this.keyOTh_ValueChanged);
+            // 
+            // ColFunc
+            // 
+            this.ColFunc.Location = new System.Drawing.Point(133, 3);
+            this.ColFunc.Name = "ColFunc";
+            this.ColFunc.Size = new System.Drawing.Size(41, 33);
+            this.ColFunc.TabIndex = 13;
+            this.ColFunc.UseVisualStyleBackColor = true;
+            this.ColFunc.Click += new System.EventHandler(this.ColFunc_Click);
+            // 
+            // OColFunc
+            // 
+            this.OColFunc.Location = new System.Drawing.Point(171, 3);
+            this.OColFunc.Name = "OColFunc";
+            this.OColFunc.Size = new System.Drawing.Size(41, 33);
+            this.OColFunc.TabIndex = 13;
+            this.OColFunc.UseVisualStyleBackColor = true;
+            this.OColFunc.Click += new System.EventHandler(this.OColFunc_Click);
+            // 
+            // OThFunc
+            // 
+            this.OThFunc.Location = new System.Drawing.Point(183, 3);
+            this.OThFunc.Name = "OThFunc";
+            this.OThFunc.Size = new System.Drawing.Size(41, 33);
+            this.OThFunc.TabIndex = 13;
+            this.OThFunc.UseVisualStyleBackColor = true;
+            this.OThFunc.Click += new System.EventHandler(this.OThFunc_Click);
             // 
             // KeyProperties
             // 
@@ -508,6 +663,13 @@
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Opacity)).EndInit();
+            this.flowLayoutPanel4.ResumeLayout(false);
+            this.flowLayoutPanel4.PerformLayout();
+            this.flowLayoutPanel5.ResumeLayout(false);
+            this.flowLayoutPanel5.PerformLayout();
+            this.flowLayoutPanel6.ResumeLayout(false);
+            this.flowLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.keyOTh)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -542,5 +704,17 @@
         private System.Windows.Forms.Button OriFunc;
         private System.Windows.Forms.Button PosFunc;
         private System.Windows.Forms.Button OpaFunc;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button keyColor;
+        private System.Windows.Forms.Button ColFunc;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button keyOColor;
+        private System.Windows.Forms.Button OColFunc;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel6;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown keyOTh;
+        private System.Windows.Forms.Button OThFunc;
     }
 }

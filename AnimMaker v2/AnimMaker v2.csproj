@@ -83,7 +83,8 @@
     <Reference Include="WGP.NET-SFDynamicObject">
       <HintPath>..\..\WGP.NET-SFDynamicObject\WGP.NET-SFDynamicObject\bin\x64\Release\WGP.NET-SFDynamicObject.dll</HintPath>
     </Reference>
-    <Reference Include="WGP.NET-TEXT">
+    <Reference Include="WGP.NET-TEXT, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\WGP.NET-TEXT\WGP.NET-TEXT\bin\Release\WGP.NET-TEXT.dll</HintPath>
     </Reference>
     <Reference Include="WildGoatPackage.NET">
@@ -91,6 +92,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AnimProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -154,6 +161,9 @@
     <Compile Include="SpriteProperties.Designer.cs">
       <DependentUpon>SpriteProperties.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AnimProperties.resx">
       <DependentUpon>AnimProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -234,6 +244,7 @@
     <Content Include="icons\removeRes.png" />
     <Content Include="icons\root.png" />
     <Content Include="logo.ico" />
+    <None Include="logox64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

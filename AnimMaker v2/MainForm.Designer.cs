@@ -107,6 +107,7 @@
             this.saveObject = new System.Windows.Forms.SaveFileDialog();
             this.saveRes = new System.Windows.Forms.SaveFileDialog();
             this.openTexture = new System.Windows.Forms.OpenFileDialog();
+            this.aProposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -526,6 +527,7 @@
             this.nouveauManagerToolStripMenuItem,
             this.ouvrirToolStripMenuItem,
             this.sauvegarderLeManagerToolStripMenuItem,
+            this.aProposToolStripMenuItem,
             this.fermerToolStripMenuItem});
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
@@ -537,7 +539,7 @@
             this.objetDynamiqueToolStripMenuItem,
             this.managerToolStripMenuItem});
             this.nouveauManagerToolStripMenuItem.Name = "nouveauManagerToolStripMenuItem";
-            this.nouveauManagerToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.nouveauManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.nouveauManagerToolStripMenuItem.Text = "Nouveau";
             // 
             // objetDynamiqueToolStripMenuItem
@@ -562,7 +564,7 @@
             this.objetDynamiqueToolStripMenuItem2,
             this.managerToolStripMenuItem2});
             this.ouvrirToolStripMenuItem.Name = "ouvrirToolStripMenuItem";
-            this.ouvrirToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.ouvrirToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ouvrirToolStripMenuItem.Text = "Ouvrir";
             // 
             // objetDynamiqueToolStripMenuItem2
@@ -587,7 +589,7 @@
             this.objetDynamiqueToolStripMenuItem1,
             this.managerToolStripMenuItem1});
             this.sauvegarderLeManagerToolStripMenuItem.Name = "sauvegarderLeManagerToolStripMenuItem";
-            this.sauvegarderLeManagerToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.sauvegarderLeManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sauvegarderLeManagerToolStripMenuItem.Text = "Sauvegarder";
             // 
             // objetDynamiqueToolStripMenuItem1
@@ -609,7 +611,7 @@
             // fermerToolStripMenuItem
             // 
             this.fermerToolStripMenuItem.Name = "fermerToolStripMenuItem";
-            this.fermerToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.fermerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fermerToolStripMenuItem.Text = "Fermer";
             this.fermerToolStripMenuItem.Click += new System.EventHandler(this.fermerToolStripMenuItem_Click);
             // 
@@ -863,6 +865,13 @@
             this.openTexture.Multiselect = true;
             this.openTexture.Title = "Charger la texture";
             // 
+            // aProposToolStripMenuItem
+            // 
+            this.aProposToolStripMenuItem.Name = "aProposToolStripMenuItem";
+            this.aProposToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aProposToolStripMenuItem.Text = "A propos";
+            this.aProposToolStripMenuItem.Click += new System.EventHandler(this.aProposToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -974,5 +983,6 @@
         private System.Windows.Forms.ToolStripMenuItem fermerToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripMenuItem aProposToolStripMenuItem;
     }
 }

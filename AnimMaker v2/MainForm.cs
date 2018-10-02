@@ -226,10 +226,30 @@ namespace AnimMaker_v2
         {
             if (openObject.ShowDialog() == DialogResult.OK)
             {
-                Program.DynamicObject.LoadFromFile(openObject.FileName);
-                Program.DynamicObject.ReloadManager();
-                Program.selection = null;
-                UpdateInterface();
+                try
+                {
+                    Program.DynamicObject.LoadFromFile(openObject.FileName);
+                    Program.DynamicObject.ReloadManager();
+                    Program.selection = null;
+                    UpdateInterface();
+                }
+                catch(Exception e)
+                {
+                    if (e.InnerException.InnerException is SFDynamicObject.NewerVersionException ex)
+                    {
+                        if (MessageBox.Show("Le fichier chargé proviens d'une versions plus récente : " + ex.RequestedVersion + " alors que la révision actuelle est " + SFDynamicObject.CurrentVersion + "\nCharger ce fichier pourrait corrompre certaines données, le charger quand même ?", "Conflit de version", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                        {
+                            Program.DynamicObject.LoadFromFile(openObject.FileName, true);
+                            Program.DynamicObject.ReloadManager();
+                            Program.selection = null;
+                            UpdateInterface();
+                        }
+                    }
+                    else
+                        throw e;
+                }
+                if (Program.DynamicObject.Version < SFDynamicObject.CurrentVersion)
+                    MessageBox.Show("Ce fichier est en version " + Program.DynamicObject.Version + " alors que l'API est en " + SFDynamicObject.CurrentVersion + " le fichier peut avoir quelques changements.", "Conflit de version", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         public void OpenRes(string path)
@@ -631,6 +651,12 @@ namespace AnimMaker_v2
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             Program.Chronometer.Paused = !Program.Chronometer.Paused;
+        }
+
+        private void aProposToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialog = new AboutForm();
+            dialog.ShowDialog();
         }
     }
 }

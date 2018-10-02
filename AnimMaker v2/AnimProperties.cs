@@ -66,10 +66,13 @@ namespace AnimMaker_v2
 
         private void bones_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectKeys.Enabled = bones.SelectedIndex != -1;
-            removeBone.Enabled = bones.SelectedIndex != -1;
+            if (bones.SelectedIndex > -1)
+            {
+                selectKeys.Enabled = bones.SelectedIndex != -1;
+                removeBone.Enabled = bones.SelectedIndex != -1;
 
-            Program.selectedBone = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.Name == bones.Items[bones.SelectedIndex].ToString());
+                Program.selectedBone = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.Name == bones.Items[bones.SelectedIndex].ToString());
+            }
         }
 
         private void removeBone_Click(object sender, EventArgs e)

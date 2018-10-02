@@ -63,6 +63,12 @@
             this.boneName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.alphaMode = new System.Windows.Forms.RadioButton();
+            this.multMode = new System.Windows.Forms.RadioButton();
+            this.subsMode = new System.Windows.Forms.RadioButton();
+            this.addMode = new System.Windows.Forms.RadioButton();
             this.groupBox3.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -79,14 +85,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.ScaleY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Rotation)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.flowLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.flowLayoutPanel3);
-            this.groupBox3.Location = new System.Drawing.Point(3, 474);
+            this.groupBox3.Location = new System.Drawing.Point(3, 422);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(214, 292);
+            this.groupBox3.Size = new System.Drawing.Size(214, 240);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Sprites";
@@ -100,7 +108,7 @@
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(208, 273);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(208, 221);
             this.flowLayoutPanel3.TabIndex = 0;
             // 
             // sprites
@@ -108,7 +116,7 @@
             this.sprites.FormattingEnabled = true;
             this.sprites.Location = new System.Drawing.Point(3, 3);
             this.sprites.Name = "sprites";
-            this.sprites.Size = new System.Drawing.Size(202, 173);
+            this.sprites.Size = new System.Drawing.Size(202, 121);
             this.sprites.TabIndex = 0;
             this.sprites.SelectedIndexChanged += new System.EventHandler(this.sprites_SelectedIndexChanged);
             // 
@@ -125,7 +133,7 @@
             this.tableLayoutPanel3.Controls.Add(this.moveSpriteUp, 2, 2);
             this.tableLayoutPanel3.Controls.Add(this.moveSpriteDown, 3, 2);
             this.tableLayoutPanel3.Controls.Add(this.modSprite, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 182);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 130);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -203,7 +211,7 @@
             // statut
             // 
             this.statut.AutoSize = true;
-            this.statut.Location = new System.Drawing.Point(3, 769);
+            this.statut.Location = new System.Drawing.Point(3, 801);
             this.statut.Name = "statut";
             this.statut.Size = new System.Drawing.Size(0, 13);
             this.statut.TabIndex = 2;
@@ -213,7 +221,7 @@
             this.groupBox2.Controls.Add(this.flowLayoutPanel2);
             this.groupBox2.Location = new System.Drawing.Point(3, 202);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(214, 266);
+            this.groupBox2.Size = new System.Drawing.Size(214, 214);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Enfants";
@@ -227,7 +235,7 @@
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(208, 247);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(208, 195);
             this.flowLayoutPanel2.TabIndex = 0;
             // 
             // children
@@ -235,7 +243,7 @@
             this.children.FormattingEnabled = true;
             this.children.Location = new System.Drawing.Point(3, 3);
             this.children.Name = "children";
-            this.children.Size = new System.Drawing.Size(202, 173);
+            this.children.Size = new System.Drawing.Size(202, 121);
             this.children.TabIndex = 0;
             this.children.SelectedIndexChanged += new System.EventHandler(this.children_SelectedIndexChanged);
             // 
@@ -250,7 +258,7 @@
             this.tableLayoutPanel2.Controls.Add(this.removeChild, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.addChildList, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 182);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 130);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -563,6 +571,7 @@
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
             this.flowLayoutPanel1.Controls.Add(this.groupBox2);
             this.flowLayoutPanel1.Controls.Add(this.groupBox3);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox4);
             this.flowLayoutPanel1.Controls.Add(this.statut);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -570,6 +579,77 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(910, 881);
             this.flowLayoutPanel1.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.flowLayoutPanel4);
+            this.groupBox4.Location = new System.Drawing.Point(3, 668);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(214, 130);
+            this.groupBox4.TabIndex = 6;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Mode de fusion";
+            // 
+            // flowLayoutPanel4
+            // 
+            this.flowLayoutPanel4.Controls.Add(this.alphaMode);
+            this.flowLayoutPanel4.Controls.Add(this.multMode);
+            this.flowLayoutPanel4.Controls.Add(this.subsMode);
+            this.flowLayoutPanel4.Controls.Add(this.addMode);
+            this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(208, 111);
+            this.flowLayoutPanel4.TabIndex = 0;
+            // 
+            // alphaMode
+            // 
+            this.alphaMode.AutoSize = true;
+            this.alphaMode.Location = new System.Drawing.Point(3, 3);
+            this.alphaMode.Name = "alphaMode";
+            this.alphaMode.Size = new System.Drawing.Size(52, 17);
+            this.alphaMode.TabIndex = 0;
+            this.alphaMode.TabStop = true;
+            this.alphaMode.Text = "Alpha";
+            this.alphaMode.UseVisualStyleBackColor = true;
+            this.alphaMode.CheckedChanged += new System.EventHandler(this.alphaMode_CheckedChanged);
+            // 
+            // multMode
+            // 
+            this.multMode.AutoSize = true;
+            this.multMode.Location = new System.Drawing.Point(3, 26);
+            this.multMode.Name = "multMode";
+            this.multMode.Size = new System.Drawing.Size(77, 17);
+            this.multMode.TabIndex = 1;
+            this.multMode.TabStop = true;
+            this.multMode.Text = "Multiplicatif";
+            this.multMode.UseVisualStyleBackColor = true;
+            this.multMode.CheckedChanged += new System.EventHandler(this.multMode_CheckedChanged);
+            // 
+            // subsMode
+            // 
+            this.subsMode.AutoSize = true;
+            this.subsMode.Location = new System.Drawing.Point(3, 49);
+            this.subsMode.Name = "subsMode";
+            this.subsMode.Size = new System.Drawing.Size(75, 17);
+            this.subsMode.TabIndex = 2;
+            this.subsMode.TabStop = true;
+            this.subsMode.Text = "Soustractif";
+            this.subsMode.UseVisualStyleBackColor = true;
+            this.subsMode.CheckedChanged += new System.EventHandler(this.subsMode_CheckedChanged);
+            // 
+            // addMode
+            // 
+            this.addMode.AutoSize = true;
+            this.addMode.Location = new System.Drawing.Point(3, 72);
+            this.addMode.Name = "addMode";
+            this.addMode.Size = new System.Drawing.Size(54, 17);
+            this.addMode.TabIndex = 3;
+            this.addMode.TabStop = true;
+            this.addMode.Text = "Additif";
+            this.addMode.UseVisualStyleBackColor = true;
+            this.addMode.CheckedChanged += new System.EventHandler(this.addMode_CheckedChanged);
             // 
             // BoneProperties
             // 
@@ -599,6 +679,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Rotation)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.flowLayoutPanel4.ResumeLayout(false);
+            this.flowLayoutPanel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -640,5 +723,11 @@
         private System.Windows.Forms.Button moveSpriteUp;
         private System.Windows.Forms.Button moveSpriteDown;
         private System.Windows.Forms.Button modSprite;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
+        private System.Windows.Forms.RadioButton alphaMode;
+        private System.Windows.Forms.RadioButton multMode;
+        private System.Windows.Forms.RadioButton subsMode;
+        private System.Windows.Forms.RadioButton addMode;
     }
 }

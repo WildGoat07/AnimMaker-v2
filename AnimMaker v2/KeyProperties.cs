@@ -17,6 +17,8 @@ namespace AnimMaker_v2
 {
     public partial class KeyProperties : UserControl
     {
+        private static int[] customColors = null;
+
         private bool init;
         public KeyProperties()
         {
@@ -137,13 +139,70 @@ namespace AnimMaker_v2
                         OpaFunc.Image = Properties.Resources.bin;
                         break;
                 }
+                switch (selectKey.ColorFunction)
+                {
+                    case Animation.Key.Fct.LINEAR:
+                        ColFunc.Image = Properties.Resources.linear;
+                        break;
+                    case Animation.Key.Fct.POWER:
+                        ColFunc.Image = Properties.Resources.pow;
+                        break;
+                    case Animation.Key.Fct.ROOT:
+                        ColFunc.Image = Properties.Resources.root;
+                        break;
+                    case Animation.Key.Fct.GAUSS:
+                        ColFunc.Image = Properties.Resources.gauss;
+                        break;
+                    case Animation.Key.Fct.BINARY:
+                        ColFunc.Image = Properties.Resources.bin;
+                        break;
+                }
+                switch (selectKey.OutlineColorFunction)
+                {
+                    case Animation.Key.Fct.LINEAR:
+                        OColFunc.Image = Properties.Resources.linear;
+                        break;
+                    case Animation.Key.Fct.POWER:
+                        OColFunc.Image = Properties.Resources.pow;
+                        break;
+                    case Animation.Key.Fct.ROOT:
+                        OColFunc.Image = Properties.Resources.root;
+                        break;
+                    case Animation.Key.Fct.GAUSS:
+                        OColFunc.Image = Properties.Resources.gauss;
+                        break;
+                    case Animation.Key.Fct.BINARY:
+                        OColFunc.Image = Properties.Resources.bin;
+                        break;
+                }
+                switch (selectKey.OutlineThicknessFunction)
+                {
+                    case Animation.Key.Fct.LINEAR:
+                        OThFunc.Image = Properties.Resources.linear;
+                        break;
+                    case Animation.Key.Fct.POWER:
+                        OThFunc.Image = Properties.Resources.pow;
+                        break;
+                    case Animation.Key.Fct.ROOT:
+                        OThFunc.Image = Properties.Resources.root;
+                        break;
+                    case Animation.Key.Fct.GAUSS:
+                        OThFunc.Image = Properties.Resources.gauss;
+                        break;
+                    case Animation.Key.Fct.BINARY:
+                        OThFunc.Image = Properties.Resources.bin;
+                        break;
+                }
+                keyColor.Image = Utilities.SFMLImageAsSystemBitmap(new SFML.Graphics.Image(100, 100, selectKey.Color));
+                keyOColor.Image = Utilities.SFMLImageAsSystemBitmap(new SFML.Graphics.Image(100, 100, selectKey.OutlineColor));
+                keyOTh.Value = (decimal)selectKey.OutlineThickness;
             }
             init = true;
         }
 
         private void keysList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (init)
+            if (init && keysList.SelectedIndex > -1)
             {
                 var keys = Program.selectedKeys;
                 Program.selection = keys[int.Parse(keysList.Items[keysList.SelectedIndex].ToString().Substring(0, 2)) - 1];
@@ -326,6 +385,85 @@ namespace AnimMaker_v2
             key.OpacityFctCoeff = tmp.Coefficient;
 
             Program.form.UpdateProp();
+        }
+
+        private void ColFunc_Click(object sender, EventArgs e)
+        {
+            var key = (Animation.Key)Program.selection;
+            var tmp = new FunctionDialog();
+            tmp.Function = key.ColorFunction;
+            tmp.Coefficient = key.ColorFctCoeff;
+
+            tmp.Start();
+
+            key.ColorFunction = tmp.Function;
+            key.ColorFctCoeff = tmp.Coefficient;
+
+            Program.form.UpdateProp();
+        }
+
+        private void OColFunc_Click(object sender, EventArgs e)
+        {
+            var key = (Animation.Key)Program.selection;
+            var tmp = new FunctionDialog();
+            tmp.Function = key.OutlineColorFunction;
+            tmp.Coefficient = key.OutlineColorFctCoeff;
+
+            tmp.Start();
+
+            key.OutlineColorFunction = tmp.Function;
+            key.OutlineColorFctCoeff = tmp.Coefficient;
+
+            Program.form.UpdateProp();
+        }
+
+        private void OThFunc_Click(object sender, EventArgs e)
+        {
+            var key = (Animation.Key)Program.selection;
+            var tmp = new FunctionDialog();
+            tmp.Function = key.OutlineThicknessFunction;
+            tmp.Coefficient = key.OutlineThicknessFctCoeff;
+
+            tmp.Start();
+
+            key.OutlineThicknessFunction = tmp.Function;
+            key.OutlineThicknessFctCoeff = tmp.Coefficient;
+
+            Program.form.UpdateProp();
+        }
+
+        private void keyColor_Click(object sender, EventArgs e)
+        {
+            var key = (Animation.Key)Program.selection;
+            var dialog = new ColorDialog();
+            dialog.CustomColors = customColors;
+            dialog.Color = System.Drawing.Color.FromArgb(key.Color.A, key.Color.R, key.Color.G, key.Color.B);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                key.Color = new SFML.Graphics.Color(dialog.Color.R, dialog.Color.G, dialog.Color.B, dialog.Color.A);
+                Program.form.UpdateProp();
+            }
+            customColors = dialog.CustomColors;
+        }
+
+        private void keyOColor_Click(object sender, EventArgs e)
+        {
+            var key = (Animation.Key)Program.selection;
+            var dialog = new ColorDialog();
+            dialog.CustomColors = customColors;
+            dialog.Color = System.Drawing.Color.FromArgb(key.OutlineColor.A, key.OutlineColor.R, key.OutlineColor.G, key.OutlineColor.B);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                key.OutlineColor = new SFML.Graphics.Color(dialog.Color.R, dialog.Color.G, dialog.Color.B, dialog.Color.A);
+                Program.form.UpdateProp();
+            }
+            customColors = dialog.CustomColors;
+        }
+
+        private void keyOTh_ValueChanged(object sender, EventArgs e)
+        {
+            var key = (Animation.Key)Program.selection;
+            key.OutlineThickness = (float)keyOTh.Value;
         }
     }
 }

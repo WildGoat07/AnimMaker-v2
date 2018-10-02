@@ -33,6 +33,21 @@ namespace AnimMaker_v2
                 ScaleX.Value = (decimal)bone.Scale.X;
                 ScaleY.Value = (decimal)bone.Scale.Y;
                 Rotation.Value = (decimal)bone.Rotation;
+                switch (bone.BlendMode)
+                {
+                    case BlendModeType.BLEND_ALPHA:
+                        alphaMode.Checked = true;
+                        break;
+                    case BlendModeType.BLEND_ADD:
+                        addMode.Checked = true;
+                        break;
+                    case BlendModeType.BLEND_MULT:
+                        multMode.Checked = true;
+                        break;
+                    case BlendModeType.BLEND_SUB:
+                        subsMode.Checked = true;
+                        break;
+                }
 
                 boneStatut.Text = "Statut : ";
                 if (Program.DynamicObject.MasterBones.Contains(Program.selection))
@@ -289,6 +304,30 @@ namespace AnimMaker_v2
             Program.selection = ((Bone)Program.selection).AttachedSprites[index];
 
             Program.form.UpdateInterface();
+        }
+
+        private void alphaMode_CheckedChanged(object sender, EventArgs e)
+        {
+            var bone = (Bone)Program.selection;
+            bone.BlendMode = BlendModeType.BLEND_ALPHA;
+        }
+
+        private void multMode_CheckedChanged(object sender, EventArgs e)
+        {
+            var bone = (Bone)Program.selection;
+            bone.BlendMode = BlendModeType.BLEND_MULT;
+        }
+
+        private void subsMode_CheckedChanged(object sender, EventArgs e)
+        {
+            var bone = (Bone)Program.selection;
+            bone.BlendMode = BlendModeType.BLEND_SUB;
+        }
+
+        private void addMode_CheckedChanged(object sender, EventArgs e)
+        {
+            var bone = (Bone)Program.selection;
+            bone.BlendMode = BlendModeType.BLEND_ADD;
         }
     }
 }

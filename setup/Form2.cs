@@ -70,7 +70,7 @@ namespace setup
             Console.WriteLine("deleted AnimMakerV2");
             System.IO.Directory.Delete(Path, true);
             MessageBox.Show(this, "AnimMaker v2 a été désinstallé avec succès", "Désinstallation terminée", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Environment.Exit(0);
+            Close();
         }
     }
 }

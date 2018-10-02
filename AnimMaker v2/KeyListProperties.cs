@@ -36,10 +36,13 @@ namespace AnimMaker_v2
 
         private void keysList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var keys = Program.selectedKeys;
-            Program.selection = keys[int.Parse(keysList.Items[keysList.SelectedIndex].ToString().Substring(0, 2)) - 1];
+            if (keysList.SelectedIndex > -1)
+            {
+                var keys = Program.selectedKeys;
+                Program.selection = keys[int.Parse(keysList.Items[keysList.SelectedIndex].ToString().Substring(0, 2)) - 1];
 
-            Program.form.UpdateProp();
+                Program.form.UpdateProp();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

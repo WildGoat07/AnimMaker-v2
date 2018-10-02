@@ -42,8 +42,7 @@ namespace setup
                 uninstall = true;
             if (uninstall)
                 Application.Run(new Form2());
-            else
-                Application.Run(new Form1());
+            Application.Run(new Form1());
         }
     }
     public struct ToExtract
