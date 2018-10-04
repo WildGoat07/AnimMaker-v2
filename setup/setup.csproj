@@ -117,19 +117,20 @@
     <Content Include="logo.ico" />
     <Content Include="logox64.png" />
     <Content Include="Resources\AnimMaker v2.exe" />
+    <Content Include="Resources\csfml-graphics-2.dll" />
+    <Content Include="Resources\csfml-system-2.dll" />
+    <Content Include="Resources\csfml-window-2.dll" />
+    <Content Include="Resources\Newtonsoft.Json.dll" />
+    <Content Include="Resources\sfmlnet-audio-2.dll" />
+    <Content Include="Resources\sfmlnet-graphics-2.dll" />
+    <Content Include="Resources\sfmlnet-system-2.dll" />
+    <Content Include="Resources\sfmlnet-window-2.dll" />
+    <Content Include="Resources\System.ValueTuple.dll" />
+    <Content Include="Resources\WGP.NET-SFDynamicObject.dll" />
+    <Content Include="Resources\WGP.NET-TEXT.dll" />
+    <Content Include="Resources\WildGoatPackage.NET.dll" />
     <None Include="Resources\resm" />
     <None Include="Resources\wgdo" />
-    <None Include="Resources\sfmlnet-audio-2.dll" />
-    <None Include="Resources\csfml-graphics-2.dll" />
-    <None Include="Resources\WildGoatPackage.NET.dll" />
-    <None Include="Resources\WGP.NET-TEXT.dll" />
-    <None Include="Resources\WGP.NET-SFDynamicObject.dll" />
-    <None Include="Resources\sfmlnet-window-2.dll" />
-    <None Include="Resources\sfmlnet-system-2.dll" />
-    <None Include="Resources\sfmlnet-graphics-2.dll" />
-    <None Include="Resources\Newtonsoft.Json.dll" />
-    <None Include="Resources\csfml-window-2.dll" />
-    <None Include="Resources\csfml-system-2.dll" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
