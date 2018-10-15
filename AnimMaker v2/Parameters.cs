@@ -24,7 +24,7 @@ namespace AnimMaker_v2
                 System.IO.Directory.CreateDirectory(Program.Settings.AutoFilePath);
             foreach (var item in new System.IO.DirectoryInfo(Program.Settings.AutoFilePath).GetFiles())
                 size += item.Length;
-            cleanFolder.Text = "Vider le dosser (" + ((double)size / 1024 / 1024).ToString("F") + " Mo)";
+            cleanFolder.Text = "Vider le cache (" + ((double)size / 1024 / 1024).ToString("F") + " Mo)";
         }
 
         private void Parameters_FormClosed(object sender, FormClosedEventArgs e)
@@ -59,7 +59,7 @@ namespace AnimMaker_v2
             long size = 0;
             foreach (var item in new System.IO.DirectoryInfo(Program.Settings.AutoFilePath).GetFiles())
                 size += item.Length;
-            cleanFolder.Text = "Vider le dosser (" + ((double)size / 1024 / 1024).ToString("F") + " Mo)";
+            cleanFolder.Text = "Vider le cache (" + ((double)size / 1024 / 1024).ToString("F") + " Mo)";
         }
 
         private void searchFolder_Click(object sender, EventArgs e)
