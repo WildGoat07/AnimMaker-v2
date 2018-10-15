@@ -112,6 +112,7 @@ namespace AnimMaker_v2
 
                     if (Settings.AutoFileSave && autoSaveClock.ElapsedTime > Settings.AutoFileTime.ToSFML())
                     {
+                        autoSaveClock.Restart();
                         if (!System.IO.Directory.Exists(Settings.AutoFilePath))
                             System.IO.Directory.CreateDirectory(Settings.AutoFilePath);
                         System.IO.Stream stream = null;
