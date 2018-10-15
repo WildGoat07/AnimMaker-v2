@@ -231,6 +231,7 @@ namespace AnimMaker_v2
                     Program.DynamicObject.LoadFromFile(openObject.FileName);
                     Program.DynamicObject.ReloadManager();
                     Program.selection = null;
+                    Program.CurrentID = Guid.NewGuid();
                     UpdateInterface();
                 }
                 catch(Exception e)
@@ -242,6 +243,7 @@ namespace AnimMaker_v2
                             Program.DynamicObject.LoadFromFile(openObject.FileName, true);
                             Program.DynamicObject.ReloadManager();
                             Program.selection = null;
+                            Program.CurrentID = Guid.NewGuid();
                             UpdateInterface();
                         }
                     }
@@ -264,6 +266,7 @@ namespace AnimMaker_v2
             Program.DynamicObject.LoadFromFile(path);
             Program.DynamicObject.ReloadManager();
             Program.selection = null;
+            Program.CurrentID = Guid.NewGuid();
             UpdateInterface();
         }
         public void SaveRes()
@@ -510,6 +513,7 @@ namespace AnimMaker_v2
 
         public void newObj()
         {
+            Program.CurrentID = Guid.NewGuid();
             Program.DynamicObject = new SFDynamicObject();
             Program.DynamicObject.Manager = Program.Resources;
             Program.DynamicObject.Chronometer = Program.Chronometer;
@@ -657,6 +661,11 @@ namespace AnimMaker_v2
         {
             var dialog = new AboutForm();
             dialog.ShowDialog();
+        }
+
+        private void paramètresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Parameters().ShowDialog();
         }
     }
 }

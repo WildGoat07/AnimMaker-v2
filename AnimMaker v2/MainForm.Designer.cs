@@ -73,6 +73,7 @@
             this.sauvegarderLeManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objetDynamiqueToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.managerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aProposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fermerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.osToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nouveauToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,7 +108,7 @@
             this.saveObject = new System.Windows.Forms.SaveFileDialog();
             this.saveRes = new System.Windows.Forms.SaveFileDialog();
             this.openTexture = new System.Windows.Forms.OpenFileDialog();
-            this.aProposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paramètresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -527,6 +528,7 @@
             this.nouveauManagerToolStripMenuItem,
             this.ouvrirToolStripMenuItem,
             this.sauvegarderLeManagerToolStripMenuItem,
+            this.paramètresToolStripMenuItem,
             this.aProposToolStripMenuItem,
             this.fermerToolStripMenuItem});
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
@@ -607,6 +609,13 @@
             this.managerToolStripMenuItem1.Size = new System.Drawing.Size(210, 22);
             this.managerToolStripMenuItem1.Text = "manager";
             this.managerToolStripMenuItem1.Click += new System.EventHandler(this.managerToolStripMenuItem1_Click);
+            // 
+            // aProposToolStripMenuItem
+            // 
+            this.aProposToolStripMenuItem.Name = "aProposToolStripMenuItem";
+            this.aProposToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aProposToolStripMenuItem.Text = "A propos";
+            this.aProposToolStripMenuItem.Click += new System.EventHandler(this.aProposToolStripMenuItem_Click);
             // 
             // fermerToolStripMenuItem
             // 
@@ -865,12 +874,12 @@
             this.openTexture.Multiselect = true;
             this.openTexture.Title = "Charger la texture";
             // 
-            // aProposToolStripMenuItem
+            // paramètresToolStripMenuItem
             // 
-            this.aProposToolStripMenuItem.Name = "aProposToolStripMenuItem";
-            this.aProposToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.aProposToolStripMenuItem.Text = "A propos";
-            this.aProposToolStripMenuItem.Click += new System.EventHandler(this.aProposToolStripMenuItem_Click);
+            this.paramètresToolStripMenuItem.Name = "paramètresToolStripMenuItem";
+            this.paramètresToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.paramètresToolStripMenuItem.Text = "Paramètres";
+            this.paramètresToolStripMenuItem.Click += new System.EventHandler(this.paramètresToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -984,5 +993,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripMenuItem aProposToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem paramètresToolStripMenuItem;
     }
 }

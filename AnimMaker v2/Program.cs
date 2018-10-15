@@ -32,11 +32,27 @@ namespace AnimMaker_v2
         public static FloatRect timeLineDrawRect;
         public static List<KeyControl> keyControls;
         public static bool seeking;
+        public static Options Settings;
+        public static Guid CurrentID;
         
+        [STAThread]
         static void Main(string[] args)
         {
             try
             {
+                try
+                {
+                    using (var stream = new System.IO.FileStream(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AnimMakerV2/params"), System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                    {
+                        var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                        Settings = (Options)formatter.Deserialize(stream);
+                    }
+                }
+                catch (Exception)
+                {
+                    Settings = Options.Default;
+                }
+                Clock autoSaveClock = new Clock();
                 Application.EnableVisualStyles();
                 form = new MainForm();
                 Chronometer = new Chronometer();
@@ -94,6 +110,21 @@ namespace AnimMaker_v2
                     Application.DoEvents();
                     Timeline.DispatchEvents();
 
+                    if (Settings.AutoFileSave && autoSaveClock.ElapsedTime > Settings.AutoFileTime.ToSFML())
+                    {
+                        if (!System.IO.Directory.Exists(Settings.AutoFilePath))
+                            System.IO.Directory.CreateDirectory(Settings.AutoFilePath);
+                        System.IO.Stream stream = null;
+                        try
+                        {
+                            stream = new System.IO.FileStream(System.IO.Path.Combine(Settings.AutoFilePath, CurrentID + ".wgdo"), System.IO.FileMode.Create, System.IO.FileAccess.Write);
+                            DynamicObject.SaveToStream(stream);
+                        }
+                        catch(Exception) { }
+                        if (stream != null)
+                            stream.Close();
+                    }
+
                     if (selectedAnim != null)
                     {
                         textTimer.String = DynamicObject.CurrentTime.AsSeconds().ToString("F") + " : " + selectedAnim.Duration.AsSeconds().ToString("F");
@@ -129,7 +160,7 @@ namespace AnimMaker_v2
                             count++;
                         }
                     }
-                    if (seeking)
+                    if (seeking && selectedAnim != null)
                     {
                         var msPos = Timeline.MapPixelToCoords(Mouse.GetPosition(Timeline));
                         DynamicObject.CurrentTime = Utilities.Interpolation(Utilities.Percent(msPos.X, 0, timeLineDrawRect.Width), Time.Zero, selectedAnim.Duration);

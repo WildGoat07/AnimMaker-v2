@@ -17,7 +17,7 @@ namespace AnimMaker_v2
         {
             InitializeComponent();
             titleText.Font = new Font("Calibri", 24);
-            versionName.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            versionName.Text = Assembly.GetEntryAssembly().GetName().Version + "  version de l'API : " + WGP.SFDynamicObject.SFDynamicObject.CurrentVersion;
             Select();
         }
 
