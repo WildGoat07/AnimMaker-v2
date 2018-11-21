@@ -17,6 +17,8 @@ namespace AnimMaker_v2
 {
     public partial class SpriteProperties : UserControl
     {
+        #region Public Constructors
+
         public SpriteProperties()
         {
             InitializeComponent();
@@ -24,13 +26,6 @@ namespace AnimMaker_v2
 
             if (sprite != null)
             {
-                PosX.Value = (decimal)sprite.Value.Position.X;
-                PosY.Value = (decimal)sprite.Value.Position.Y;
-                OriginX.Value = (decimal)sprite.Value.Origin.X;
-                OriginY.Value = (decimal)sprite.Value.Origin.Y;
-                ScaleX.Value = (decimal)sprite.Value.Scale.X;
-                ScaleY.Value = (decimal)sprite.Value.Scale.Y;
-                Rotation.Value = (decimal)sprite.Value.Rotation;
                 SizeX.Value = (decimal)sprite.Value.Size.X;
                 SizeY.Value = (decimal)sprite.Value.Size.Y;
                 TexPosX.Value = (decimal)sprite.Value.TextureRect.Left;
@@ -40,75 +35,9 @@ namespace AnimMaker_v2
             }
         }
 
-        private void PosX_ValueChanged(object sender, EventArgs e)
-        {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
+        #endregion Public Constructors
 
-            var vec = sprite.Value.Position;
-            vec.X = (float)PosX.Value;
-            sprite.Value.Position = vec;
-        }
-
-        private void PosY_ValueChanged(object sender, EventArgs e)
-        {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
-
-            var vec = sprite.Value.Position;
-            vec.Y = (float)PosY.Value;
-            sprite.Value.Position = vec;
-        }
-
-        private void OriginX_ValueChanged(object sender, EventArgs e)
-        {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
-
-            var vec = sprite.Value.Origin;
-            vec.X = (float)OriginX.Value;
-            sprite.Value.Origin = vec;
-        }
-
-        private void OriginY_ValueChanged(object sender, EventArgs e)
-        {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
-
-            var vec = sprite.Value.Origin;
-            vec.Y = (float)OriginY.Value;
-            sprite.Value.Origin = vec;
-        }
-
-        private void ScaleX_ValueChanged(object sender, EventArgs e)
-        {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
-
-            var vec = sprite.Value.Scale;
-            vec.X = (float)ScaleX.Value;
-            sprite.Value.Scale = vec;
-        }
-
-        private void ScaleY_ValueChanged(object sender, EventArgs e)
-        {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
-
-            var vec = sprite.Value.Scale;
-            vec.Y = (float)ScaleY.Value;
-            sprite.Value.Scale = vec;
-        }
-
-        private void Rotation_ValueChanged(object sender, EventArgs e)
-        {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
-
-            sprite.Value.Rotation = (float)Rotation.Value;
-        }
-        
-        private void SizeX_ValueChanged(object sender, EventArgs e)
-        {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
-
-            var vec = sprite.Value.Size;
-            vec.X = (float)SizeX.Value;
-            sprite.Value.Size = vec;
-        }
+        #region Private Methods
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
@@ -117,6 +46,15 @@ namespace AnimMaker_v2
             var vec = sprite.Value.TextureRect;
             vec.Left = (int)TexPosX.Value;
             sprite.Value.TextureRect = vec;
+        }
+
+        private void SizeX_ValueChanged(object sender, EventArgs e)
+        {
+            var sprite = (Couple<string, RectangleShape>)Program.selection;
+
+            var vec = sprite.Value.Size;
+            vec.X = (float)SizeX.Value;
+            sprite.Value.Size = vec;
         }
 
         private void SizeY_ValueChanged(object sender, EventArgs e)
@@ -155,13 +93,6 @@ namespace AnimMaker_v2
             sprite.Value.TextureRect = vec;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
-            Program.selection = Program.Resources.First((res) => res.Key == sprite.Key);
-
-
-            Program.form.UpdateProp();
-        }
+        #endregion Private Methods
     }
 }

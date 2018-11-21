@@ -7,17 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 using SFML.Graphics;
 using SFML.System;
 using WGP;
 using WGP.SFDynamicObject;
+
 #pragma warning disable IDE1006 // Styles d'affectation de noms
 
 namespace AnimMaker_v2
 {
     public partial class MainForm : Form
     {
+        #region Public Constructors
+
         public MainForm()
         {
             InitializeComponent();
@@ -47,10 +51,125 @@ namespace AnimMaker_v2
             }
         }
 
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
+        #endregion Public Constructors
 
+        #region Public Methods
+
+        public void newObj()
+        {
+            Program.CurrentID = Guid.NewGuid();
+            Program.DynamicObject = new SFDynamicObject();
+            Program.DynamicObject.Chronometer = Program.Chronometer;
+            Program.createdAnimations = 0;
+            Program.createdBones = 0;
+            Program.selection = null;
+
+            UpdateInterface();
         }
+
+        public void OpenObject()
+        {
+            if (openObject.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Program.Manager = new DynamicObjectBuilder();
+                    using (var stream = new FileStream(openObject.FileName, FileMode.Open, FileAccess.Read))
+                    {
+                        Program.Manager.LoadObjectTemplate("obj", stream);
+                    }
+                    Program.DynamicObject = Program.Manager.CreateObject("obj");
+                    Program.selection = null;
+                    Program.CurrentID = Guid.NewGuid();
+                    Program.currentPath = (string)openObject.FileName.Clone();
+                    UpdateInterface();
+                }
+                catch (Exception e)
+                {
+                    var dialog = new ThreadExceptionDialog(e);
+                    dialog.ShowDialog();
+                }
+                if (Program.DynamicObject.Version < SFDynamicObject.CurrentVersion)
+                    MessageBox.Show("Ce fichier est en version " + Program.DynamicObject.Version + " alors que l'API est en " + SFDynamicObject.CurrentVersion + " le fichier peut avoir quelques changements.", "Conflit de version", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        public void OpenObject(string path)
+        {
+            Program.currentPath = (string)path.Clone();
+            Program.Manager = new DynamicObjectBuilder();
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                Program.Manager.LoadObjectTemplate("obj", stream);
+            }
+            Program.DynamicObject = Program.Manager.CreateObject("obj");
+            Program.selection = null;
+            Program.CurrentID = Guid.NewGuid();
+            UpdateInterface();
+        }
+
+        public void SaveObject(bool sub = false)
+        {
+            if (Program.currentPath != null && Program.currentPath != "" && !sub)
+            {
+                using (var stream = new System.IO.FileStream(Program.currentPath, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                    Program.DynamicObject.SaveAsTemplate(stream);
+            }
+            else if (saveObject.ShowDialog() == DialogResult.OK)
+            {
+                using (var stream = new System.IO.FileStream(saveObject.FileName, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                    Program.DynamicObject.SaveAsTemplate(stream);
+                Program.currentPath = (string)saveObject.FileName.Clone();
+            }
+            UpdateInterface();
+        }
+
+        public void UpdateInterface()
+        {
+            {
+                hierarchy.Items.Clear();
+                foreach (var bone in Program.DynamicObject.BonesHierarchy.AsEnumerable().Reverse())
+                    hierarchy.Items.Add(bone.Name);
+                if (Program.selection is Bone)
+                    hierarchy.SelectedIndex = hierarchy.Items.IndexOf(((Bone)Program.selection).Name);
+                else
+                    hierarchy.SelectedIndex = -1;
+            }
+            {
+                res.Items.Clear();
+                foreach (var resource in Program.DynamicObject.UsedResources)
+                    res.Items.Add(resource.Name);
+                if (Program.selection is Resource)
+                    res.SelectedIndex = res.Items.IndexOf(((Resource)Program.selection).Name);
+                else
+                    res.SelectedIndex = -1;
+            }
+            {
+                animations.Items.Clear();
+                foreach (var animation in Program.DynamicObject.Animations)
+                    animations.Items.Add(animation.Name);
+                if (Program.selection is Animation)
+                    animations.SelectedIndex = animations.Items.IndexOf(((Animation)Program.selection).Name);
+                else
+                    animations.SelectedIndex = -1;
+            }
+            stripCopyListAnim.Items.Clear();
+            stripBeforeListAnim.Items.Clear();
+            stripAfterListAnim.Items.Clear();
+            stripBetweenAListAnim.Items.Clear();
+            stripBetweenBListAnim.Items.Clear();
+            foreach (var anim in Program.DynamicObject.Animations)
+            {
+                stripCopyListAnim.Items.Add(anim.Name);
+                stripBeforeListAnim.Items.Add(anim.Name);
+                stripAfterListAnim.Items.Add(anim.Name);
+                stripBetweenAListAnim.Items.Add(anim.Name);
+                stripBetweenBListAnim.Items.Add(anim.Name);
+            }
+
+            UpdateProp();
+        }
+
         public void UpdateProp()
         {
             removeAnim.Enabled = false;
@@ -108,7 +227,7 @@ namespace AnimMaker_v2
                     }
                     Program.DynamicObject.LoadAnimation(anim.Name);
                 }
-                if (Program.selection is KeyValuePair<string, ResourceManager.Resource>)
+                if (Program.selection is Resource)
                 {
                     Program.DynamicObject.ResetAnimation();
                     Program.selectedKeys = null;
@@ -142,7 +261,7 @@ namespace AnimMaker_v2
                         foreach (var animBone in ani.Bones)
                         {
                             if (animBone.Value == Program.selectedKeys)
-                                Program.selectedBone = Program.DynamicObject.BonesHierarchy.Find((b) => b.Name == animBone.Key);
+                                Program.selectedBone = animBone.Key;
                         }
                     }
                     {
@@ -167,183 +286,13 @@ namespace AnimMaker_v2
             }
         }
 
-        public void UpdateInterface()
-        {
-            {
-                hierarchy.Items.Clear();
-                foreach (var bone in Program.DynamicObject.BonesHierarchy.AsEnumerable().Reverse())
-                    hierarchy.Items.Add(bone.Name);
-                if (Program.selection is Bone)
-                    hierarchy.SelectedIndex = hierarchy.Items.IndexOf(((Bone)Program.selection).Name);
-                else
-                    hierarchy.SelectedIndex = -1;
-            }
-            {
-                res.Items.Clear();
-                foreach (var resource in Program.Resources)
-                    res.Items.Add(resource.Key);
-                if (Program.selection is KeyValuePair<string, ResourceManager.Resource>)
-                    res.SelectedIndex = res.Items.IndexOf(((KeyValuePair<string, ResourceManager.Resource>)Program.selection).Key);
-                else
-                    res.SelectedIndex = -1;
-            }
-            {
-                animations.Items.Clear();
-                foreach (var animation in Program.DynamicObject.Animations)
-                    animations.Items.Add(animation.Name);
-                if (Program.selection is Animation)
-                    animations.SelectedIndex = animations.Items.IndexOf(((Animation)Program.selection).Name);
-                else
-                    animations.SelectedIndex = -1;
-            }
-            stripCopyListAnim.Items.Clear();
-            stripBeforeListAnim.Items.Clear();
-            stripAfterListAnim.Items.Clear();
-            stripBetweenAListAnim.Items.Clear();
-            stripBetweenBListAnim.Items.Clear();
-            foreach (var anim in Program.DynamicObject.Animations)
-            {
-                stripCopyListAnim.Items.Add(anim.Name);
-                stripBeforeListAnim.Items.Add(anim.Name);
-                stripAfterListAnim.Items.Add(anim.Name);
-                stripBetweenAListAnim.Items.Add(anim.Name);
-                stripBetweenBListAnim.Items.Add(anim.Name);
-            }
+        #endregion Public Methods
 
-            UpdateProp();
-        }
-        public void OpenRes()
-        {
-            if (openRes.ShowDialog() == DialogResult.OK)
-            {
-                Program.Resources.LoadFromFile(openRes.FileName);
-                Program.DynamicObject.Manager = Program.Resources;
-                Program.selection = null;
-                UpdateInterface();
-            }
-        }
-        public void OpenObject()
-        {
-            if (openObject.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    Program.DynamicObject.LoadFromFile(openObject.FileName);
-                    Program.DynamicObject.ReloadManager();
-                    Program.selection = null;
-                    Program.CurrentID = Guid.NewGuid();
-                    UpdateInterface();
-                }
-                catch(Exception e)
-                {
-                    if (e.InnerException.InnerException is SFDynamicObject.NewerVersionException ex)
-                    {
-                        if (MessageBox.Show("Le fichier chargé proviens d'une versions plus récente : " + ex.RequestedVersion + " alors que la révision actuelle est " + SFDynamicObject.CurrentVersion + "\nCharger ce fichier pourrait corrompre certaines données, le charger quand même ?", "Conflit de version", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
-                        {
-                            Program.DynamicObject.LoadFromFile(openObject.FileName, true);
-                            Program.DynamicObject.ReloadManager();
-                            Program.selection = null;
-                            Program.CurrentID = Guid.NewGuid();
-                            UpdateInterface();
-                        }
-                    }
-                    else
-                        throw e;
-                }
-                if (Program.DynamicObject.Version < SFDynamicObject.CurrentVersion)
-                    MessageBox.Show("Ce fichier est en version " + Program.DynamicObject.Version + " alors que l'API est en " + SFDynamicObject.CurrentVersion + " le fichier peut avoir quelques changements.", "Conflit de version", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        public void OpenRes(string path)
-        {
-            Program.Resources.LoadFromFile(path);
-            Program.DynamicObject.Manager = Program.Resources;
-            Program.selection = null;
-            UpdateInterface();
-        }
-        public void OpenObject(string path)
-        {
-            Program.DynamicObject.LoadFromFile(path);
-            Program.DynamicObject.ReloadManager();
-            Program.selection = null;
-            Program.CurrentID = Guid.NewGuid();
-            UpdateInterface();
-        }
-        public void SaveRes()
-        {
-            if (saveRes.ShowDialog() == DialogResult.OK)
-                Program.Resources.SaveToFile(saveRes.FileName);
-
-
-            UpdateInterface();
-        }
-        public void SaveObject()
-        {
-            if (saveObject.ShowDialog() == DialogResult.OK)
-                Program.DynamicObject.SaveToStream(new System.IO.FileStream(saveObject.FileName, System.IO.FileMode.Create, System.IO.FileAccess.Write));
-
-
-            UpdateInterface();
-        }
-
-        private void objetDynamiqueToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            OpenObject();
-        }
-
-        private void managerToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            OpenRes();
-        }
-
-        private void managerToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            SaveRes();
-        }
-
-        private void objetDynamiqueToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            SaveObject();
-        }
-        #region some button
-        private void createBone_Click(object sender, EventArgs e)
-        {
-            Program.AddBone();
-        }
-
-        private void deleteBone_Click(object sender, EventArgs e)
-        {
-            Program.RemoveBone();
-        }
+        #region Private Methods
 
         private void addResource_Click(object sender, EventArgs e)
         {
             Program.AddResource();
-        }
-
-        private void removeResource_Click(object sender, EventArgs e)
-        {
-            Program.RemoveResource();
-        }
-
-        private void createAnim_Click(object sender, EventArgs e)
-        {
-            Program.AddAnimation();
-        }
-
-        private void removeAnim_Click(object sender, EventArgs e)
-        {
-            Program.RemoveAnimation();
-        }
-
-        private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Program.AddBone();
-        }
-
-        private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Program.RemoveBone();
         }
 
         private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -351,19 +300,29 @@ namespace AnimMaker_v2
             Program.AddResource();
         }
 
-        private void supprimerToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void animations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.RemoveResource();
+            if (animations.SelectedIndex == -1)
+                Program.selection = null;
+            else
+                Program.selection = Program.DynamicObject.Animations.Find((anim) => anim.Name == animations.Items[animations.SelectedIndex].ToString());
+            UpdateProp();
         }
 
-        private void supprimerToolStripMenuItem2_Click(object sender, EventArgs e)
+        private void aProposToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.RemoveAnimation();
+            var dialog = new AboutForm();
+            dialog.ShowDialog();
         }
 
-        private void videToolStripMenuItem_Click(object sender, EventArgs e)
+        private void createAnim_Click(object sender, EventArgs e)
         {
             Program.AddAnimation();
+        }
+
+        private void createBone_Click(object sender, EventArgs e)
+        {
+            Program.AddBone();
         }
 
         private void créerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -376,7 +335,7 @@ namespace AnimMaker_v2
                 var anim = new Animation();
                 foreach (var bone in baseAnim.Bones)
                 {
-                    var couple = new Couple<string, List<Animation.Key>>();
+                    var couple = new Couple<Bone, List<Animation.Key>>();
                     couple.Key = bone.Key;
                     couple.Value = new List<Animation.Key>();
                     foreach (var key in bone.Value)
@@ -404,7 +363,7 @@ namespace AnimMaker_v2
                 var anim = new Animation();
                 foreach (var bone in baseAnim.Bones)
                 {
-                    var couple = new Couple<string, List<Animation.Key>>();
+                    var couple = new Couple<Bone, List<Animation.Key>>();
                     couple.Key = bone.Key;
                     couple.Value = new List<Animation.Key>();
                     Animation.Key lastKey = null;
@@ -434,7 +393,7 @@ namespace AnimMaker_v2
                 var anim = new Animation();
                 foreach (var bone in baseAnim.Bones)
                 {
-                    var couple = new Couple<string, List<Animation.Key>>();
+                    var couple = new Couple<Bone, List<Animation.Key>>();
                     couple.Key = bone.Key;
                     couple.Value = new List<Animation.Key>();
                     Animation.Key firstKey = bone.Value.FirstOrDefault();
@@ -464,15 +423,15 @@ namespace AnimMaker_v2
 
                 foreach (var bone in Program.DynamicObject.BonesHierarchy)
                 {
-                    if (baseAnimA.Bones.Find((couple) => couple.Key == bone.Name) != null || baseAnimB.Bones.Find((couple) => couple.Key == bone.Name) != null)
+                    if (baseAnimA.Bones.Find((couple) => couple.Key.ID == bone.ID) != null || baseAnimB.Bones.Find((couple) => couple.Key.ID == bone.ID) != null)
                         toCompute.Add(bone);
                 }
                 foreach (var bone in toCompute)
                 {
                     Animation.Key first = new Animation.Key() { Position = Time.FromSeconds(1), Transform = new Transformable() };
                     Animation.Key last = new Animation.Key() { Position = Time.Zero, Transform = new Transformable() };
-                    Couple<string, List<Animation.Key>> coupleAfter = baseAnimA.Bones.Find((c) => c.Key == bone.Name);
-                    Couple<string, List<Animation.Key>> coupleBefore = baseAnimB.Bones.Find((c) => c.Key == bone.Name);
+                    Couple<Bone, List<Animation.Key>> coupleAfter = baseAnimA.Bones.Find((c) => c.Key.ID == bone.ID);
+                    Couple<Bone, List<Animation.Key>> coupleBefore = baseAnimB.Bones.Find((c) => c.Key.ID == bone.ID);
                     if (coupleAfter != null)
                     {
                         var tmp = new List<Animation.Key>(coupleAfter.Value.ToArray());
@@ -485,7 +444,7 @@ namespace AnimMaker_v2
                         tmp.Sort();
                         last.Transform = new Transformable(tmp.Last().Transform);
                     }
-                    anim.Bones.Add(new Couple<string, List<Animation.Key>>() { Key = bone.Name, Value = new List<Animation.Key>() { last, first } });
+                    anim.Bones.Add(new Couple<Bone, List<Animation.Key>>() { Key = bone, Value = new List<Animation.Key>() { last, first } });
                 }
 
                 anim.Name = "Entre " + baseAnimB.Name + " et " + baseAnimA.Name;
@@ -493,86 +452,15 @@ namespace AnimMaker_v2
                 Program.AddAnimation(anim);
             }
         }
-        #endregion
 
-        private void MainForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.O)
-                OpenObject();
-            if (e.Control && e.Shift && !e.Alt && e.KeyCode == Keys.O)
-                OpenRes();
-            if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.N)
-                newObj();
-            if (e.Control && e.Shift && !e.Alt && e.KeyCode == Keys.N)
-                newRes();
-            if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.S)
-                SaveObject();
-            if (e.Control && e.Shift && !e.Alt && e.KeyCode == Keys.S)
-                SaveRes();
-        }
-
-        public void newObj()
-        {
-            Program.CurrentID = Guid.NewGuid();
-            Program.DynamicObject = new SFDynamicObject();
-            Program.DynamicObject.Manager = Program.Resources;
-            Program.DynamicObject.Chronometer = Program.Chronometer;
-            Program.createdAnimations = 0;
-            Program.createdBones = 0;
-            Program.selection = null;
-
-            UpdateInterface();
-        }
-
-        public void newRes()
-        {
-            Program.Resources = new ResourceManager();
-            Program.DynamicObject.Manager = Program.Resources;
-            Program.createdResources = 0;
-            Program.createdBones = 0;
-            Program.selection = null;
-
-            UpdateInterface();
-        }
-
-        private void objetDynamiqueToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newObj();
-        }
-
-        private void managerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newRes();
-        }
-
-        private void toolAddBone_Click(object sender, EventArgs e)
-        {
-            Program.AddBone();
-        }
-
-        private void toolRemoveBone_Click(object sender, EventArgs e)
+        private void deleteBone_Click(object sender, EventArgs e)
         {
             Program.RemoveBone();
         }
 
-        private void toolAddRes_Click(object sender, EventArgs e)
+        private void fermerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.AddResource();
-        }
-
-        private void toolRemoveRes_Click(object sender, EventArgs e)
-        {
-            Program.RemoveResource();
-        }
-
-        private void toolAddAnim_Click(object sender, EventArgs e)
-        {
-            Program.AddAnimation();
-        }
-
-        private void toolRemoveAnim_Click(object sender, EventArgs e)
-        {
-            Program.RemoveAnimation();
+            Environment.Exit(0);
         }
 
         private void hierarchy_SelectedIndexChanged(object sender, EventArgs e)
@@ -585,14 +473,18 @@ namespace AnimMaker_v2
             UpdateProp();
         }
 
-        private void moveUpHierarchy_Click(object sender, EventArgs e)
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            var selection = (Bone)Program.selection;
-            var target = Program.DynamicObject.BonesHierarchy.FindIndex((bone) => bone.Name == selection.Name) + 1;
-            Program.DynamicObject.BonesHierarchy.Remove(selection);
-            Program.DynamicObject.BonesHierarchy.Insert(target, selection);
-
-            UpdateInterface();
+            if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.O)
+                OpenObject();
+            if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.N)
+                newObj();
+            if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.S)
+                SaveObject();
+            if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.P)
+                paramètresToolStripMenuItem_Click(null, null);
+            if (e.Control && e.Shift && !e.Alt && e.KeyCode == Keys.S)
+                SaveObject(true);
         }
 
         private void moveDownHierarchy_Click(object sender, EventArgs e)
@@ -605,13 +497,49 @@ namespace AnimMaker_v2
             UpdateInterface();
         }
 
-        private void animations_SelectedIndexChanged(object sender, EventArgs e)
+        private void moveUpHierarchy_Click(object sender, EventArgs e)
         {
-            if (animations.SelectedIndex == -1)
-                Program.selection = null;
-            else
-                Program.selection = Program.DynamicObject.Animations.Find((anim) => anim.Name == animations.Items[animations.SelectedIndex].ToString());
-            UpdateProp();
+            var selection = (Bone)Program.selection;
+            var target = Program.DynamicObject.BonesHierarchy.FindIndex((bone) => bone.Name == selection.Name) + 1;
+            Program.DynamicObject.BonesHierarchy.Remove(selection);
+            Program.DynamicObject.BonesHierarchy.Insert(target, selection);
+
+            UpdateInterface();
+        }
+
+        private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.AddBone();
+        }
+
+        private void objetDynamiqueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newObj();
+        }
+
+        private void objetDynamiqueToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SaveObject();
+        }
+
+        private void objetDynamiqueToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            OpenObject();
+        }
+
+        private void paramètresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Parameters().ShowDialog();
+        }
+
+        private void removeAnim_Click(object sender, EventArgs e)
+        {
+            Program.RemoveAnimation();
+        }
+
+        private void removeResource_Click(object sender, EventArgs e)
+        {
+            Program.RemoveResource();
         }
 
         private void res_SelectedIndexChanged(object sender, EventArgs e)
@@ -619,17 +547,18 @@ namespace AnimMaker_v2
             if (res.SelectedIndex == -1)
                 Program.selection = null;
             else
-                Program.selection = Program.Resources.First((pair) => pair.Key == res.Items[res.SelectedIndex].ToString());
+                Program.selection = Program.DynamicObject.UsedResources.Find((r) => r.Name == res.Items[res.SelectedIndex].ToString());
             UpdateProp();
         }
 
-        private void stripTopBone_Click(object sender, EventArgs e)
+        private void sauvegarderLeManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var selection = (Bone)Program.selection;
-            Program.DynamicObject.BonesHierarchy.Remove(selection);
-            Program.DynamicObject.BonesHierarchy.Insert(Program.DynamicObject.BonesHierarchy.Count, selection);
+            SaveObject();
+        }
 
-            UpdateInterface();
+        private void sauvegarderSousToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveObject(true);
         }
 
         private void stripBotBone_Click(object sender, EventArgs e)
@@ -647,9 +576,62 @@ namespace AnimMaker_v2
             UpdateProp();
         }
 
-        private void fermerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void stripTopBone_Click(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            var selection = (Bone)Program.selection;
+            Program.DynamicObject.BonesHierarchy.Remove(selection);
+            Program.DynamicObject.BonesHierarchy.Insert(Program.DynamicObject.BonesHierarchy.Count, selection);
+
+            UpdateInterface();
+        }
+
+        private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.RemoveBone();
+        }
+
+        private void supprimerToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Program.RemoveResource();
+        }
+
+        private void supprimerToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Program.RemoveAnimation();
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+        }
+
+        private void toolAddAnim_Click(object sender, EventArgs e)
+        {
+            Program.AddAnimation();
+        }
+
+        private void toolAddBone_Click(object sender, EventArgs e)
+        {
+            Program.AddBone();
+        }
+
+        private void toolAddRes_Click(object sender, EventArgs e)
+        {
+            Program.AddResource();
+        }
+
+        private void toolRemoveAnim_Click(object sender, EventArgs e)
+        {
+            Program.RemoveAnimation();
+        }
+
+        private void toolRemoveBone_Click(object sender, EventArgs e)
+        {
+            Program.RemoveBone();
+        }
+
+        private void toolRemoveRes_Click(object sender, EventArgs e)
+        {
+            Program.RemoveResource();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -657,16 +639,13 @@ namespace AnimMaker_v2
             Program.Chronometer.Paused = !Program.Chronometer.Paused;
         }
 
-        private void aProposToolStripMenuItem_Click(object sender, EventArgs e)
+        private void videToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dialog = new AboutForm();
-            dialog.ShowDialog();
+            Program.AddAnimation();
         }
 
-        private void paramètresToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new Parameters().ShowDialog();
-        }
+        #endregion Private Methods
     }
 }
+
 #pragma warning restore IDE1006 // Styles d'affectation de noms

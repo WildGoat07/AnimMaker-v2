@@ -18,31 +18,21 @@ namespace AnimMaker_v2
 {
     public partial class ResProperties : UserControl
     {
+        #region Public Constructors
+
         public ResProperties()
         {
             InitializeComponent();
 
-
             if (Program.selection != null)
             {
-                var selectRes = (KeyValuePair<string, ResourceManager.Resource>)Program.selection;
+                var selectRes = (Resource)Program.selection;
 
-                name.Text = "Nom : " + selectRes.Key;
-                path.Text = selectRes.Value.Path.Replace('/', '\\');
-                img.Image = Utilities.SFMLImageAsSystemBitmap(((Texture)selectRes.Value.Data).CopyToImage());
+                name.Text = "Nom : " + selectRes.Name;
+                img.Image = (Bitmap)selectRes.BaseImage;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var selectRes = (KeyValuePair<string, ResourceManager.Resource>)Program.selection;
-            Process.Start("explorer.exe", "/select,\"" + System.IO.Path.Combine(Program.Resources.Path, selectRes.Value.Path) + "\"");
-        }
-
-        private void path_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            var selectRes = (KeyValuePair<string, ResourceManager.Resource>)Program.selection;
-            Process.Start("\"" + System.IO.Path.GetFullPath(System.IO.Path.Combine(Program.Resources.Path, selectRes.Value.Path)) + "\"");
-        }
+        #endregion Public Constructors
     }
 }

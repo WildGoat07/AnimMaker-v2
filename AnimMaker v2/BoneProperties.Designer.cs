@@ -28,16 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.sprites = new System.Windows.Forms.ListBox();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.addSprite = new System.Windows.Forms.Button();
-            this.removeSprite = new System.Windows.Forms.Button();
-            this.addSpriteList = new System.Windows.Forms.ComboBox();
-            this.moveSpriteUp = new System.Windows.Forms.Button();
-            this.moveSpriteDown = new System.Windows.Forms.Button();
-            this.modSprite = new System.Windows.Forms.Button();
             this.statut = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
@@ -69,9 +59,6 @@
             this.multMode = new System.Windows.Forms.RadioButton();
             this.subsMode = new System.Windows.Forms.RadioButton();
             this.addMode = new System.Windows.Forms.RadioButton();
-            this.groupBox3.SuspendLayout();
-            this.flowLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -89,129 +76,10 @@
             this.flowLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.flowLayoutPanel3);
-            this.groupBox3.Location = new System.Drawing.Point(3, 422);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(214, 240);
-            this.groupBox3.TabIndex = 5;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Sprites";
-            // 
-            // flowLayoutPanel3
-            // 
-            this.flowLayoutPanel3.AutoSize = true;
-            this.flowLayoutPanel3.Controls.Add(this.sprites);
-            this.flowLayoutPanel3.Controls.Add(this.tableLayoutPanel3);
-            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 16);
-            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(208, 221);
-            this.flowLayoutPanel3.TabIndex = 0;
-            // 
-            // sprites
-            // 
-            this.sprites.FormattingEnabled = true;
-            this.sprites.Location = new System.Drawing.Point(3, 3);
-            this.sprites.Name = "sprites";
-            this.sprites.Size = new System.Drawing.Size(202, 121);
-            this.sprites.TabIndex = 0;
-            this.sprites.SelectedIndexChanged += new System.EventHandler(this.sprites_SelectedIndexChanged);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel3.Controls.Add(this.addSprite, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.removeSprite, 1, 2);
-            this.tableLayoutPanel3.Controls.Add(this.addSpriteList, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.moveSpriteUp, 2, 2);
-            this.tableLayoutPanel3.Controls.Add(this.moveSpriteDown, 3, 2);
-            this.tableLayoutPanel3.Controls.Add(this.modSprite, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 130);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 3;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(202, 87);
-            this.tableLayoutPanel3.TabIndex = 1;
-            // 
-            // addSprite
-            // 
-            this.addSprite.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addSprite.Location = new System.Drawing.Point(3, 61);
-            this.addSprite.Name = "addSprite";
-            this.addSprite.Size = new System.Drawing.Size(64, 23);
-            this.addSprite.TabIndex = 0;
-            this.addSprite.Text = "Ajouter";
-            this.addSprite.UseVisualStyleBackColor = true;
-            this.addSprite.Click += new System.EventHandler(this.addSprite_Click);
-            // 
-            // removeSprite
-            // 
-            this.removeSprite.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.removeSprite.Location = new System.Drawing.Point(73, 61);
-            this.removeSprite.Name = "removeSprite";
-            this.removeSprite.Size = new System.Drawing.Size(64, 23);
-            this.removeSprite.TabIndex = 1;
-            this.removeSprite.Text = "Supprimer";
-            this.removeSprite.UseVisualStyleBackColor = true;
-            this.removeSprite.Click += new System.EventHandler(this.removeSprite_Click);
-            // 
-            // addSpriteList
-            // 
-            this.tableLayoutPanel3.SetColumnSpan(this.addSpriteList, 4);
-            this.addSpriteList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addSpriteList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.addSpriteList.FormattingEnabled = true;
-            this.addSpriteList.Location = new System.Drawing.Point(3, 32);
-            this.addSpriteList.Name = "addSpriteList";
-            this.addSpriteList.Size = new System.Drawing.Size(196, 21);
-            this.addSpriteList.TabIndex = 2;
-            this.addSpriteList.SelectedIndexChanged += new System.EventHandler(this.addSpriteList_SelectedIndexChanged);
-            // 
-            // moveSpriteUp
-            // 
-            this.moveSpriteUp.Location = new System.Drawing.Point(143, 61);
-            this.moveSpriteUp.Name = "moveSpriteUp";
-            this.moveSpriteUp.Size = new System.Drawing.Size(24, 23);
-            this.moveSpriteUp.TabIndex = 3;
-            this.moveSpriteUp.Text = "↑";
-            this.moveSpriteUp.UseVisualStyleBackColor = true;
-            this.moveSpriteUp.Click += new System.EventHandler(this.moveSpriteUp_Click);
-            // 
-            // moveSpriteDown
-            // 
-            this.moveSpriteDown.Location = new System.Drawing.Point(173, 61);
-            this.moveSpriteDown.Name = "moveSpriteDown";
-            this.moveSpriteDown.Size = new System.Drawing.Size(26, 23);
-            this.moveSpriteDown.TabIndex = 4;
-            this.moveSpriteDown.Text = "↓";
-            this.moveSpriteDown.UseVisualStyleBackColor = true;
-            this.moveSpriteDown.Click += new System.EventHandler(this.moveSpriteDown_Click);
-            // 
-            // modSprite
-            // 
-            this.tableLayoutPanel3.SetColumnSpan(this.modSprite, 4);
-            this.modSprite.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.modSprite.Location = new System.Drawing.Point(3, 3);
-            this.modSprite.Name = "modSprite";
-            this.modSprite.Size = new System.Drawing.Size(196, 23);
-            this.modSprite.TabIndex = 5;
-            this.modSprite.Text = "modifier";
-            this.modSprite.UseVisualStyleBackColor = true;
-            this.modSprite.Click += new System.EventHandler(this.modSprite_Click);
-            // 
             // statut
             // 
             this.statut.AutoSize = true;
-            this.statut.Location = new System.Drawing.Point(3, 801);
+            this.statut.Location = new System.Drawing.Point(3, 555);
             this.statut.Name = "statut";
             this.statut.Size = new System.Drawing.Size(0, 13);
             this.statut.TabIndex = 2;
@@ -570,7 +438,6 @@
             this.flowLayoutPanel1.Controls.Add(this.boneStatut);
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
             this.flowLayoutPanel1.Controls.Add(this.groupBox2);
-            this.flowLayoutPanel1.Controls.Add(this.groupBox3);
             this.flowLayoutPanel1.Controls.Add(this.groupBox4);
             this.flowLayoutPanel1.Controls.Add(this.statut);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -583,7 +450,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.flowLayoutPanel4);
-            this.groupBox4.Location = new System.Drawing.Point(3, 668);
+            this.groupBox4.Location = new System.Drawing.Point(3, 422);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(214, 130);
             this.groupBox4.TabIndex = 6;
@@ -658,10 +525,6 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "BoneProperties";
             this.Size = new System.Drawing.Size(910, 881);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.flowLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
@@ -687,13 +550,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Button addSprite;
-        private System.Windows.Forms.Button removeSprite;
-        private System.Windows.Forms.ComboBox addSpriteList;
         private System.Windows.Forms.Label statut;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
@@ -719,10 +575,6 @@
         private System.Windows.Forms.TextBox boneName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ListBox sprites;
-        private System.Windows.Forms.Button moveSpriteUp;
-        private System.Windows.Forms.Button moveSpriteDown;
-        private System.Windows.Forms.Button modSprite;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
         private System.Windows.Forms.RadioButton alphaMode;

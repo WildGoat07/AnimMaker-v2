@@ -13,30 +13,281 @@ namespace AnimMaker_v2
 {
     static partial class Program
     {
-        public static RenderWindow Display;
-        public static RenderWindow Timeline;
-        public static ResourceManager Resources;
-        public static SFDynamicObject DynamicObject;
+        #region Public Fields
+
         public static Chronometer Chronometer;
+        public static int createdAnimations;
+        public static int createdBones;
+        public static Guid CurrentID;
+        public static RenderWindow Display;
+        public static SFDynamicObject DynamicObject;
+        public static WGP.TEXT.Font font;
         public static MainForm form;
-        public static object selection;
-        public static List<Animation.Key> selectedKeys;
+        public static List<KeyControl> keyControls;
+        public static DynamicObjectBuilder Manager;
+        public static bool seeking;
         public static Animation selectedAnim;
         public static Bone selectedBone;
-        public static int createdBones;
-        public static int createdResources;
-        public static int createdAnimations;
-        public static WGP.TEXT.Font font;
-        public static WGP.TEXT.Text textTimer;
-        public static VertexArray timeLineSegs;
-        public static FloatRect timeLineDrawRect;
-        public static List<KeyControl> keyControls;
-        public static bool seeking;
+        public static List<Animation.Key> selectedKeys;
+        public static object selection;
         public static Options Settings;
-        public static Guid CurrentID;
-        
+        public static WGP.TEXT.Text textTimer;
+        public static RenderWindow Timeline;
+        public static FloatRect timeLineDrawRect;
+        public static VertexArray timeLineSegs;
+        public static string currentPath;
+
+        #endregion Public Fields
+
+        #region Public Methods
+
+        public static void AddAnimation()
+        {
+            var anim = new Animation();
+            anim.Name = "anim" + createdAnimations;
+            anim.Duration = Time.FromSeconds(1);
+            createdAnimations++;
+            DynamicObject.Animations.Add(anim);
+            selection = anim;
+
+            form.UpdateInterface();
+        }
+
+        public static void AddAnimation(Animation anim)
+        {
+            createdAnimations++;
+            DynamicObject.Animations.Add(anim);
+            selection = anim;
+
+            form.UpdateInterface();
+        }
+
+        public static void AddBone()
+        {
+            var bone = new Bone();
+            bone.Name = "os" + createdBones;
+            createdBones++;
+            DynamicObject.BonesHierarchy.Add(bone);
+            DynamicObject.MasterBones.Add(bone);
+            selection = bone;
+
+            form.UpdateInterface();
+        }
+
+        public static void AddResource()
+        {
+            if (form.openTexture.ShowDialog() == DialogResult.OK)
+            {
+                var toOpen = form.openTexture.FileNames;
+                foreach (var file in toOpen)
+                {
+                    var key = System.IO.Path.GetFileNameWithoutExtension(file);
+                    var res = new Resource();
+                    res.Name = key;
+                    res.ChangeBaseImage(new Image(file));
+                    res.AdaptFrameSize();
+                    DynamicObject.UsedResources.Add(res);
+                    selection = res;
+                }
+                form.UpdateInterface();
+            }
+        }
+
+        public static void leftClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Button == Mouse.Button.Left)
+            {
+                var msPos = Timeline.MapPixelToCoords(new Vector2i(e.X, e.Y));
+                int count = 0;
+                foreach (var item in keyControls)
+                {
+                    if (item.GlobalHitBox.Collision(msPos))
+                    {
+                        selection = selectedKeys[count];
+                        DynamicObject.CurrentTime = selectedKeys[count].Position;
+                        form.UpdateProp();
+                        return;
+                    }
+
+                    count++;
+                }
+                if (msPos.Y > 30)
+                    seeking = true;
+            }
+        }
+
+        public static void RemoveAnimation()
+        {
+            var anim = (Animation)selection;
+            DynamicObject.Animations.Remove(anim);
+            selection = null;
+            DynamicObject.ResetAnimation();
+
+            form.UpdateInterface();
+        }
+
+        public static void RemoveBone()
+        {
+            var bone = (Bone)selection;
+            DynamicObject.BonesHierarchy.Remove(bone);
+            DynamicObject.MasterBones.Remove(bone);
+            DynamicObject.BonesHierarchy.Remove(bone);
+            var par = DynamicObject.BonesHierarchy.Find((parent) => parent.Children.Contains(bone));
+            if (par != null)
+                par.Children.Remove(bone);
+            foreach (var child in bone.Children)
+            {
+                DynamicObject.MasterBones.Add(child);
+            }
+            selection = null;
+
+            form.UpdateInterface();
+        }
+
+        public static void RemoveResource()
+        {
+            var res = (Resource)selection;
+            DynamicObject.UsedResources.Remove(res);
+            res.ChangeBaseImage(null);
+            res.ChangeFrames(default, new Vector2i());
+            foreach (var item in DynamicObject.BonesHierarchy)
+            {
+                if (item.AttachedSprite != null && item.AttachedSprite.Resource != null && item.AttachedSprite.Resource.ID == res.ID)
+                {
+                    item.AttachedSprite.Resource = null;
+                    item.AttachedSprite.InternalRect.Texture = null;
+                }
+            }
+            res.Dispose();
+
+            selection = null;
+
+            form.UpdateInterface();
+        }
+
+        public static void ResizeTimeline()
+        {
+            timeLineDrawRect = new FloatRect();
+            timeLineDrawRect.Top = 30 + Timeline.Size.Y / 15;
+            timeLineDrawRect.Width = Timeline.Size.X;
+            timeLineDrawRect.Height = Timeline.Size.Y - 30 - Timeline.Size.Y / 7.5f;
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private static void DisplLoop()
+        {
+            Display.SetActive();
+            VertexArray segs = new VertexArray(PrimitiveType.Lines);
+            var backRect = new RectangleShape(new Vector2f(2000, 2000)) { Origin = new Vector2f(1000, 1000) };
+            Texture backTexture;
+            {
+                var img = new Image(2, 2, new Color(100, 100, 100));
+                img.SetPixel(0, 0, new Color(200, 200, 200));
+                img.SetPixel(1, 1, new Color(200, 200, 200));
+                backTexture = new Texture(img);
+            }
+            backRect.Texture = backTexture;
+            backRect.TextureRect = new IntRect(0, 0, 100, 100);
+            backTexture.Repeated = true;
+            while (form.Visible)
+            {
+                Display.DispatchEvents();
+                DynamicObject.Update();
+
+                segs.Clear();
+                segs.Append(new Vertex(new Vector2f(-99999, 0), Color.Red));
+                segs.Append(new Vertex(new Vector2f(99999, 0), Color.Red));
+                segs.Append(new Vertex(new Vector2f(0, -99999), Color.Green));
+                segs.Append(new Vertex(new Vector2f(0, 99999), Color.Green));
+
+                if (selectedBone != null)
+                {
+                    var bone = selectedBone;
+                    List<FloatRect> localRects = new List<FloatRect>();
+                    List<Vector2f> pts = new List<Vector2f>();
+                    var tr = bone.ComputedTransform;
+                    if (bone.AttachedSprite != null)
+                    {
+                        var sprite = bone.AttachedSprite;
+                        var sptr = tr * sprite.InternalRect.Transform;
+                        pts.Add(sptr.TransformPoint(sprite.InternalRect.GetLocalBounds().TopLeft()));
+                        pts.Add(sptr.TransformPoint(sprite.InternalRect.GetLocalBounds().TopRight()));
+                        pts.Add(sptr.TransformPoint(sprite.InternalRect.GetLocalBounds().BotLeft()));
+                        pts.Add(sptr.TransformPoint(sprite.InternalRect.GetLocalBounds().BotRight()));
+                        localRects.Add(sprite.InternalRect.GetGlobalBounds());
+                        var spriteBounds = sprite.InternalRect.GetLocalBounds();
+                        segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.TopLeft()), new Color(255, 130, 0)));
+                        segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.TopRight()), new Color(255, 130, 0)));
+                        segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.TopRight()), new Color(255, 130, 0)));
+                        segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.BotRight()), new Color(255, 130, 0)));
+                        segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.BotRight()), new Color(255, 130, 0)));
+                        segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.BotLeft()), new Color(255, 130, 0)));
+                        segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.BotLeft()), new Color(255, 130, 0)));
+                        segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.TopLeft()), new Color(255, 130, 0)));
+                    }
+                    if (localRects.Count > 0)
+                    {
+                        Vector2f topleft = localRects.First().TopLeft();
+                        Vector2f botright = localRects.First().BotRight();
+                        foreach (var rect in localRects)
+                        {
+                            topleft.X = Utilities.Min(topleft.X, rect.TopLeft().X);
+                            topleft.Y = Utilities.Min(topleft.Y, rect.TopLeft().Y);
+                            botright.X = Utilities.Max(botright.X, rect.BotRight().X);
+                            botright.Y = Utilities.Max(botright.Y, rect.BotRight().Y);
+                        }
+                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, topleft.Y), Color.Black));
+                        segs.Append(new Vertex(tr.TransformPoint(botright.X, topleft.Y), Color.Black));
+                        segs.Append(new Vertex(tr.TransformPoint(botright.X, topleft.Y), Color.Black));
+                        segs.Append(new Vertex(tr.TransformPoint(botright.X, botright.Y), Color.Black));
+                        segs.Append(new Vertex(tr.TransformPoint(botright.X, botright.Y), Color.Black));
+                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, botright.Y), Color.Black));
+                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, botright.Y), Color.Black));
+                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, topleft.Y), Color.Black));
+                    }
+                    if (pts.Count > 0)
+                    {
+                        Vector2f topleft;
+                        Vector2f botright;
+                        {
+                            var box = Utilities.CreateRect(pts.ToArray());
+                            topleft = box.TopLeft();
+                            botright = box.BotRight();
+                        }
+                        segs.Append(new Vertex(new Vector2f(topleft.X, topleft.Y), Color.Magenta));
+                        segs.Append(new Vertex(new Vector2f(botright.X, topleft.Y), Color.Magenta));
+                        segs.Append(new Vertex(new Vector2f(botright.X, topleft.Y), Color.Magenta));
+                        segs.Append(new Vertex(new Vector2f(botright.X, botright.Y), Color.Magenta));
+                        segs.Append(new Vertex(new Vector2f(botright.X, botright.Y), Color.Magenta));
+                        segs.Append(new Vertex(new Vector2f(topleft.X, botright.Y), Color.Magenta));
+                        segs.Append(new Vertex(new Vector2f(topleft.X, botright.Y), Color.Magenta));
+                        segs.Append(new Vertex(new Vector2f(topleft.X, topleft.Y), Color.Magenta));
+                    }
+                    var tr2 = tr;
+                    tr2.Translate(bone.Origin);
+                    segs.Append(new Vertex(tr2.TransformPoint(-99999, 0), Color.Blue));
+                    segs.Append(new Vertex(tr2.TransformPoint(99999, 0), Color.Blue));
+                    segs.Append(new Vertex(tr2.TransformPoint(0, -99999), Color.Cyan));
+                    segs.Append(new Vertex(tr2.TransformPoint(0, 99999), Color.Cyan));
+                }
+
+                Display.Clear(Color.White);
+
+                Display.Draw(backRect);
+
+                Display.Draw(DynamicObject);
+
+                Display.Draw(segs);
+
+                Display.Display();
+            }
+        }
+
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             try
             {
@@ -57,9 +308,9 @@ namespace AnimMaker_v2
                 form = new MainForm();
                 Chronometer = new Chronometer();
                 DynamicObject = new SFDynamicObject();
-                Resources = new ResourceManager();
+                Manager = new DynamicObjectBuilder();
                 form.newObj();
-                form.newRes();
+                currentPath = null;
                 selection = null;
                 selectedKeys = null;
                 selectedBone = null;
@@ -84,22 +335,8 @@ namespace AnimMaker_v2
 
                 if (args.Length > 0)
                 {
-                    for (int i = 0; i < args.Length; i++)
-                    {
-                        var curr = args[i];
-                        if (curr == "/r")
-                        {
-                            i++;
-                            var path = args[i];
-                            form.OpenRes(path);
-                        }
-                        else if (curr == "/o")
-                        {
-                            i++;
-                            var path = args[i];
-                            form.OpenObject(path);
-                        }
-                    }
+                    var path = args[1];
+                    form.OpenObject(path);
                 }
 
                 form.Show();
@@ -118,10 +355,10 @@ namespace AnimMaker_v2
                         System.IO.Stream stream = null;
                         try
                         {
-                            stream = new System.IO.FileStream(System.IO.Path.Combine(Settings.AutoFilePath, CurrentID + ".wgdo"), System.IO.FileMode.Create, System.IO.FileAccess.Write);
-                            DynamicObject.SaveToStream(stream);
+                            stream = new System.IO.FileStream(System.IO.Path.Combine(Settings.AutoFilePath, CurrentID + ".wgdot"), System.IO.FileMode.Create, System.IO.FileAccess.Write);
+                            DynamicObject.SaveAsTemplate(stream);
                         }
-                        catch(Exception) { }
+                        catch (Exception) { }
                         if (stream != null)
                             stream.Close();
                     }
@@ -195,229 +432,9 @@ namespace AnimMaker_v2
                 Environment.Exit(1);
             }
         }
-        static void DisplLoop()
-        {
-            Display.SetActive();
-            VertexArray segs = new VertexArray(PrimitiveType.Lines);
-            var backRect = new RectangleShape(new Vector2f(2000, 2000)) { Origin = new Vector2f(1000, 1000) };
-            Texture backTexture;
-            {
-                var img = new Image(2, 2, new Color(100, 100, 100));
-                img.SetPixel(0, 0, new Color(200, 200, 200));
-                img.SetPixel(1, 1, new Color(200, 200, 200));
-                backTexture = new Texture(img);
-            }
-            backRect.Texture = backTexture;
-            backRect.TextureRect = new IntRect(0, 0, 100, 100);
-            backTexture.Repeated = true;
-            while (form.Visible)
-            {
-                Display.DispatchEvents();
-                DynamicObject.Update();
 
-                segs.Clear();
-                segs.Append(new Vertex(new Vector2f(-99999, 0), Color.Red));
-                segs.Append(new Vertex(new Vector2f(99999, 0), Color.Red));
-                segs.Append(new Vertex(new Vector2f(0, -99999), Color.Green));
-                segs.Append(new Vertex(new Vector2f(0, 99999), Color.Green));
+        #endregion Private Methods
 
-                if (selectedBone != null)
-                {
-                    var bone = selectedBone;
-                    List<FloatRect> localRects = new List<FloatRect>();
-                    List<Vector2f> pts = new List<Vector2f>();
-                    var tr = bone.ComputedTransform;
-                    foreach (var sprite in bone.AttachedSprites)
-                    {
-                        pts.Add((tr * sprite.Value.Transform).TransformPoint(sprite.Value.GetLocalBounds().TopLeft()));
-                        pts.Add((tr * sprite.Value.Transform).TransformPoint(sprite.Value.GetLocalBounds().TopRight()));
-                        pts.Add((tr * sprite.Value.Transform).TransformPoint(sprite.Value.GetLocalBounds().BotLeft()));
-                        pts.Add((tr * sprite.Value.Transform).TransformPoint(sprite.Value.GetLocalBounds().BotRight()));
-                    }
-                    foreach (var sprite in bone.AttachedSprites)
-                    {
-                        localRects.Add(sprite.Value.GetGlobalBounds());
-                        var spriteBounds = sprite.Value.GetLocalBounds();
-                        segs.Append(new Vertex((tr * sprite.Value.Transform).TransformPoint(spriteBounds.TopLeft()), new Color(255, 130, 0)));
-                        segs.Append(new Vertex((tr * sprite.Value.Transform).TransformPoint(spriteBounds.TopRight()), new Color(255, 130, 0)));
-                        segs.Append(new Vertex((tr * sprite.Value.Transform).TransformPoint(spriteBounds.TopRight()), new Color(255, 130, 0)));
-                        segs.Append(new Vertex((tr * sprite.Value.Transform).TransformPoint(spriteBounds.BotRight()), new Color(255, 130, 0)));
-                        segs.Append(new Vertex((tr * sprite.Value.Transform).TransformPoint(spriteBounds.BotRight()), new Color(255, 130, 0)));
-                        segs.Append(new Vertex((tr * sprite.Value.Transform).TransformPoint(spriteBounds.BotLeft()), new Color(255, 130, 0)));
-                        segs.Append(new Vertex((tr * sprite.Value.Transform).TransformPoint(spriteBounds.BotLeft()), new Color(255, 130, 0)));
-                        segs.Append(new Vertex((tr * sprite.Value.Transform).TransformPoint(spriteBounds.TopLeft()), new Color(255, 130, 0)));
-                    }
-                    if (localRects.Count > 0)
-                    {
-                        Vector2f topleft = localRects.First().TopLeft();
-                        Vector2f botright = localRects.First().BotRight();
-                        foreach (var rect in localRects)
-                        {
-                            topleft.X = Utilities.Min(topleft.X, rect.TopLeft().X);
-                            topleft.Y = Utilities.Min(topleft.Y, rect.TopLeft().Y);
-                            botright.X = Utilities.Max(botright.X, rect.BotRight().X);
-                            botright.Y = Utilities.Max(botright.Y, rect.BotRight().Y);
-                        }
-                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, topleft.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(botright.X, topleft.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(botright.X, topleft.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(botright.X, botright.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(botright.X, botright.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, botright.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, botright.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, topleft.Y), Color.Black));
-                    }
-                    if (pts.Count > 0)
-                    {
-
-                        Vector2f topleft;
-                        Vector2f botright;
-                        {
-                            var box = Utilities.CreateRect(pts.ToArray());
-                            topleft = box.TopLeft();
-                            botright = box.BotRight();
-                        }
-                        segs.Append(new Vertex(new Vector2f(topleft.X, topleft.Y), Color.Magenta));
-                        segs.Append(new Vertex(new Vector2f(botright.X, topleft.Y), Color.Magenta));
-                        segs.Append(new Vertex(new Vector2f(botright.X, topleft.Y), Color.Magenta));
-                        segs.Append(new Vertex(new Vector2f(botright.X, botright.Y), Color.Magenta));
-                        segs.Append(new Vertex(new Vector2f(botright.X, botright.Y), Color.Magenta));
-                        segs.Append(new Vertex(new Vector2f(topleft.X, botright.Y), Color.Magenta));
-                        segs.Append(new Vertex(new Vector2f(topleft.X, botright.Y), Color.Magenta));
-                        segs.Append(new Vertex(new Vector2f(topleft.X, topleft.Y), Color.Magenta));
-                    }
-                    var tr2 = tr;
-                    tr2.Translate(bone.Origin);
-                    segs.Append(new Vertex(tr2.TransformPoint(-99999, 0), Color.Blue));
-                    segs.Append(new Vertex(tr2.TransformPoint(99999, 0), Color.Blue));
-                    segs.Append(new Vertex(tr2.TransformPoint(0, -99999), Color.Cyan));
-                    segs.Append(new Vertex(tr2.TransformPoint(0, 99999), Color.Cyan));
-                }
-
-                Display.Clear(Color.White);
-
-                Display.Draw(backRect);
-
-                Display.Draw(DynamicObject);
-
-                Display.Draw(segs);
-
-                Display.Display();
-            }
-        }
         /*********************************************************************************************************************************/
-        public static void ResizeTimeline()
-        {
-            timeLineDrawRect = new FloatRect();
-            timeLineDrawRect.Top = 30 + Timeline.Size.Y / 15;
-            timeLineDrawRect.Width = Timeline.Size.X;
-            timeLineDrawRect.Height = Timeline.Size.Y - 30 - Timeline.Size.Y / 7.5f;
-        }
-        public static void AddBone()
-        {
-            var bone = new Bone();
-            bone.Name = "os" + createdBones;
-            createdBones++;
-            DynamicObject.BonesHierarchy.Add(bone);
-            DynamicObject.MasterBones.Add(bone);
-            selection = bone;
-
-
-            form.UpdateInterface();
-        }
-        public static void leftClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.Button == Mouse.Button.Left)
-            {
-                var msPos = Timeline.MapPixelToCoords(new Vector2i(e.X, e.Y));
-                int count = 0;
-                foreach (var item in keyControls)
-                {
-                    if (item.GlobalHitBox.Collision(msPos))
-                    {
-                        selection = selectedKeys[count];
-                        DynamicObject.CurrentTime = selectedKeys[count].Position;
-                        form.UpdateProp();
-                        return;
-                    }
-
-                    count++;
-                }
-                if (msPos.Y > 30)
-                    seeking = true;
-            }
-        }
-        public static void RemoveBone()
-        {
-            var bone = (Bone)selection;
-            DynamicObject.BonesHierarchy.Remove(bone);
-            DynamicObject.MasterBones.Remove(bone);
-            DynamicObject.BonesHierarchy.Remove(bone);
-            var par = DynamicObject.BonesHierarchy.Find((parent) => parent.ChildBones.Contains(bone));
-            if (par != null)
-                par.ChildBones.Remove(bone);
-            foreach (var child in bone.ChildBones)
-            {
-                DynamicObject.MasterBones.Add(child);
-            }
-            selection = null;
-
-            form.UpdateInterface();
-        }
-        public static void AddResource()
-        {
-            if (form.openTexture.ShowDialog() == DialogResult.OK)
-            {
-                var toOpen = form.openTexture.FileNames;
-                foreach (var file in toOpen)
-                {
-                    var key = System.IO.Path.GetFileNameWithoutExtension(file);
-                    Resources.Add(key, new ResourceManager.Resource() { Path = file, Data = new Texture(file) });
-                    selection = Resources.First((pair) => pair.Key == key);
-                }
-                DynamicObject.ReloadManager();
-                form.UpdateInterface();
-            }
-        }
-        public static void RemoveResource()
-        {
-            var pair = (KeyValuePair<string, ResourceManager.Resource>)selection;
-            Resources.Remove(pair.Key);
-
-            selection = null;
-
-            DynamicObject.ReloadManager();
-            form.UpdateInterface();
-        }
-        public static void AddAnimation()
-        {
-            var anim = new Animation();
-            anim.Name = "anim" + createdAnimations;
-            anim.Duration = Time.FromSeconds(1);
-            createdAnimations++;
-            DynamicObject.Animations.Add(anim);
-            selection = anim;
-
-
-            form.UpdateInterface();
-        }
-        public static void AddAnimation(Animation anim)
-        {
-            createdAnimations++;
-            DynamicObject.Animations.Add(anim);
-            selection = anim;
-
-
-            form.UpdateInterface();
-        }
-        public static void RemoveAnimation()
-        {
-            var anim = (Animation)selection;
-            DynamicObject.Animations.Remove(anim);
-            selection = null;
-            DynamicObject.ResetAnimation();
-
-            form.UpdateInterface();
-        }
     }
 }

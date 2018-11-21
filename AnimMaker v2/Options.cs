@@ -12,6 +12,7 @@ namespace AnimMaker_v2
         public string AutoFilePath;
         public bool AutoFileSave;
         public TimeSpan AutoFileTime;
+
         public static Options Default
         {
             get

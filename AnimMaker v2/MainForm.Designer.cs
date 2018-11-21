@@ -65,14 +65,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nouveauManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.objetDynamiqueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.managerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ouvrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.objetDynamiqueToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.managerToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.sauvegarderLeManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.objetDynamiqueToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.managerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.paramètresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aProposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fermerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.osToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,7 +103,7 @@
             this.saveObject = new System.Windows.Forms.SaveFileDialog();
             this.saveRes = new System.Windows.Forms.SaveFileDialog();
             this.openTexture = new System.Windows.Forms.OpenFileDialog();
-            this.paramètresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sauvegarderSousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -528,6 +523,7 @@
             this.nouveauManagerToolStripMenuItem,
             this.ouvrirToolStripMenuItem,
             this.sauvegarderLeManagerToolStripMenuItem,
+            this.sauvegarderSousToolStripMenuItem,
             this.paramètresToolStripMenuItem,
             this.aProposToolStripMenuItem,
             this.fermerToolStripMenuItem});
@@ -537,90 +533,45 @@
             // 
             // nouveauManagerToolStripMenuItem
             // 
-            this.nouveauManagerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.objetDynamiqueToolStripMenuItem,
-            this.managerToolStripMenuItem});
             this.nouveauManagerToolStripMenuItem.Name = "nouveauManagerToolStripMenuItem";
-            this.nouveauManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nouveauManagerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.nouveauManagerToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.nouveauManagerToolStripMenuItem.Text = "Nouveau";
-            // 
-            // objetDynamiqueToolStripMenuItem
-            // 
-            this.objetDynamiqueToolStripMenuItem.Name = "objetDynamiqueToolStripMenuItem";
-            this.objetDynamiqueToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + N";
-            this.objetDynamiqueToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.objetDynamiqueToolStripMenuItem.Text = "objet dynamique";
-            this.objetDynamiqueToolStripMenuItem.Click += new System.EventHandler(this.objetDynamiqueToolStripMenuItem_Click);
-            // 
-            // managerToolStripMenuItem
-            // 
-            this.managerToolStripMenuItem.Name = "managerToolStripMenuItem";
-            this.managerToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + Maj + N";
-            this.managerToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.managerToolStripMenuItem.Text = "manager";
-            this.managerToolStripMenuItem.Click += new System.EventHandler(this.managerToolStripMenuItem_Click);
             // 
             // ouvrirToolStripMenuItem
             // 
-            this.ouvrirToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.objetDynamiqueToolStripMenuItem2,
-            this.managerToolStripMenuItem2});
             this.ouvrirToolStripMenuItem.Name = "ouvrirToolStripMenuItem";
-            this.ouvrirToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ouvrirToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.ouvrirToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.ouvrirToolStripMenuItem.Text = "Ouvrir";
-            // 
-            // objetDynamiqueToolStripMenuItem2
-            // 
-            this.objetDynamiqueToolStripMenuItem2.Name = "objetDynamiqueToolStripMenuItem2";
-            this.objetDynamiqueToolStripMenuItem2.ShortcutKeyDisplayString = "Ctrl + O";
-            this.objetDynamiqueToolStripMenuItem2.Size = new System.Drawing.Size(213, 22);
-            this.objetDynamiqueToolStripMenuItem2.Text = "objet dynamique";
-            this.objetDynamiqueToolStripMenuItem2.Click += new System.EventHandler(this.objetDynamiqueToolStripMenuItem2_Click);
-            // 
-            // managerToolStripMenuItem2
-            // 
-            this.managerToolStripMenuItem2.Name = "managerToolStripMenuItem2";
-            this.managerToolStripMenuItem2.ShortcutKeyDisplayString = "Ctrl + Maj + O";
-            this.managerToolStripMenuItem2.Size = new System.Drawing.Size(213, 22);
-            this.managerToolStripMenuItem2.Text = "manager";
-            this.managerToolStripMenuItem2.Click += new System.EventHandler(this.managerToolStripMenuItem2_Click);
             // 
             // sauvegarderLeManagerToolStripMenuItem
             // 
-            this.sauvegarderLeManagerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.objetDynamiqueToolStripMenuItem1,
-            this.managerToolStripMenuItem1});
             this.sauvegarderLeManagerToolStripMenuItem.Name = "sauvegarderLeManagerToolStripMenuItem";
-            this.sauvegarderLeManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.sauvegarderLeManagerToolStripMenuItem.Text = "Sauvegarder";
+            this.sauvegarderLeManagerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.sauvegarderLeManagerToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.sauvegarderLeManagerToolStripMenuItem.Text = "Enregistrer";
+            this.sauvegarderLeManagerToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderLeManagerToolStripMenuItem_Click);
             // 
-            // objetDynamiqueToolStripMenuItem1
+            // paramètresToolStripMenuItem
             // 
-            this.objetDynamiqueToolStripMenuItem1.Name = "objetDynamiqueToolStripMenuItem1";
-            this.objetDynamiqueToolStripMenuItem1.ShortcutKeyDisplayString = "Ctrl + S";
-            this.objetDynamiqueToolStripMenuItem1.Size = new System.Drawing.Size(210, 22);
-            this.objetDynamiqueToolStripMenuItem1.Text = "objet dynamique";
-            this.objetDynamiqueToolStripMenuItem1.Click += new System.EventHandler(this.objetDynamiqueToolStripMenuItem1_Click);
-            // 
-            // managerToolStripMenuItem1
-            // 
-            this.managerToolStripMenuItem1.Name = "managerToolStripMenuItem1";
-            this.managerToolStripMenuItem1.ShortcutKeyDisplayString = "Ctrl + Maj + S";
-            this.managerToolStripMenuItem1.Size = new System.Drawing.Size(210, 22);
-            this.managerToolStripMenuItem1.Text = "manager";
-            this.managerToolStripMenuItem1.Click += new System.EventHandler(this.managerToolStripMenuItem1_Click);
+            this.paramètresToolStripMenuItem.Name = "paramètresToolStripMenuItem";
+            this.paramètresToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.paramètresToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.paramètresToolStripMenuItem.Text = "Paramètres";
+            this.paramètresToolStripMenuItem.Click += new System.EventHandler(this.paramètresToolStripMenuItem_Click);
             // 
             // aProposToolStripMenuItem
             // 
             this.aProposToolStripMenuItem.Name = "aProposToolStripMenuItem";
-            this.aProposToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aProposToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.aProposToolStripMenuItem.Text = "A propos";
             this.aProposToolStripMenuItem.Click += new System.EventHandler(this.aProposToolStripMenuItem_Click);
             // 
             // fermerToolStripMenuItem
             // 
             this.fermerToolStripMenuItem.Name = "fermerToolStripMenuItem";
-            this.fermerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fermerToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.fermerToolStripMenuItem.Text = "Fermer";
             this.fermerToolStripMenuItem.Click += new System.EventHandler(this.fermerToolStripMenuItem_Click);
             // 
@@ -639,7 +590,7 @@
             // 
             this.nouveauToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addBone;
             this.nouveauToolStripMenuItem.Name = "nouveauToolStripMenuItem";
-            this.nouveauToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.nouveauToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.nouveauToolStripMenuItem.Text = "Nouveau";
             this.nouveauToolStripMenuItem.Click += new System.EventHandler(this.nouveauToolStripMenuItem_Click);
             // 
@@ -647,21 +598,21 @@
             // 
             this.stripRemoveBone.Image = global::AnimMaker_v2.Properties.Resources.removeBone;
             this.stripRemoveBone.Name = "stripRemoveBone";
-            this.stripRemoveBone.Size = new System.Drawing.Size(131, 22);
+            this.stripRemoveBone.Size = new System.Drawing.Size(180, 22);
             this.stripRemoveBone.Text = "Supprimer";
             this.stripRemoveBone.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
             // stripTopBone
             // 
             this.stripTopBone.Name = "stripTopBone";
-            this.stripTopBone.Size = new System.Drawing.Size(131, 22);
+            this.stripTopBone.Size = new System.Drawing.Size(180, 22);
             this.stripTopBone.Text = "En premier";
             this.stripTopBone.Click += new System.EventHandler(this.stripTopBone_Click);
             // 
             // stripBotBone
             // 
             this.stripBotBone.Name = "stripBotBone";
-            this.stripBotBone.Size = new System.Drawing.Size(131, 22);
+            this.stripBotBone.Size = new System.Drawing.Size(180, 22);
             this.stripBotBone.Text = "En dernier";
             this.stripBotBone.Click += new System.EventHandler(this.stripBotBone_Click);
             // 
@@ -678,7 +629,7 @@
             // 
             this.ajouterToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addRes;
             this.ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            this.ajouterToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.ajouterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ajouterToolStripMenuItem.Text = "Ajouter";
             this.ajouterToolStripMenuItem.Click += new System.EventHandler(this.ajouterToolStripMenuItem_Click);
             // 
@@ -686,7 +637,7 @@
             // 
             this.stripRemoveRes.Image = global::AnimMaker_v2.Properties.Resources.removeRes;
             this.stripRemoveRes.Name = "stripRemoveRes";
-            this.stripRemoveRes.Size = new System.Drawing.Size(129, 22);
+            this.stripRemoveRes.Size = new System.Drawing.Size(180, 22);
             this.stripRemoveRes.Text = "Supprimer";
             this.stripRemoveRes.Click += new System.EventHandler(this.supprimerToolStripMenuItem1_Click);
             // 
@@ -874,12 +825,14 @@
             this.openTexture.Multiselect = true;
             this.openTexture.Title = "Charger la texture";
             // 
-            // paramètresToolStripMenuItem
+            // sauvegarderSousToolStripMenuItem
             // 
-            this.paramètresToolStripMenuItem.Name = "paramètresToolStripMenuItem";
-            this.paramètresToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.paramètresToolStripMenuItem.Text = "Paramètres";
-            this.paramètresToolStripMenuItem.Click += new System.EventHandler(this.paramètresToolStripMenuItem_Click);
+            this.sauvegarderSousToolStripMenuItem.Name = "sauvegarderSousToolStripMenuItem";
+            this.sauvegarderSousToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.sauvegarderSousToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.sauvegarderSousToolStripMenuItem.Text = "Enregistrer sous";
+            this.sauvegarderSousToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderSousToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -934,13 +887,7 @@
         private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nouveauManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sauvegarderLeManagerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem managerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem objetDynamiqueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ouvrirToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem managerToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem objetDynamiqueToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem managerToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem objetDynamiqueToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem osToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nouveauToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stripRemoveBone;
@@ -994,5 +941,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripMenuItem aProposToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paramètresToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sauvegarderSousToolStripMenuItem;
     }
 }
