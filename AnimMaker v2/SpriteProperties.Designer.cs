@@ -41,6 +41,8 @@
             this.TexSizeX = new System.Windows.Forms.NumericUpDown();
             this.TexSizeY = new System.Windows.Forms.NumericUpDown();
             this.TexPosY = new System.Windows.Forms.NumericUpDown();
+            this.selectedRes = new System.Windows.Forms.ComboBox();
+            this.adapt = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SizeX)).BeginInit();
@@ -57,6 +59,7 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel2);
             this.flowLayoutPanel1.Controls.Add(this.groupBox2);
+            this.flowLayoutPanel1.Controls.Add(this.adapt);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -126,7 +129,7 @@
             this.groupBox2.Controls.Add(this.tableLayoutPanel3);
             this.groupBox2.Location = new System.Drawing.Point(3, 37);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(214, 99);
+            this.groupBox2.Size = new System.Drawing.Size(214, 114);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Texture";
@@ -135,10 +138,11 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel3.Controls.Add(this.label6, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label7, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.selectedRes, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.TexPosX, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.TexSizeX, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.TexSizeY, 2, 1);
@@ -148,9 +152,10 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(208, 80);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(208, 95);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // label6
@@ -159,7 +164,7 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Location = new System.Drawing.Point(3, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 26);
+            this.label6.Size = new System.Drawing.Size(63, 31);
             this.label6.TabIndex = 0;
             this.label6.Text = "Position";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -168,9 +173,9 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(3, 26);
+            this.label7.Location = new System.Drawing.Point(3, 31);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 26);
+            this.label7.Size = new System.Drawing.Size(63, 31);
             this.label7.TabIndex = 1;
             this.label7.Text = "Taille";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -197,7 +202,7 @@
             // TexSizeX
             // 
             this.TexSizeX.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TexSizeX.Location = new System.Drawing.Point(72, 29);
+            this.TexSizeX.Location = new System.Drawing.Point(72, 34);
             this.TexSizeX.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -211,7 +216,7 @@
             // TexSizeY
             // 
             this.TexSizeY.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TexSizeY.Location = new System.Drawing.Point(141, 29);
+            this.TexSizeY.Location = new System.Drawing.Point(141, 34);
             this.TexSizeY.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -240,6 +245,28 @@
             this.TexPosY.Size = new System.Drawing.Size(64, 20);
             this.TexPosY.TabIndex = 10;
             this.TexPosY.ValueChanged += new System.EventHandler(this.TexPosY_ValueChanged);
+            // 
+            // selectedRes
+            // 
+            this.tableLayoutPanel3.SetColumnSpan(this.selectedRes, 3);
+            this.selectedRes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectedRes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.selectedRes.FormattingEnabled = true;
+            this.selectedRes.Location = new System.Drawing.Point(3, 65);
+            this.selectedRes.Name = "selectedRes";
+            this.selectedRes.Size = new System.Drawing.Size(202, 21);
+            this.selectedRes.TabIndex = 11;
+            this.selectedRes.SelectedIndexChanged += new System.EventHandler(this.selectedRes_SelectedIndexChanged);
+            // 
+            // adapt
+            // 
+            this.adapt.Location = new System.Drawing.Point(3, 157);
+            this.adapt.Name = "adapt";
+            this.adapt.Size = new System.Drawing.Size(214, 23);
+            this.adapt.TabIndex = 12;
+            this.adapt.Text = "Adapter à la texture";
+            this.adapt.UseVisualStyleBackColor = true;
+            this.adapt.Click += new System.EventHandler(this.adapt_Click);
             // 
             // SpriteProperties
             // 
@@ -278,5 +305,7 @@
         private System.Windows.Forms.NumericUpDown TexSizeX;
         private System.Windows.Forms.NumericUpDown TexSizeY;
         private System.Windows.Forms.NumericUpDown TexPosY;
+        private System.Windows.Forms.ComboBox selectedRes;
+        private System.Windows.Forms.Button adapt;
     }
 }

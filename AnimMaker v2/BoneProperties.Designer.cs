@@ -53,6 +53,11 @@
             this.boneName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.spriteButton = new System.Windows.Forms.Button();
+            this.addSprite = new System.Windows.Forms.Button();
+            this.removeSprite = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.alphaMode = new System.Windows.Forms.RadioButton();
@@ -72,6 +77,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.ScaleY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Rotation)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
@@ -79,7 +86,7 @@
             // statut
             // 
             this.statut.AutoSize = true;
-            this.statut.Location = new System.Drawing.Point(3, 555);
+            this.statut.Location = new System.Drawing.Point(3, 677);
             this.statut.Name = "statut";
             this.statut.Size = new System.Drawing.Size(0, 13);
             this.statut.TabIndex = 2;
@@ -438,6 +445,7 @@
             this.flowLayoutPanel1.Controls.Add(this.boneStatut);
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
             this.flowLayoutPanel1.Controls.Add(this.groupBox2);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox3);
             this.flowLayoutPanel1.Controls.Add(this.groupBox4);
             this.flowLayoutPanel1.Controls.Add(this.statut);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -447,10 +455,62 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(910, 881);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.flowLayoutPanel3);
+            this.groupBox3.Location = new System.Drawing.Point(3, 422);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(214, 116);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Sprite";
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.spriteButton);
+            this.flowLayoutPanel3.Controls.Add(this.addSprite);
+            this.flowLayoutPanel3.Controls.Add(this.removeSprite);
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(208, 97);
+            this.flowLayoutPanel3.TabIndex = 0;
+            // 
+            // spriteButton
+            // 
+            this.spriteButton.Location = new System.Drawing.Point(3, 3);
+            this.spriteButton.Name = "spriteButton";
+            this.spriteButton.Size = new System.Drawing.Size(181, 23);
+            this.spriteButton.TabIndex = 0;
+            this.spriteButton.Text = "button1";
+            this.spriteButton.UseVisualStyleBackColor = true;
+            this.spriteButton.Click += new System.EventHandler(this.spriteButton_Click);
+            // 
+            // addSprite
+            // 
+            this.addSprite.Location = new System.Drawing.Point(3, 32);
+            this.addSprite.Name = "addSprite";
+            this.addSprite.Size = new System.Drawing.Size(181, 23);
+            this.addSprite.TabIndex = 1;
+            this.addSprite.Text = "Ajouter le sprite";
+            this.addSprite.UseVisualStyleBackColor = true;
+            this.addSprite.Click += new System.EventHandler(this.addSprite_Click);
+            // 
+            // removeSprite
+            // 
+            this.removeSprite.Location = new System.Drawing.Point(3, 61);
+            this.removeSprite.Name = "removeSprite";
+            this.removeSprite.Size = new System.Drawing.Size(181, 23);
+            this.removeSprite.TabIndex = 2;
+            this.removeSprite.Text = "Supprimer le sprite";
+            this.removeSprite.UseVisualStyleBackColor = true;
+            this.removeSprite.Click += new System.EventHandler(this.removeSprite_Click);
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.flowLayoutPanel4);
-            this.groupBox4.Location = new System.Drawing.Point(3, 422);
+            this.groupBox4.Location = new System.Drawing.Point(3, 544);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(214, 130);
             this.groupBox4.TabIndex = 6;
@@ -542,6 +602,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.Rotation)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.flowLayoutPanel3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel4.PerformLayout();
@@ -581,5 +643,10 @@
         private System.Windows.Forms.RadioButton multMode;
         private System.Windows.Forms.RadioButton subsMode;
         private System.Windows.Forms.RadioButton addMode;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Button spriteButton;
+        private System.Windows.Forms.Button addSprite;
+        private System.Windows.Forms.Button removeSprite;
     }
 }

@@ -242,7 +242,7 @@ namespace AnimMaker_v2
                         properties.Controls.Add(tmp2);
                     }
                 }
-                if (Program.selection is Couple<string, RectangleShape>)
+                if (Program.selection is DynamicSprite)
                 {/***/
                     Program.DynamicObject.ResetAnimation();
                     Program.selectedKeys = null;

@@ -35,6 +35,19 @@ namespace AnimMaker_v2
                 ScaleX.Value = (decimal)bone.Scale.X;
                 ScaleY.Value = (decimal)bone.Scale.Y;
                 Rotation.Value = (decimal)bone.Rotation;
+                if (bone.AttachedSprite != null)
+                {
+                    removeSprite.Enabled = true;
+                    addSprite.Enabled = false;
+                    spriteButton.Text = "Modifier le sprite";
+                }
+                else
+                {
+                    removeSprite.Enabled = false;
+                    addSprite.Enabled = true;
+                    spriteButton.Text = "Aucun sprite";
+                    spriteButton.Enabled = false;
+                }
                 switch (bone.BlendMode)
                 {
                     case BlendModeType.BLEND_ALPHA:
@@ -113,6 +126,15 @@ namespace AnimMaker_v2
         {
             var bone = (Bone)Program.selection;
             bone.BlendMode = BlendModeType.BLEND_ADD;
+        }
+
+        private void addSprite_Click(object sender, EventArgs e)
+        {
+            var bone = (Bone)Program.selection;
+
+            bone.AttachedSprite = new DynamicSprite();
+
+            Program.form.UpdateProp();
         }
 
         private void alphaMode_CheckedChanged(object sender, EventArgs e)
@@ -201,6 +223,15 @@ namespace AnimMaker_v2
             Program.form.UpdateInterface();
         }
 
+        private void removeSprite_Click(object sender, EventArgs e)
+        {
+            var bone = (Bone)Program.selection;
+
+            bone.AttachedSprite = null;
+
+            Program.form.UpdateProp();
+        }
+
         private void Rotation_ValueChanged(object sender, EventArgs e)
         {
             var bone = (Bone)Program.selection;
@@ -221,6 +252,14 @@ namespace AnimMaker_v2
             var scale = bone.Scale;
             scale.Y = (float)ScaleY.Value;
             bone.Scale = scale;
+        }
+
+        private void spriteButton_Click(object sender, EventArgs e)
+        {
+            var bone = (Bone)Program.selection;
+            Program.selection = bone.AttachedSprite;
+
+            Program.form.UpdateProp();
         }
 
         private void subsMode_CheckedChanged(object sender, EventArgs e)

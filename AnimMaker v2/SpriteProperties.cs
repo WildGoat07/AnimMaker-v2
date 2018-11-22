@@ -17,22 +17,44 @@ namespace AnimMaker_v2
 {
     public partial class SpriteProperties : UserControl
     {
+        #region Private Fields
+
+        private bool init;
+
+        #endregion Private Fields
+
         #region Public Constructors
 
         public SpriteProperties()
         {
+            init = false;
             InitializeComponent();
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
+            var sprite = (DynamicSprite)Program.selection;
 
             if (sprite != null)
             {
-                SizeX.Value = (decimal)sprite.Value.Size.X;
-                SizeY.Value = (decimal)sprite.Value.Size.Y;
-                TexPosX.Value = (decimal)sprite.Value.TextureRect.Left;
-                TexPosY.Value = (decimal)sprite.Value.TextureRect.Top;
-                TexSizeX.Value = (decimal)sprite.Value.TextureRect.Width;
-                TexSizeY.Value = (decimal)sprite.Value.TextureRect.Height;
+                SizeX.Value = (decimal)sprite.InternalRect.Size.X;
+                SizeY.Value = (decimal)sprite.InternalRect.Size.Y;
+                TexPosX.Value = (decimal)sprite.InternalRect.TextureRect.Left;
+                TexPosY.Value = (decimal)sprite.InternalRect.TextureRect.Top;
+                TexSizeX.Value = (decimal)sprite.InternalRect.TextureRect.Width;
+                TexSizeY.Value = (decimal)sprite.InternalRect.TextureRect.Height;
+                selectedRes.Items.Add("Aucune ressource");
+                int i = 1;
+                foreach (var item in Program.DynamicObject.UsedResources)
+                {
+                    selectedRes.Items.Add(item.Name);
+                    if (sprite.Resource != null && sprite.Resource.ID == item.ID)
+                        selectedRes.SelectedIndex = i;
+                    i++;
+                }
+                if (sprite.Resource == null)
+                {
+                    selectedRes.SelectedIndex = 0;
+                    adapt.Enabled = false;
+                }
             }
+            init = true;
         }
 
         #endregion Public Constructors
@@ -41,58 +63,89 @@ namespace AnimMaker_v2
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
+            var sprite = (DynamicSprite)Program.selection;
 
-            var vec = sprite.Value.TextureRect;
+            var vec = sprite.InternalRect.TextureRect;
             vec.Left = (int)TexPosX.Value;
-            sprite.Value.TextureRect = vec;
+            sprite.InternalRect.TextureRect = vec;
+        }
+
+        private void selectedRes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (init)
+            {
+                var sprite = (DynamicSprite)Program.selection;
+                if (selectedRes.SelectedIndex == 0)
+                {
+                    sprite.Resource = null;
+                }
+                else
+                {
+                    var selection = (string)selectedRes.Items[selectedRes.SelectedIndex];
+                    var res = Program.DynamicObject.UsedResources.Find((r) => r.Name == selection);
+                    sprite.Resource = res;
+                    sprite.InternalRect.Size = (Vector2f)sprite.Resource.FrameSize;
+                    sprite.InternalRect.TextureRect = new IntRect(default, sprite.Resource.FrameSize);
+                }
+
+                Program.form.UpdateProp();
+            }
         }
 
         private void SizeX_ValueChanged(object sender, EventArgs e)
         {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
+            var sprite = (DynamicSprite)Program.selection;
 
-            var vec = sprite.Value.Size;
+            var vec = sprite.InternalRect.Size;
             vec.X = (float)SizeX.Value;
-            sprite.Value.Size = vec;
+            sprite.InternalRect.Size = vec;
         }
 
         private void SizeY_ValueChanged(object sender, EventArgs e)
         {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
+            var sprite = (DynamicSprite)Program.selection;
 
-            var vec = sprite.Value.Size;
+            var vec = sprite.InternalRect.Size;
             vec.Y = (float)SizeY.Value;
-            sprite.Value.Size = vec;
+            sprite.InternalRect.Size = vec;
         }
 
         private void TexPosY_ValueChanged(object sender, EventArgs e)
         {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
+            var sprite = (DynamicSprite)Program.selection;
 
-            var vec = sprite.Value.TextureRect;
+            var vec = sprite.InternalRect.TextureRect;
             vec.Top = (int)TexPosY.Value;
-            sprite.Value.TextureRect = vec;
+            sprite.InternalRect.TextureRect = vec;
         }
 
         private void TexSizeX_ValueChanged(object sender, EventArgs e)
         {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
+            var sprite = (DynamicSprite)Program.selection;
 
-            var vec = sprite.Value.TextureRect;
+            var vec = sprite.InternalRect.TextureRect;
             vec.Width = (int)TexSizeX.Value;
-            sprite.Value.TextureRect = vec;
+            sprite.InternalRect.TextureRect = vec;
         }
 
         private void TexSizeY_ValueChanged(object sender, EventArgs e)
         {
-            var sprite = (Couple<string, RectangleShape>)Program.selection;
+            var sprite = (DynamicSprite)Program.selection;
 
-            var vec = sprite.Value.TextureRect;
+            var vec = sprite.InternalRect.TextureRect;
             vec.Height = (int)TexSizeY.Value;
-            sprite.Value.TextureRect = vec;
+            sprite.InternalRect.TextureRect = vec;
         }
 
         #endregion Private Methods
+
+        private void adapt_Click(object sender, EventArgs e)
+        {
+            var sprite = (DynamicSprite)Program.selection;
+            sprite.InternalRect.TextureRect = new IntRect(default, sprite.Resource.FrameSize);
+            sprite.InternalRect.Size = (Vector2f)sprite.Resource.FrameSize;
+
+            Program.form.UpdateProp();
+        }
     }
 }

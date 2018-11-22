@@ -19,6 +19,7 @@ namespace AnimMaker_v2
         public static int createdAnimations;
         public static int createdBones;
         public static Guid CurrentID;
+        public static string currentPath;
         public static RenderWindow Display;
         public static SFDynamicObject DynamicObject;
         public static WGP.TEXT.Font font;
@@ -35,7 +36,6 @@ namespace AnimMaker_v2
         public static RenderWindow Timeline;
         public static FloatRect timeLineDrawRect;
         public static VertexArray timeLineSegs;
-        public static string currentPath;
 
         #endregion Public Fields
 
@@ -83,6 +83,7 @@ namespace AnimMaker_v2
                 {
                     var key = System.IO.Path.GetFileNameWithoutExtension(file);
                     var res = new Resource();
+                    res.Smooth = true;
                     res.Name = key;
                     res.ChangeBaseImage(new Image(file));
                     res.AdaptFrameSize();
@@ -352,15 +353,20 @@ namespace AnimMaker_v2
                         autoSaveClock.Restart();
                         if (!System.IO.Directory.Exists(Settings.AutoFilePath))
                             System.IO.Directory.CreateDirectory(Settings.AutoFilePath);
-                        System.IO.Stream stream = null;
-                        try
+                        System.Threading.ThreadStart save = () =>
                         {
-                            stream = new System.IO.FileStream(System.IO.Path.Combine(Settings.AutoFilePath, CurrentID + ".wgdot"), System.IO.FileMode.Create, System.IO.FileAccess.Write);
-                            DynamicObject.SaveAsTemplate(stream);
-                        }
-                        catch (Exception) { }
-                        if (stream != null)
-                            stream.Close();
+                            System.IO.Stream stream = null;
+                            try
+                            {
+                                stream = new System.IO.FileStream(System.IO.Path.Combine(Settings.AutoFilePath, CurrentID + ".wgdot"), System.IO.FileMode.Create, System.IO.FileAccess.Write);
+                                DynamicObject.SaveAsTemplate(stream);
+                            }
+                            catch (Exception) { }
+                            if (stream != null)
+                                stream.Close();
+                        };
+                        System.Threading.Thread autoSaveThread = new System.Threading.Thread(save);
+                        autoSaveThread.Start();
                     }
 
                     if (selectedAnim != null)
