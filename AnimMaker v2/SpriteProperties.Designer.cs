@@ -37,11 +37,11 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.selectedRes = new System.Windows.Forms.ComboBox();
             this.TexPosX = new System.Windows.Forms.NumericUpDown();
             this.TexSizeX = new System.Windows.Forms.NumericUpDown();
             this.TexSizeY = new System.Windows.Forms.NumericUpDown();
             this.TexPosY = new System.Windows.Forms.NumericUpDown();
-            this.selectedRes = new System.Windows.Forms.ComboBox();
             this.adapt = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -180,6 +180,18 @@
             this.label7.Text = "Taille";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // selectedRes
+            // 
+            this.tableLayoutPanel3.SetColumnSpan(this.selectedRes, 3);
+            this.selectedRes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectedRes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.selectedRes.FormattingEnabled = true;
+            this.selectedRes.Location = new System.Drawing.Point(3, 65);
+            this.selectedRes.Name = "selectedRes";
+            this.selectedRes.Size = new System.Drawing.Size(202, 21);
+            this.selectedRes.TabIndex = 11;
+            this.selectedRes.SelectedIndexChanged += new System.EventHandler(this.selectedRes_SelectedIndexChanged);
+            // 
             // TexPosX
             // 
             this.TexPosX.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -245,18 +257,6 @@
             this.TexPosY.Size = new System.Drawing.Size(64, 20);
             this.TexPosY.TabIndex = 10;
             this.TexPosY.ValueChanged += new System.EventHandler(this.TexPosY_ValueChanged);
-            // 
-            // selectedRes
-            // 
-            this.tableLayoutPanel3.SetColumnSpan(this.selectedRes, 3);
-            this.selectedRes.Dock = System.Windows.Forms.DockStyle.Top;
-            this.selectedRes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.selectedRes.FormattingEnabled = true;
-            this.selectedRes.Location = new System.Drawing.Point(3, 65);
-            this.selectedRes.Name = "selectedRes";
-            this.selectedRes.Size = new System.Drawing.Size(202, 21);
-            this.selectedRes.TabIndex = 11;
-            this.selectedRes.SelectedIndexChanged += new System.EventHandler(this.selectedRes_SelectedIndexChanged);
             // 
             // adapt
             // 

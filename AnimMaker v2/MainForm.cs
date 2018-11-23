@@ -20,11 +20,21 @@ namespace AnimMaker_v2
 {
     public partial class MainForm : Form
     {
+        #region Public Fields
+
+        public DrawingSurface resDispl;
+        public DynamicSprite resSprite;
+
+        #endregion Public Fields
+
         #region Public Constructors
 
         public MainForm()
         {
             InitializeComponent();
+            resDispl = new DrawingSurface();
+            resDispl.Target.SetActive(false);
+            resSprite = new DynamicSprite();
             var tmp = new DrawingSurface();
             tmp.Dock = DockStyle.Fill;
             Program.Display = tmp.Target;
@@ -44,11 +54,6 @@ namespace AnimMaker_v2
                 Program.Timeline.SetView(view);
                 Program.ResizeTimeline();
             };
-            {
-                var tmp2 = new BoneProperties();
-                tmp2.Dock = DockStyle.Fill;
-                properties.Controls.Add(tmp2);
-            }
         }
 
         #endregion Public Constructors
@@ -58,6 +63,7 @@ namespace AnimMaker_v2
         public void newObj()
         {
             Program.CurrentID = Guid.NewGuid();
+            Program.Manager = new DynamicObjectBuilder();
             Program.DynamicObject = new SFDynamicObject();
             Program.DynamicObject.Chronometer = Program.Chronometer;
             Program.createdAnimations = 0;
@@ -81,6 +87,9 @@ namespace AnimMaker_v2
                     Program.DynamicObject = Program.Manager.CreateObject("obj");
                     Program.selection = null;
                     Program.CurrentID = Guid.NewGuid();
+                    Program.createdAnimations = 0;
+                    Program.createdBones = 0;
+                    Program.DynamicObject.Chronometer = Program.Chronometer;
                     Program.currentPath = (string)openObject.FileName.Clone();
                     UpdateInterface();
                 }
@@ -507,6 +516,11 @@ namespace AnimMaker_v2
             UpdateInterface();
         }
 
+        private void nouveauManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newObj();
+        }
+
         private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Program.AddBone();
@@ -523,6 +537,11 @@ namespace AnimMaker_v2
         }
 
         private void objetDynamiqueToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            OpenObject();
+        }
+
+        private void ouvrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenObject();
         }

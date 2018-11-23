@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.name = new System.Windows.Forms.TextBox();
@@ -36,33 +36,30 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.resourceMode = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.img = new System.Windows.Forms.PictureBox();
             this.smooth = new System.Windows.Forms.CheckBox();
             this.repeated = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.exportPng = new System.Windows.Forms.SaveFileDialog();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.panel.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.img)).BeginInit();
             this.SuspendLayout();
             // 
-            // flowLayoutPanel1
+            // panel
             // 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel3);
-            this.flowLayoutPanel1.Controls.Add(this.groupBox1);
-            this.flowLayoutPanel1.Controls.Add(this.smooth);
-            this.flowLayoutPanel1.Controls.Add(this.repeated);
-            this.flowLayoutPanel1.Controls.Add(this.button2);
-            this.flowLayoutPanel1.Controls.Add(this.img);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(866, 802);
-            this.flowLayoutPanel1.TabIndex = 0;
+            this.panel.AutoScroll = true;
+            this.panel.Controls.Add(this.flowLayoutPanel3);
+            this.panel.Controls.Add(this.groupBox1);
+            this.panel.Controls.Add(this.smooth);
+            this.panel.Controls.Add(this.repeated);
+            this.panel.Controls.Add(this.button2);
+            this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.panel.Location = new System.Drawing.Point(0, 0);
+            this.panel.Name = "panel";
+            this.panel.Size = new System.Drawing.Size(866, 802);
+            this.panel.TabIndex = 0;
             // 
             // flowLayoutPanel3
             // 
@@ -133,15 +130,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // img
-            // 
-            this.img.Location = new System.Drawing.Point(3, 189);
-            this.img.Name = "img";
-            this.img.Size = new System.Drawing.Size(100, 50);
-            this.img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.img.TabIndex = 1;
-            this.img.TabStop = false;
-            // 
             // smooth
             // 
             this.smooth.AutoSize = true;
@@ -183,25 +171,23 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.panel);
             this.Name = "ResProperties";
             this.Size = new System.Drawing.Size(866, 802);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
+            this.panel.ResumeLayout(false);
+            this.panel.PerformLayout();
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.img)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.PictureBox img;
+        private System.Windows.Forms.FlowLayoutPanel panel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Label resourceMode;

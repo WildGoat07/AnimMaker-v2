@@ -67,6 +67,7 @@
             this.nouveauManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ouvrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sauvegarderLeManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sauvegarderSousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paramètresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aProposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fermerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,7 +104,6 @@
             this.saveObject = new System.Windows.Forms.SaveFileDialog();
             this.saveRes = new System.Windows.Forms.SaveFileDialog();
             this.openTexture = new System.Windows.Forms.OpenFileDialog();
-            this.sauvegarderSousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -537,6 +537,7 @@
             this.nouveauManagerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.nouveauManagerToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.nouveauManagerToolStripMenuItem.Text = "Nouveau";
+            this.nouveauManagerToolStripMenuItem.Click += new System.EventHandler(this.nouveauManagerToolStripMenuItem_Click);
             // 
             // ouvrirToolStripMenuItem
             // 
@@ -544,6 +545,7 @@
             this.ouvrirToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.ouvrirToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.ouvrirToolStripMenuItem.Text = "Ouvrir";
+            this.ouvrirToolStripMenuItem.Click += new System.EventHandler(this.ouvrirToolStripMenuItem_Click);
             // 
             // sauvegarderLeManagerToolStripMenuItem
             // 
@@ -552,6 +554,15 @@
             this.sauvegarderLeManagerToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.sauvegarderLeManagerToolStripMenuItem.Text = "Enregistrer";
             this.sauvegarderLeManagerToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderLeManagerToolStripMenuItem_Click);
+            // 
+            // sauvegarderSousToolStripMenuItem
+            // 
+            this.sauvegarderSousToolStripMenuItem.Name = "sauvegarderSousToolStripMenuItem";
+            this.sauvegarderSousToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.sauvegarderSousToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.sauvegarderSousToolStripMenuItem.Text = "Enregistrer sous";
+            this.sauvegarderSousToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderSousToolStripMenuItem_Click);
             // 
             // paramètresToolStripMenuItem
             // 
@@ -590,7 +601,7 @@
             // 
             this.nouveauToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addBone;
             this.nouveauToolStripMenuItem.Name = "nouveauToolStripMenuItem";
-            this.nouveauToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nouveauToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.nouveauToolStripMenuItem.Text = "Nouveau";
             this.nouveauToolStripMenuItem.Click += new System.EventHandler(this.nouveauToolStripMenuItem_Click);
             // 
@@ -598,21 +609,21 @@
             // 
             this.stripRemoveBone.Image = global::AnimMaker_v2.Properties.Resources.removeBone;
             this.stripRemoveBone.Name = "stripRemoveBone";
-            this.stripRemoveBone.Size = new System.Drawing.Size(180, 22);
+            this.stripRemoveBone.Size = new System.Drawing.Size(131, 22);
             this.stripRemoveBone.Text = "Supprimer";
             this.stripRemoveBone.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
             // stripTopBone
             // 
             this.stripTopBone.Name = "stripTopBone";
-            this.stripTopBone.Size = new System.Drawing.Size(180, 22);
+            this.stripTopBone.Size = new System.Drawing.Size(131, 22);
             this.stripTopBone.Text = "En premier";
             this.stripTopBone.Click += new System.EventHandler(this.stripTopBone_Click);
             // 
             // stripBotBone
             // 
             this.stripBotBone.Name = "stripBotBone";
-            this.stripBotBone.Size = new System.Drawing.Size(180, 22);
+            this.stripBotBone.Size = new System.Drawing.Size(131, 22);
             this.stripBotBone.Text = "En dernier";
             this.stripBotBone.Click += new System.EventHandler(this.stripBotBone_Click);
             // 
@@ -629,7 +640,7 @@
             // 
             this.ajouterToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addRes;
             this.ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            this.ajouterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ajouterToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.ajouterToolStripMenuItem.Text = "Ajouter";
             this.ajouterToolStripMenuItem.Click += new System.EventHandler(this.ajouterToolStripMenuItem_Click);
             // 
@@ -637,7 +648,7 @@
             // 
             this.stripRemoveRes.Image = global::AnimMaker_v2.Properties.Resources.removeRes;
             this.stripRemoveRes.Name = "stripRemoveRes";
-            this.stripRemoveRes.Size = new System.Drawing.Size(180, 22);
+            this.stripRemoveRes.Size = new System.Drawing.Size(129, 22);
             this.stripRemoveRes.Text = "Supprimer";
             this.stripRemoveRes.Click += new System.EventHandler(this.supprimerToolStripMenuItem1_Click);
             // 
@@ -825,19 +836,11 @@
             this.openTexture.Multiselect = true;
             this.openTexture.Title = "Charger la texture";
             // 
-            // sauvegarderSousToolStripMenuItem
-            // 
-            this.sauvegarderSousToolStripMenuItem.Name = "sauvegarderSousToolStripMenuItem";
-            this.sauvegarderSousToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.sauvegarderSousToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.sauvegarderSousToolStripMenuItem.Text = "Enregistrer sous";
-            this.sauvegarderSousToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderSousToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1401, 784);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

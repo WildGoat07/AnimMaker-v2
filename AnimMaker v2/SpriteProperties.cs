@@ -61,6 +61,15 @@ namespace AnimMaker_v2
 
         #region Private Methods
 
+        private void adapt_Click(object sender, EventArgs e)
+        {
+            var sprite = (DynamicSprite)Program.selection;
+            sprite.InternalRect.TextureRect = new IntRect(default, sprite.Resource.FrameSize);
+            sprite.InternalRect.Size = (Vector2f)sprite.Resource.FrameSize;
+
+            Program.form.UpdateProp();
+        }
+
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
             var sprite = (DynamicSprite)Program.selection;
@@ -138,14 +147,5 @@ namespace AnimMaker_v2
         }
 
         #endregion Private Methods
-
-        private void adapt_Click(object sender, EventArgs e)
-        {
-            var sprite = (DynamicSprite)Program.selection;
-            sprite.InternalRect.TextureRect = new IntRect(default, sprite.Resource.FrameSize);
-            sprite.InternalRect.Size = (Vector2f)sprite.Resource.FrameSize;
-
-            Program.form.UpdateProp();
-        }
     }
 }

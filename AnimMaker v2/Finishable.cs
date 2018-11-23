@@ -8,10 +8,6 @@ namespace AnimMaker_v2
 {
     internal interface Finishable
     {
-        #region Public Properties
-
         bool Finished { get; set; }
-
-        #endregion Public Properties
     }
 }

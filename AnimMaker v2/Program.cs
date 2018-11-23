@@ -36,6 +36,7 @@ namespace AnimMaker_v2
         public static RenderWindow Timeline;
         public static FloatRect timeLineDrawRect;
         public static VertexArray timeLineSegs;
+        public static bool askForUpdate;
 
         #endregion Public Fields
 
@@ -183,6 +184,26 @@ namespace AnimMaker_v2
             Display.SetActive();
             VertexArray segs = new VertexArray(PrimitiveType.Lines);
             var backRect = new RectangleShape(new Vector2f(2000, 2000)) { Origin = new Vector2f(1000, 1000) };
+            int typeGrabbed = 0;
+            bool grabbing = false;
+            Vector2f relativePos = default;
+            Display.MouseButtonPressed += (sender, e) =>
+            {
+                var msPos = Display.MapPixelToCoords(Mouse.GetPosition(Display));
+                if (selection is Bone bone)
+                {
+                    if ((bone.ComputedTransform.TransformPoint(default) - msPos).LengthSquared() < 10 * 10)
+                    {
+                        grabbing = true;
+                        relativePos = bone.ComputedTransform.TransformPoint(default) - msPos;
+                    }
+                }
+            };
+            Display.MouseButtonReleased += (sender, e) =>
+            {
+                grabbing = false;
+                askForUpdate = true;
+            };
             Texture backTexture;
             {
                 var img = new Image(2, 2, new Color(100, 100, 100));
@@ -195,6 +216,7 @@ namespace AnimMaker_v2
             backTexture.Repeated = true;
             while (form.Visible)
             {
+                var mousPosition = Display.MapPixelToCoords(Mouse.GetPosition(Display));
                 Display.DispatchEvents();
                 DynamicObject.Update();
 
@@ -274,6 +296,22 @@ namespace AnimMaker_v2
                     segs.Append(new Vertex(tr2.TransformPoint(0, -99999), Color.Cyan));
                     segs.Append(new Vertex(tr2.TransformPoint(0, 99999), Color.Cyan));
                 }
+                if (grabbing)
+                {
+                    if (typeGrabbed == 0)
+                        (selection as Bone).Position = mousPosition + relativePos;
+                }
+                if (selection is Resource && form.resSprite != null)
+                    form.resSprite.Update(Chronometer.ElapsedTime);
+
+                if (form.resDispl != null && form.resSprite != null)
+                {
+                    form.resDispl.Target.Clear(form.BackColor);
+
+                    form.resDispl.Target.Draw(form.resSprite.InternalRect);
+
+                    form.resDispl.Target.Display();
+                }
 
                 Display.Clear(Color.White);
 
@@ -304,12 +342,11 @@ namespace AnimMaker_v2
                 {
                     Settings = Options.Default;
                 }
+                askForUpdate = false;
                 Clock autoSaveClock = new Clock();
                 Application.EnableVisualStyles();
                 form = new MainForm();
                 Chronometer = new Chronometer();
-                DynamicObject = new SFDynamicObject();
-                Manager = new DynamicObjectBuilder();
                 form.newObj();
                 currentPath = null;
                 selection = null;
@@ -347,7 +384,11 @@ namespace AnimMaker_v2
                 {
                     Application.DoEvents();
                     Timeline.DispatchEvents();
-
+                    if (askForUpdate)
+                    {
+                        askForUpdate = false;
+                        form.UpdateProp();
+                    }
                     if (Settings.AutoFileSave && autoSaveClock.ElapsedTime > Settings.AutoFileTime.ToSFML())
                     {
                         autoSaveClock.Restart();

@@ -18,9 +18,13 @@ namespace AnimMaker_v2
 {
     public partial class ResProperties : UserControl
     {
-        #region Public Constructors
+        #region Private Fields
 
         private bool init;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ResProperties()
         {
@@ -38,7 +42,13 @@ namespace AnimMaker_v2
                     resourceMode.Text = "Texture fixe";
                 smooth.Checked = selectRes.Smooth;
                 repeated.Checked = selectRes.Repeated;
-                img.Image = (Bitmap)selectRes.BaseImage;
+                panel.Controls.Add(Program.form.resDispl);
+                Program.form.resSprite.Resource = selectRes;
+                Program.form.resSprite.InternalRect.Size = (Vector2f)selectRes.FrameSize;
+                Program.form.resSprite.InternalRect.TextureRect = new IntRect(default, selectRes.FrameSize);
+                Program.form.resDispl.Size = new Size(selectRes.FrameSize.X, selectRes.FrameSize.Y);
+                Program.form.resDispl.Target.Size = (Vector2u)selectRes.FrameSize;
+                Program.form.resDispl.Target.SetView(new SFML.Graphics.View(new FloatRect(default, (Vector2f)selectRes.FrameSize)));
             }
             init = true;
         }
@@ -55,7 +65,20 @@ namespace AnimMaker_v2
             Program.form.UpdateProp();
         }
 
-        #endregion Private Methods
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (exportPng.ShowDialog() == DialogResult.OK)
+            {
+                var res = (Resource)Program.selection;
+                res.BaseImage.SaveToFile(exportPng.FileName);
+            }
+        }
+
+        private void name_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!e.Alt && !e.Shift && !e.Control && e.KeyCode == Keys.Return)
+                Program.form.DisplayPanel.Focus();
+        }
 
         private void name_Validated(object sender, EventArgs e)
         {
@@ -65,10 +88,10 @@ namespace AnimMaker_v2
             Program.form.UpdateInterface();
         }
 
-        private void name_KeyDown(object sender, KeyEventArgs e)
+        private void repeated_CheckedChanged(object sender, EventArgs e)
         {
-            if (!e.Alt && !e.Shift && !e.Control && e.KeyCode == Keys.Return)
-                Program.form.DisplayPanel.Focus();
+            var res = (Resource)Program.selection;
+            res.Repeated = repeated.Checked;
         }
 
         private void smooth_CheckedChanged(object sender, EventArgs e)
@@ -77,19 +100,6 @@ namespace AnimMaker_v2
             res.Smooth = smooth.Checked;
         }
 
-        private void repeated_CheckedChanged(object sender, EventArgs e)
-        {
-            var res = (Resource)Program.selection;
-            res.Repeated = repeated.Checked;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (exportPng.ShowDialog() == DialogResult.OK)
-            {
-                var res = (Resource)Program.selection;
-                res.BaseImage.SaveToFile(exportPng.FileName);
-            }
-        }
+        #endregion Private Methods
     }
 }

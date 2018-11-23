@@ -13,6 +13,8 @@ namespace AnimMaker_v2
 {
     public partial class AboutForm : Form
     {
+        #region Public Constructors
+
         public AboutForm()
         {
             InitializeComponent();
@@ -20,6 +22,10 @@ namespace AnimMaker_v2
             versionName.Text = Assembly.GetEntryAssembly().GetName().Version + "  version de l'API : " + WGP.SFDynamicObject.SFDynamicObject.CurrentVersion;
             Select();
         }
+
+        #endregion Public Constructors
+
+        #region Private Methods
 
         private void AboutForm_KeyDown(object sender, KeyEventArgs e)
         {
@@ -31,5 +37,7 @@ namespace AnimMaker_v2
         {
             System.Diagnostics.Process.Start(e.LinkText);
         }
+
+        #endregion Private Methods
     }
 }

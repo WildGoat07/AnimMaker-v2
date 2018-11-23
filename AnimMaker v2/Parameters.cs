@@ -12,6 +12,8 @@ namespace AnimMaker_v2
 {
     public partial class Parameters : Form
     {
+        #region Public Constructors
+
         public Parameters()
         {
             InitializeComponent();
@@ -27,18 +29,9 @@ namespace AnimMaker_v2
             cleanFolder.Text = "Vider le cache (" + ((double)size / 1024 / 1024).ToString("F") + " Mo)";
         }
 
-        private void Parameters_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (System.IO.Directory.Exists(autoFilePath.Text))
-                Program.Settings.AutoFilePath = autoFilePath.Text;
-            Program.Settings.AutoFileSave = autoFileSave.Checked;
-            Program.Settings.AutoFileTime = TimeSpan.FromMinutes((double)autoFileTime.Value);
-            using (var stream = new System.IO.FileStream(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AnimMakerV2\\params"), System.IO.FileMode.Create, System.IO.FileAccess.Write))
-            {
-                var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                formatter.Serialize(stream, Program.Settings);
-            }
-        }
+        #endregion Public Constructors
+
+        #region Private Methods
 
         private void autoFileSave_CheckedChanged(object sender, EventArgs e)
         {
@@ -62,6 +55,19 @@ namespace AnimMaker_v2
             cleanFolder.Text = "Vider le cache (" + ((double)size / 1024 / 1024).ToString("F") + " Mo)";
         }
 
+        private void Parameters_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (System.IO.Directory.Exists(autoFilePath.Text))
+                Program.Settings.AutoFilePath = autoFilePath.Text;
+            Program.Settings.AutoFileSave = autoFileSave.Checked;
+            Program.Settings.AutoFileTime = TimeSpan.FromMinutes((double)autoFileTime.Value);
+            using (var stream = new System.IO.FileStream(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AnimMakerV2\\params"), System.IO.FileMode.Create, System.IO.FileAccess.Write))
+            {
+                var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                formatter.Serialize(stream, Program.Settings);
+            }
+        }
+
         private void searchFolder_Click(object sender, EventArgs e)
         {
             var dialog = new FolderBrowserDialog();
@@ -72,5 +78,7 @@ namespace AnimMaker_v2
                 autoFilePath.Text = dialog.SelectedPath;
             }
         }
+
+        #endregion Private Methods
     }
 }

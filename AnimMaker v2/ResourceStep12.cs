@@ -18,9 +18,9 @@ namespace AnimMaker_v2
     {
         #region Public Fields
 
-        public Vector2i size;
-        public Vector2i[] pos;
         public int fpsCount;
+        public Vector2i[] pos;
+        public Vector2i size;
 
         #endregion Public Fields
 
@@ -62,6 +62,11 @@ namespace AnimMaker_v2
         #endregion Public Properties
 
         #region Private Methods
+
+        private void fps_ValueChanged(object sender, EventArgs e)
+        {
+            fpsCount = (int)fps.Value;
+        }
 
         private void SizeX_ValueChanged(object sender, EventArgs e)
         {
@@ -137,10 +142,5 @@ namespace AnimMaker_v2
         }
 
         #endregion Private Methods
-
-        private void fps_ValueChanged(object sender, EventArgs e)
-        {
-            fpsCount = (int)fps.Value;
-        }
     }
 }
