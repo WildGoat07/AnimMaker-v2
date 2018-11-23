@@ -142,6 +142,12 @@
   <data name="logox64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\logox64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="majDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icons\majDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="majUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icons\majUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="origin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icons\origin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -171,5 +177,17 @@
   </data>
   <data name="scale" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icons\scale.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icons\xDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icons\xUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="yDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icons\yDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="yUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icons\yUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

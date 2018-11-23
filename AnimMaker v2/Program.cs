@@ -15,6 +15,7 @@ namespace AnimMaker_v2
     {
         #region Public Fields
 
+        public static bool askForUpdate;
         public static Chronometer Chronometer;
         public static int createdAnimations;
         public static int createdBones;
@@ -24,6 +25,7 @@ namespace AnimMaker_v2
         public static SFDynamicObject DynamicObject;
         public static WGP.TEXT.Font font;
         public static MainForm form;
+        public static Gizmo Gizmo;
         public static List<KeyControl> keyControls;
         public static DynamicObjectBuilder Manager;
         public static bool seeking;
@@ -36,7 +38,6 @@ namespace AnimMaker_v2
         public static RenderWindow Timeline;
         public static FloatRect timeLineDrawRect;
         public static VertexArray timeLineSegs;
-        public static bool askForUpdate;
 
         #endregion Public Fields
 
@@ -181,21 +182,112 @@ namespace AnimMaker_v2
 
         private static void DisplLoop()
         {
+            Func<Bone, Transform> GetParentTransform = (bone) => bone.ComputedTransform * bone.InverseTransform;
+            Func<Bone, Transform> TransformWithoutOri = (bone) => bone.ComputedTransform * new Transformable() { Origin = -bone.Origin }.Transform;
+            Func<Bone, Transform> GetPositionTransform = (bone) => bone.ComputedTransform * bone.InverseTransform * new Transformable() { Position = bone.Position }.Transform;
             Display.SetActive();
             VertexArray segs = new VertexArray(PrimitiveType.Lines);
             var backRect = new RectangleShape(new Vector2f(2000, 2000)) { Origin = new Vector2f(1000, 1000) };
             int typeGrabbed = 0;
             bool grabbing = false;
-            Vector2f relativePos = default;
+            Vector2f basePt2 = default;
+            Vector2f basePt = default;
+            Vector2f baseOri = default;
+            Vector2f basePos = default;
+            Vector2f baseSca = default;
+            float baseRot = default;
+            Vector2f baseOriK = default;
+            Vector2f basePosK = default;
+            Vector2f baseScaK = default;
+            float baseRotK = default;
+            Angle baseAngle = default;
+            Transform baseTr = default;
+            Transform baseTr2 = default;
+            bool wasPlaying = false;
+            bool grabbingAnim = false;
             Display.MouseButtonPressed += (sender, e) =>
             {
                 var msPos = Display.MapPixelToCoords(Mouse.GetPosition(Display));
                 if (selection is Bone bone)
                 {
-                    if ((bone.ComputedTransform.TransformPoint(default) - msPos).LengthSquared() < 10 * 10)
+                    if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.POSITION)
                     {
+                        typeGrabbed = 0;
                         grabbing = true;
-                        relativePos = bone.ComputedTransform.TransformPoint(default) - msPos;
+                        baseTr = GetParentTransform(bone);
+                        basePos = bone.Position;
+                        basePt = baseTr.GetInverse().TransformPoint(msPos);
+                    }
+                    if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.ORIGIN)
+                    {
+                        typeGrabbed = 1;
+                        grabbing = true;
+                        baseTr = TransformWithoutOri(bone);
+                        baseTr2 = GetParentTransform(bone);
+                        basePt2 = baseTr.GetInverse().TransformPoint(msPos);
+                        basePt = baseTr2.GetInverse().TransformPoint(msPos);
+                        baseOri = bone.Origin;
+                        basePos = bone.Position;
+                    }
+                    if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.SCALE)
+                    {
+                        typeGrabbed = 2;
+                        grabbing = true;
+                        baseTr = GetPositionTransform(bone);
+                        basePt = baseTr.GetInverse().TransformPoint(msPos);
+                        baseSca = bone.Scale;
+                    }
+                    if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.ROTATION)
+                    {
+                        typeGrabbed = 3;
+                        grabbing = true;
+                        baseTr = GetPositionTransform(bone);
+                        baseAngle = baseTr.GetInverse().TransformPoint(msPos).GetAngle();
+                        baseRot = bone.Rotation;
+                    }
+                }
+                if (selection is Animation.Key key)
+                {
+                    grabbingAnim = true;
+                    wasPlaying = !Chronometer.Paused;
+                    Chronometer.Paused = true;
+                    DynamicObject.CurrentTime = key.Position;
+                    DynamicObject.Update();
+                    if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.POSITION)
+                    {
+                        typeGrabbed = 10;
+                        grabbing = true;
+                        baseTr = GetParentTransform(selectedBone);
+                        basePosK = key.Transform.Position;
+                        basePos = selectedBone.Position;
+                        basePt = baseTr.GetInverse().TransformPoint(msPos);
+                    }
+                    if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.ORIGIN)
+                    {
+                        typeGrabbed = 11;
+                        grabbing = true;
+                        baseTr = TransformWithoutOri(selectedBone);
+                        baseTr2 = GetParentTransform(selectedBone);
+                        basePt2 = baseTr.GetInverse().TransformPoint(msPos);
+                        basePt = baseTr2.GetInverse().TransformPoint(msPos);
+                        baseOri = selectedBone.Origin;
+                        basePos = selectedBone.Position;
+                    }
+                    if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.SCALE)
+                    {
+                        typeGrabbed = 12;
+                        grabbing = true;
+                        baseTr = GetPositionTransform(selectedBone);
+                        basePt = baseTr.GetInverse().TransformPoint(msPos);
+                        baseSca = selectedBone.Scale;
+                    }
+                    if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.ROTATION)
+                    {
+                        typeGrabbed = 13;
+                        grabbing = true;
+                        baseTr = GetPositionTransform(selectedBone);
+                        baseAngle = baseTr.GetInverse().TransformPoint(msPos).GetAngle();
+                        baseRot = selectedBone.Rotation;
                     }
                 }
             };
@@ -203,6 +295,10 @@ namespace AnimMaker_v2
             {
                 grabbing = false;
                 askForUpdate = true;
+
+                if (wasPlaying && grabbingAnim)
+                    Chronometer.Paused = false;
+                grabbingAnim = false;
             };
             Texture backTexture;
             {
@@ -216,7 +312,7 @@ namespace AnimMaker_v2
             backTexture.Repeated = true;
             while (form.Visible)
             {
-                var mousPosition = Display.MapPixelToCoords(Mouse.GetPosition(Display));
+                var mousePosition = Display.MapPixelToCoords(Mouse.GetPosition(Display));
                 Display.DispatchEvents();
                 DynamicObject.Update();
 
@@ -251,26 +347,6 @@ namespace AnimMaker_v2
                         segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.BotLeft()), new Color(255, 130, 0)));
                         segs.Append(new Vertex(sptr.TransformPoint(spriteBounds.TopLeft()), new Color(255, 130, 0)));
                     }
-                    if (localRects.Count > 0)
-                    {
-                        Vector2f topleft = localRects.First().TopLeft();
-                        Vector2f botright = localRects.First().BotRight();
-                        foreach (var rect in localRects)
-                        {
-                            topleft.X = Utilities.Min(topleft.X, rect.TopLeft().X);
-                            topleft.Y = Utilities.Min(topleft.Y, rect.TopLeft().Y);
-                            botright.X = Utilities.Max(botright.X, rect.BotRight().X);
-                            botright.Y = Utilities.Max(botright.Y, rect.BotRight().Y);
-                        }
-                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, topleft.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(botright.X, topleft.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(botright.X, topleft.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(botright.X, botright.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(botright.X, botright.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, botright.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, botright.Y), Color.Black));
-                        segs.Append(new Vertex(tr.TransformPoint(topleft.X, topleft.Y), Color.Black));
-                    }
                     if (pts.Count > 0)
                     {
                         Vector2f topleft;
@@ -296,13 +372,80 @@ namespace AnimMaker_v2
                     segs.Append(new Vertex(tr2.TransformPoint(0, -99999), Color.Cyan));
                     segs.Append(new Vertex(tr2.TransformPoint(0, 99999), Color.Cyan));
                 }
+                Gizmo.Display = Gizmo.DisplayMode.NONE;
                 if (grabbing)
                 {
                     if (typeGrabbed == 0)
-                        (selection as Bone).Position = mousPosition + relativePos;
+                    {
+                        Gizmo.Display = Gizmo.DisplayMode.XY;
+                        var bone = selection as Bone;
+                        bone.Position = baseTr.GetInverse().TransformPoint(mousePosition) - basePt + basePos;
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.X))
+                            bone.Position = new Vector2f(bone.Position.X, basePos.Y);
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.Y))
+                            bone.Position = new Vector2f(basePos.X, bone.Position.Y);
+                    }
+                    if (typeGrabbed == 10)
+                    {
+                        Gizmo.Display = Gizmo.DisplayMode.XY;
+                        var key = selection as Animation.Key;
+                        key.Transform.Position = baseTr.GetInverse().TransformPoint(mousePosition) - basePt + basePosK;
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.X))
+                            key.Transform.Position = new Vector2f(key.Transform.Position.X, basePosK.Y);
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.Y))
+                            key.Transform.Position = new Vector2f(basePosK.X, key.Transform.Position.Y);
+                    }
+                    if (typeGrabbed == 1)
+                    {
+                        Gizmo.Display = Gizmo.DisplayMode.XY;
+                        var bone = selection as Bone;
+                        bone.Origin = baseOri + baseTr.GetInverse().TransformPoint(mousePosition) - basePt2;
+                        bone.Position = baseTr2.GetInverse().TransformPoint(mousePosition) - basePt + basePos;
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.X))
+                            bone.Origin = new Vector2f(bone.Origin.X, baseOri.Y);
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.Y))
+                            bone.Origin = new Vector2f(baseOri.X, bone.Origin.Y);
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.X))
+                            bone.Position = new Vector2f(bone.Position.X, basePos.Y);
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.Y))
+                            bone.Position = new Vector2f(basePos.X, bone.Position.Y);
+                    }
+                    if (typeGrabbed == 2)
+                    {
+                        Gizmo.Display = Gizmo.DisplayMode.MAJ;
+                        var bone = selection as Bone;
+                        Vector2f coeff = baseTr.GetInverse().TransformPoint(mousePosition);
+                        coeff.X /= basePt.X;
+                        coeff.Y /= basePt.Y;
+                        coeff.X = (coeff.X - 1) / 3 + 1;
+                        coeff.Y = (coeff.Y - 1) / 3 + 1;
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.LShift) || Keyboard.IsKeyPressed(Keyboard.Key.RShift))
+                            coeff = new Vector2f(Utilities.Min(coeff.X, coeff.Y), Utilities.Min(coeff.X, coeff.Y));
+                        var sc = new Vector2f(baseSca.X * coeff.X, baseSca.Y * coeff.Y);
+                        bone.Scale = sc;
+                    }
+                    if (typeGrabbed == 3)
+                    {
+                        Gizmo.Display = Gizmo.DisplayMode.MAJ;
+                        var bone = selection as Bone;
+                        Angle addAngle = baseTr.GetInverse().TransformPoint(mousePosition).GetAngle() - baseAngle;
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.LShift) || Keyboard.IsKeyPressed(Keyboard.Key.RShift))
+                            addAngle -= addAngle % (Angle.Loop / 8);
+                        bone.Rotation = (baseRot + addAngle.Degree) % 360;
+                    }
                 }
                 if (selection is Resource && form.resSprite != null)
                     form.resSprite.Update(Chronometer.ElapsedTime);
+                {
+                    if (selection is Bone bone)
+                    {
+                        Gizmo.Position = (GetPositionTransform(bone)).TransformPoint(default);
+                    }
+                    if (selection is Animation.Key)
+                    {
+                        Gizmo.Position = (GetPositionTransform(selectedBone)).TransformPoint(default);
+                    }
+                }
 
                 if (form.resDispl != null && form.resSprite != null)
                 {
@@ -320,6 +463,17 @@ namespace AnimMaker_v2
                 Display.Draw(DynamicObject);
 
                 Display.Draw(segs);
+
+                if (selection is Bone b)
+                {
+                    if ((GetPositionTransform(selectedBone).TransformPoint(default) - mousePosition).LengthSquared() < 100 * 100 || grabbing)
+                        Display.Draw(Gizmo);
+                }
+                if (selection is Animation.Key)
+                {
+                    if ((GetPositionTransform(selectedBone).TransformPoint(default) - mousePosition).LengthSquared() < 100 * 100 || grabbing)
+                        Display.Draw(Gizmo);
+                }
 
                 Display.Display();
             }
@@ -347,6 +501,7 @@ namespace AnimMaker_v2
                 Application.EnableVisualStyles();
                 form = new MainForm();
                 Chronometer = new Chronometer();
+                Gizmo = new Gizmo();
                 form.newObj();
                 currentPath = null;
                 selection = null;
