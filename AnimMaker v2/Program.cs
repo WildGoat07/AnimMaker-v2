@@ -582,7 +582,7 @@ namespace AnimMaker_v2
 
                 if (args.Length > 0)
                 {
-                    var path = args[1];
+                    var path = args[0];
                     form.OpenObject(path);
                 }
 

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6B7F83BE-4951-456D-9896-42386059B15E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>AnimMaker_v2</RootNamespace>
     <AssemblyName>AnimMaker v2</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>

@@ -7,14 +7,15 @@ using System.Windows.Forms;
 
 namespace setup
 {
-    static class Program
+    internal static class Program
     {
         public static List<ToExtract> files;
+
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             files = new List<ToExtract>();
 
@@ -22,16 +23,13 @@ namespace setup
             files.Add(new ToExtract() { Name = "csfml-graphics-2.dll", stream = new System.IO.MemoryStream(Properties.Resources.csfml_graphics_2) });
             files.Add(new ToExtract() { Name = "csfml-system-2.dll", stream = new System.IO.MemoryStream(Properties.Resources.csfml_system_2) });
             files.Add(new ToExtract() { Name = "csfml-window-2.dll", stream = new System.IO.MemoryStream(Properties.Resources.csfml_window_2) });
-            files.Add(new ToExtract() { Name = "Newtonsoft.Json.dll", stream = new System.IO.MemoryStream(Properties.Resources.Newtonsoft_Json) });
             files.Add(new ToExtract() { Name = "sfmlnet-graphics-2.dll", stream = new System.IO.MemoryStream(Properties.Resources.sfmlnet_graphics_2) });
             files.Add(new ToExtract() { Name = "sfmlnet-system-2.dll", stream = new System.IO.MemoryStream(Properties.Resources.sfmlnet_system_2) });
-            files.Add(new ToExtract() { Name = "sfmlnet-audio-2.dll", stream = new System.IO.MemoryStream(Properties.Resources.sfmlnet_audio_2) });
             files.Add(new ToExtract() { Name = "sfmlnet-window-2.dll", stream = new System.IO.MemoryStream(Properties.Resources.sfmlnet_window_2) });
             files.Add(new ToExtract() { Name = "WGP.NET-SFDynamicObject.dll", stream = new System.IO.MemoryStream(Properties.Resources.WGP_NET_SFDynamicObject) });
             files.Add(new ToExtract() { Name = "WGP.NET-TEXT.dll", stream = new System.IO.MemoryStream(Properties.Resources.WGP_NET_TEXT) });
             files.Add(new ToExtract() { Name = "WildGoatPackage.NET.dll", stream = new System.IO.MemoryStream(Properties.Resources.WildGoatPackage_NET) });
             files.Add(new ToExtract() { Name = "wgdo.ico", stream = new System.IO.MemoryStream(Properties.Resources.wgdo) });
-            files.Add(new ToExtract() { Name = "resm.ico", stream = new System.IO.MemoryStream(Properties.Resources.resm) });
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -45,6 +43,7 @@ namespace setup
             Application.Run(new Form1());
         }
     }
+
     public struct ToExtract
     {
         public string Name { get; set; }

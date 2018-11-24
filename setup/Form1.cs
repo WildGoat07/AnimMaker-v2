@@ -16,6 +16,7 @@ namespace setup
     {
         private bool mouseDown;
         private Point lastLoc;
+
         public Form1()
         {
             InitializeComponent();
@@ -77,20 +78,15 @@ namespace setup
                 if (userOnly.Checked)
                     reg = Registry.CurrentUser;
 
-                reg.CreateSubKey(@"Software\Classes\.wgdo").SetValue("", "AnimMakerV2.wgdo");
-                reg.CreateSubKey(@"Software\Classes\.resm").SetValue("", "AnimMakerV2.resm");
+                reg.CreateSubKey(@"Software\Classes\.wgdot").SetValue("", "AnimMakerV2.wgdot");
 
-                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.wgdo").SetValue("", "fichier d'objet dynamique");
-                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.resm").SetValue("", "fichier de gestionnaire de ressources");
+                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.wgdot").SetValue("", "fichier d'objet dynamique");
                 reg.CreateSubKey(@"Software\Classes\AnimMakerV2").SetValue("Path", Path);
 
-                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.wgdo\DefaultIcon").SetValue("", System.IO.Path.Combine(Path, "wgdo.ico"));
-                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.resm\DefaultIcon").SetValue("", System.IO.Path.Combine(Path, "resm.ico"));
+                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.wgdot\DefaultIcon").SetValue("", System.IO.Path.Combine(Path, "wgdo.ico"));
 
-                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.wgdo\shell\open\command").
-                    SetValue("", "\"" + System.IO.Path.Combine(Path, "AnimMaker v2.exe") + "\" \"/o\" \"%1\"");
-                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.resm\shell\open\command").
-                    SetValue("", "\"" + System.IO.Path.Combine(Path, "AnimMaker v2.exe") + "\" \"/r\" \"%1\"");
+                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.wgdot\shell\open\command").
+                    SetValue("", "\"" + System.IO.Path.Combine(Path, "AnimMaker v2.exe") + "\" \"%1\"");
 
                 if (addQuickStart.Checked)
                 {

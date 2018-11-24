@@ -114,6 +114,9 @@ namespace AnimMaker_v2
             Program.DynamicObject = Program.Manager.CreateObject("obj");
             Program.selection = null;
             Program.CurrentID = Guid.NewGuid();
+            Program.createdAnimations = 0;
+            Program.createdBones = 0;
+            Program.DynamicObject.Chronometer = Program.Chronometer;
             UpdateInterface();
         }
 

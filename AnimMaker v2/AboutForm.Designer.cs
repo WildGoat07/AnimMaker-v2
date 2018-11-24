@@ -32,8 +32,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.titleText = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.versionName = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.versionName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -64,15 +64,6 @@
             this.panel1.Size = new System.Drawing.Size(776, 435);
             this.panel1.TabIndex = 2;
             // 
-            // versionName
-            // 
-            this.versionName.AutoSize = true;
-            this.versionName.Location = new System.Drawing.Point(300, 70);
-            this.versionName.Name = "versionName";
-            this.versionName.Size = new System.Drawing.Size(35, 13);
-            this.versionName.TabIndex = 3;
-            this.versionName.Text = "label1";
-            // 
             // richTextBox1
             // 
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -83,6 +74,15 @@
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             this.richTextBox1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBox1_LinkClicked);
+            // 
+            // versionName
+            // 
+            this.versionName.AutoSize = true;
+            this.versionName.Location = new System.Drawing.Point(300, 70);
+            this.versionName.Name = "versionName";
+            this.versionName.Size = new System.Drawing.Size(35, 13);
+            this.versionName.TabIndex = 3;
+            this.versionName.Text = "label1";
             // 
             // AboutForm
             // 

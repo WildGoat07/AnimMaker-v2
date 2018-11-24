@@ -100,9 +100,7 @@
             this.properties = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.openObject = new System.Windows.Forms.OpenFileDialog();
-            this.openRes = new System.Windows.Forms.OpenFileDialog();
             this.saveObject = new System.Windows.Forms.SaveFileDialog();
-            this.saveRes = new System.Windows.Forms.SaveFileDialog();
             this.openTexture = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -809,24 +807,13 @@
             // openObject
             // 
             this.openObject.AutoUpgradeEnabled = false;
-            this.openObject.Filter = "Objets dynamqiues (*.wgdo)|*.wgdo|Tous les fichiers (*.*)|*.*";
+            this.openObject.Filter = "Objets dynamiques (*.wgdot)|*.wgdot|Tous les fichiers (*.*)|*.*";
             this.openObject.Title = "Ouvrir un objet dynamique";
-            // 
-            // openRes
-            // 
-            this.openRes.AutoUpgradeEnabled = false;
-            this.openRes.Filter = "Manager de ressources (*.resm)|*.resm|Tous les fichiers (*.*)|*.*";
-            this.openRes.Title = "Ouvrir un manager";
             // 
             // saveObject
             // 
             this.saveObject.AutoUpgradeEnabled = false;
-            this.saveObject.Filter = "Objets dynamqiues (*.wgdo)|*.wgdo|Tous les fichiers (*.*)|*.*";
-            // 
-            // saveRes
-            // 
-            this.saveRes.AutoUpgradeEnabled = false;
-            this.saveRes.Filter = "Manager de ressources (*.resm)|*.resm|Tous les fichiers (*.*)|*.*";
+            this.saveObject.Filter = "Objets dynamiques (*.wgdot)|*.wgdot|Tous les fichiers (*.*)|*.*";
             // 
             // openTexture
             // 
@@ -924,9 +911,7 @@
         private System.Windows.Forms.Button removeAnim;
         private System.Windows.Forms.ListBox animations;
         private System.Windows.Forms.OpenFileDialog openObject;
-        private System.Windows.Forms.OpenFileDialog openRes;
         private System.Windows.Forms.SaveFileDialog saveObject;
-        private System.Windows.Forms.SaveFileDialog saveRes;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolAddBone;
         private System.Windows.Forms.ToolStripButton toolRemoveBone;

@@ -15,6 +15,7 @@ namespace setup
     {
         private bool mouseDown;
         private Point lastLoc;
+
         public Form2()
         {
             InitializeComponent();
@@ -57,14 +58,10 @@ namespace setup
             else
                 reg = Registry.CurrentUser.OpenSubKey(@"Software\Classes", true);
 
-            reg.DeleteSubKeyTree(@".wgdo");
-            Console.WriteLine("deleted .wgdo");
-            reg.DeleteSubKeyTree(@".resm");
-            Console.WriteLine("deleted .resm");
-            reg.DeleteSubKeyTree(@"AnimMakerV2.wgdo");
-            Console.WriteLine("deleted AnimMakerV2.wgdo");
-            reg.DeleteSubKeyTree(@"AnimMakerV2.resm");
-            Console.WriteLine("deleted AnimMakerV2.resm");
+            reg.DeleteSubKeyTree(@".wgdot");
+            Console.WriteLine("deleted .wgdot");
+            reg.DeleteSubKeyTree(@"AnimMakerV2.wgdot");
+            Console.WriteLine("deleted AnimMakerV2.wgdot");
             Path = reg.OpenSubKey(@"AnimMakerV2").GetValue("Path").ToString();
             reg.DeleteSubKeyTree(@"AnimMakerV2");
             Console.WriteLine("deleted AnimMakerV2");
