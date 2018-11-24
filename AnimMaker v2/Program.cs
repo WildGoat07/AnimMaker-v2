@@ -183,8 +183,14 @@ namespace AnimMaker_v2
         private static void DisplLoop()
         {
             Func<Bone, Transform> GetParentTransform = (bone) => bone.ComputedTransform * bone.InverseTransform;
+            Func<Bone, Animation.Key, Transform> GetParentTransformWithKey = (bone, key) => bone.ComputedTransform * new Transformable()
+            { Position = bone.Position + key.Transform.Position, Origin = bone.Origin + key.Transform.Origin, Rotation = bone.Rotation + key.Transform.Rotation, Scale = bone.Scale * key.Transform.Scale }.InverseTransform;
             Func<Bone, Transform> TransformWithoutOri = (bone) => bone.ComputedTransform * new Transformable() { Origin = -bone.Origin }.Transform;
+            Func<Bone, Animation.Key, Transform> TransformWithoutOriWithKey = (bone, key) => bone.ComputedTransform * new Transformable() { Origin = -bone.Origin - key.Transform.Origin }.Transform;
             Func<Bone, Transform> GetPositionTransform = (bone) => bone.ComputedTransform * bone.InverseTransform * new Transformable() { Position = bone.Position }.Transform;
+            Func<Bone, Animation.Key, Transform> GetPositionTransformWithKey = (bone, key) => bone.ComputedTransform * new Transformable()
+            { Position = bone.Position + key.Transform.Position, Origin = bone.Origin + key.Transform.Origin, Rotation = bone.Rotation + key.Transform.Rotation, Scale = bone.Scale * key.Transform.Scale }.InverseTransform
+            * new Transformable() { Position = bone.Position + key.Transform.Position }.Transform;
             Display.SetActive();
             VertexArray segs = new VertexArray(PrimitiveType.Lines);
             var backRect = new RectangleShape(new Vector2f(2000, 2000)) { Origin = new Vector2f(1000, 1000) };
@@ -257,7 +263,7 @@ namespace AnimMaker_v2
                     {
                         typeGrabbed = 10;
                         grabbing = true;
-                        baseTr = GetParentTransform(selectedBone);
+                        baseTr = GetPositionTransformWithKey(selectedBone, key);
                         basePosK = key.Transform.Position;
                         basePos = selectedBone.Position;
                         basePt = baseTr.GetInverse().TransformPoint(msPos);
@@ -266,28 +272,31 @@ namespace AnimMaker_v2
                     {
                         typeGrabbed = 11;
                         grabbing = true;
-                        baseTr = TransformWithoutOri(selectedBone);
-                        baseTr2 = GetParentTransform(selectedBone);
+                        baseTr = TransformWithoutOriWithKey(selectedBone, key);
+                        baseTr2 = GetPositionTransformWithKey(selectedBone, key);
                         basePt2 = baseTr.GetInverse().TransformPoint(msPos);
                         basePt = baseTr2.GetInverse().TransformPoint(msPos);
                         baseOri = selectedBone.Origin;
                         basePos = selectedBone.Position;
+                        baseOriK = key.Transform.Origin;
+                        basePosK = key.Transform.Position;
                     }
                     if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.SCALE)
                     {
                         typeGrabbed = 12;
                         grabbing = true;
-                        baseTr = GetPositionTransform(selectedBone);
+                        baseTr = GetPositionTransformWithKey(selectedBone, key);
                         basePt = baseTr.GetInverse().TransformPoint(msPos);
                         baseSca = selectedBone.Scale;
+                        baseScaK = key.Transform.Scale;
                     }
                     if (Gizmo.GetSelection(msPos) == Gizmo.TransformType.ROTATION)
                     {
                         typeGrabbed = 13;
                         grabbing = true;
-                        baseTr = GetPositionTransform(selectedBone);
+                        baseTr = GetPositionTransformWithKey(selectedBone, key);
                         baseAngle = baseTr.GetInverse().TransformPoint(msPos).GetAngle();
-                        baseRot = selectedBone.Rotation;
+                        baseRotK = key.Transform.Rotation;
                     }
                 }
             };
@@ -325,13 +334,19 @@ namespace AnimMaker_v2
                 if (selectedBone != null)
                 {
                     var bone = selectedBone;
+                    var key = selection as Animation.Key;
                     List<FloatRect> localRects = new List<FloatRect>();
                     List<Vector2f> pts = new List<Vector2f>();
-                    var tr = bone.ComputedTransform;
+                    Transform tr;
+                    if (key != null)
+                        tr = GetPositionTransformWithKey(bone, key);
+                    else
+                        tr = bone.ComputedTransform;
+                    Transform tr3 = bone.ComputedTransform;
                     if (bone.AttachedSprite != null)
                     {
                         var sprite = bone.AttachedSprite;
-                        var sptr = tr * sprite.InternalRect.Transform;
+                        var sptr = tr3 * sprite.InternalRect.Transform;
                         pts.Add(sptr.TransformPoint(sprite.InternalRect.GetLocalBounds().TopLeft()));
                         pts.Add(sptr.TransformPoint(sprite.InternalRect.GetLocalBounds().TopRight()));
                         pts.Add(sptr.TransformPoint(sprite.InternalRect.GetLocalBounds().BotLeft()));
@@ -365,8 +380,9 @@ namespace AnimMaker_v2
                         segs.Append(new Vertex(new Vector2f(topleft.X, botright.Y), Color.Magenta));
                         segs.Append(new Vertex(new Vector2f(topleft.X, topleft.Y), Color.Magenta));
                     }
-                    var tr2 = tr;
-                    tr2.Translate(bone.Origin);
+                    var tr2 = TransformWithoutOri(selectedBone);
+                    if (key != null)
+                        tr2 = TransformWithoutOriWithKey(selectedBone, key);
                     segs.Append(new Vertex(tr2.TransformPoint(-99999, 0), Color.Blue));
                     segs.Append(new Vertex(tr2.TransformPoint(99999, 0), Color.Blue));
                     segs.Append(new Vertex(tr2.TransformPoint(0, -99999), Color.Cyan));
@@ -410,6 +426,21 @@ namespace AnimMaker_v2
                         if (Keyboard.IsKeyPressed(Keyboard.Key.Y))
                             bone.Position = new Vector2f(basePos.X, bone.Position.Y);
                     }
+                    if (typeGrabbed == 11)
+                    {
+                        Gizmo.Display = Gizmo.DisplayMode.XY;
+                        var key = selection as Animation.Key;
+                        key.Transform.Origin = baseOriK + baseTr.GetInverse().TransformPoint(mousePosition) - basePt2;
+                        key.Transform.Position = baseTr2.GetInverse().TransformPoint(mousePosition) - basePt + basePosK;
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.X))
+                            key.Transform.Origin = new Vector2f(key.Transform.Origin.X, baseOriK.Y);
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.Y))
+                            key.Transform.Origin = new Vector2f(baseOriK.X, key.Transform.Origin.Y);
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.X))
+                            key.Transform.Position = new Vector2f(key.Transform.Position.X, basePosK.Y);
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.Y))
+                            key.Transform.Position = new Vector2f(basePosK.X, key.Transform.Position.Y);
+                    }
                     if (typeGrabbed == 2)
                     {
                         Gizmo.Display = Gizmo.DisplayMode.MAJ;
@@ -424,6 +455,20 @@ namespace AnimMaker_v2
                         var sc = new Vector2f(baseSca.X * coeff.X, baseSca.Y * coeff.Y);
                         bone.Scale = sc;
                     }
+                    if (typeGrabbed == 12)
+                    {
+                        Gizmo.Display = Gizmo.DisplayMode.MAJ;
+                        var key = selection as Animation.Key;
+                        Vector2f coeff = baseTr.GetInverse().TransformPoint(mousePosition);
+                        coeff.X /= basePt.X;
+                        coeff.Y /= basePt.Y;
+                        coeff.X = (coeff.X - 1) / 3 + 1;
+                        coeff.Y = (coeff.Y - 1) / 3 + 1;
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.LShift) || Keyboard.IsKeyPressed(Keyboard.Key.RShift))
+                            coeff = new Vector2f(Utilities.Min(coeff.X, coeff.Y), Utilities.Min(coeff.X, coeff.Y));
+                        var sc = new Vector2f(baseScaK.X * coeff.X, baseScaK.Y * coeff.Y);
+                        key.Transform.Scale = sc;
+                    }
                     if (typeGrabbed == 3)
                     {
                         Gizmo.Display = Gizmo.DisplayMode.MAJ;
@@ -433,17 +478,26 @@ namespace AnimMaker_v2
                             addAngle -= addAngle % (Angle.Loop / 8);
                         bone.Rotation = (baseRot + addAngle.Degree) % 360;
                     }
+                    if (typeGrabbed == 13)
+                    {
+                        Gizmo.Display = Gizmo.DisplayMode.MAJ;
+                        var key = selection as Animation.Key;
+                        Angle addAngle = baseTr.GetInverse().TransformPoint(mousePosition).GetAngle() - baseAngle;
+                        if (Keyboard.IsKeyPressed(Keyboard.Key.LShift) || Keyboard.IsKeyPressed(Keyboard.Key.RShift))
+                            addAngle -= addAngle % (Angle.Loop / 8);
+                        key.Transform.Rotation = (baseRotK + addAngle.Degree) % 360;
+                    }
                 }
                 if (selection is Resource && form.resSprite != null)
                     form.resSprite.Update(Chronometer.ElapsedTime);
                 {
                     if (selection is Bone bone)
                     {
-                        Gizmo.Position = (GetPositionTransform(bone)).TransformPoint(default);
+                        Gizmo.Position = GetPositionTransform(bone).TransformPoint(default);
                     }
-                    if (selection is Animation.Key)
+                    if (selection is Animation.Key key)
                     {
-                        Gizmo.Position = (GetPositionTransform(selectedBone)).TransformPoint(default);
+                        Gizmo.Position = GetPositionTransformWithKey(selectedBone, key).TransformPoint(default);
                     }
                 }
 
@@ -466,12 +520,12 @@ namespace AnimMaker_v2
 
                 if (selection is Bone b)
                 {
-                    if ((GetPositionTransform(selectedBone).TransformPoint(default) - mousePosition).LengthSquared() < 100 * 100 || grabbing)
+                    if ((GetPositionTransform(b).TransformPoint(default) - mousePosition).LengthSquared() < 100 * 100 || grabbing)
                         Display.Draw(Gizmo);
                 }
-                if (selection is Animation.Key)
+                if (selection is Animation.Key k)
                 {
-                    if ((GetPositionTransform(selectedBone).TransformPoint(default) - mousePosition).LengthSquared() < 100 * 100 || grabbing)
+                    if ((GetPositionTransformWithKey(selectedBone, k).TransformPoint(default) - mousePosition).LengthSquared() < 100 * 100 || grabbing)
                         Display.Draw(Gizmo);
                 }
 
