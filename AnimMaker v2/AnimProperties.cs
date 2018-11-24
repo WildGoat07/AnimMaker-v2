@@ -17,6 +17,8 @@ namespace AnimMaker_v2
 {
     public partial class AnimProperties : UserControl
     {
+        #region Public Constructors
+
         public AnimProperties()
         {
             InitializeComponent();
@@ -33,13 +35,26 @@ namespace AnimMaker_v2
                 List<string> contained = new List<string>();
                 foreach (var couple in anim.Bones)
                 {
-                    bones.Items.Add(couple.Key);
-                    contained.Add(couple.Key);
+                    bones.Items.Add(couple.Key.Name);
+                    contained.Add(couple.Key.Name);
                 }
                 bonesList.Items.Add("Selectionner un os");
                 bonesList.SelectedIndex = 0;
                 bonesList.Items.AddRange(Program.DynamicObject.BonesHierarchy.ConvertAll((b) => b.Name).Except(contained).ToArray());
             }
+        }
+
+        #endregion Public Constructors
+
+        #region Private Methods
+
+        private void addBone_Click(object sender, EventArgs e)
+        {
+            var anim = (Animation)Program.selection;
+
+            anim.Bones.Add(new Couple<Bone, List<Animation.Key>>(Program.DynamicObject.BonesHierarchy.Find((b) => b.Name == bonesList.Items[bonesList.SelectedIndex].ToString()), new List<Animation.Key>()));
+
+            Program.form.UpdateProp();
         }
 
         private void animName_KeyDown(object sender, KeyEventArgs e)
@@ -57,13 +72,6 @@ namespace AnimMaker_v2
             Program.form.UpdateInterface();
         }
 
-        private void Duration_ValueChanged(object sender, EventArgs e)
-        {
-            var anim = (Animation)Program.selection;
-
-            anim.Duration = Time.FromSeconds((float)Duration.Value);
-        }
-
         private void bones_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (bones.SelectedIndex > -1)
@@ -75,25 +83,23 @@ namespace AnimMaker_v2
             }
         }
 
-        private void removeBone_Click(object sender, EventArgs e)
-        {
-            var anim = (Animation)Program.selection;
-
-            anim.Bones.RemoveAll((couple) => couple.Key == bones.Items[bones.SelectedIndex].ToString());
-
-            Program.form.UpdateProp();
-        }
-
         private void bonesList_SelectedIndexChanged(object sender, EventArgs e)
         {
             addBone.Enabled = bonesList.SelectedIndex > 0;
         }
 
-        private void addBone_Click(object sender, EventArgs e)
+        private void Duration_ValueChanged(object sender, EventArgs e)
         {
             var anim = (Animation)Program.selection;
 
-            anim.Bones.Add(new Couple<string, List<Animation.Key>>(bonesList.Items[bonesList.SelectedIndex].ToString(), new List<Animation.Key>()));
+            anim.Duration = Time.FromSeconds((float)Duration.Value);
+        }
+
+        private void removeBone_Click(object sender, EventArgs e)
+        {
+            var anim = (Animation)Program.selection;
+
+            anim.Bones.RemoveAll((couple) => couple.Key.Name == bones.Items[bones.SelectedIndex].ToString());
 
             Program.form.UpdateProp();
         }
@@ -102,9 +108,11 @@ namespace AnimMaker_v2
         {
             var anim = (Animation)Program.selection;
 
-            Program.selection = anim.Bones.Find((couple) => couple.Key == bones.Items[bones.SelectedIndex].ToString()).Value;
+            Program.selection = anim.Bones.Find((couple) => couple.Key.Name == bones.Items[bones.SelectedIndex].ToString()).Value;
 
             Program.form.UpdateProp();
         }
+
+        #endregion Private Methods
     }
 }

@@ -17,6 +17,8 @@ namespace AnimMaker_v2
 {
     public partial class KeysListProperties : UserControl
     {
+        #region Public Constructors
+
         public KeysListProperties()
         {
             InitializeComponent();
@@ -34,6 +36,17 @@ namespace AnimMaker_v2
             }
         }
 
+        #endregion Public Constructors
+
+        #region Private Methods
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Program.selectedKeys.Add(new Animation.Key() { Position = Program.DynamicObject.CurrentTime, Transform = new Transformable() });
+
+            Program.form.UpdateProp();
+        }
+
         private void keysList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (keysList.SelectedIndex > -1)
@@ -45,11 +58,6 @@ namespace AnimMaker_v2
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Program.selectedKeys.Add(new Animation.Key() { Position = Program.DynamicObject.CurrentTime, Transform = new Transformable() });
-
-            Program.form.UpdateProp();
-        }
+        #endregion Private Methods
     }
 }

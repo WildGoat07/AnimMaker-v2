@@ -123,36 +123,6 @@ namespace setup.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Byte[].
         /// </summary>
-        public static byte[] Newtonsoft_Json {
-            get {
-                object obj = ResourceManager.GetObject("Newtonsoft_Json", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Byte[].
-        /// </summary>
-        public static byte[] resm {
-            get {
-                object obj = ResourceManager.GetObject("resm", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Byte[].
-        /// </summary>
-        public static byte[] sfmlnet_audio_2 {
-            get {
-                object obj = ResourceManager.GetObject("sfmlnet_audio_2", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Byte[].
-        /// </summary>
         public static byte[] sfmlnet_graphics_2 {
             get {
                 object obj = ResourceManager.GetObject("sfmlnet_graphics_2", resourceCulture);

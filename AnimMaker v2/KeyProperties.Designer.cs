@@ -55,19 +55,19 @@
             this.label6 = new System.Windows.Forms.Label();
             this.Opacity = new System.Windows.Forms.NumericUpDown();
             this.OpaFunc = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
             this.keyColor = new System.Windows.Forms.Button();
+            this.ColFunc = new System.Windows.Forms.Button();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
             this.keyOColor = new System.Windows.Forms.Button();
+            this.OColFunc = new System.Windows.Forms.Button();
             this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
             this.label9 = new System.Windows.Forms.Label();
             this.keyOTh = new System.Windows.Forms.NumericUpDown();
-            this.ColFunc = new System.Windows.Forms.Button();
-            this.OColFunc = new System.Windows.Forms.Button();
             this.OThFunc = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.time)).BeginInit();
@@ -492,16 +492,6 @@
             this.OpaFunc.UseVisualStyleBackColor = true;
             this.OpaFunc.Click += new System.EventHandler(this.OpaFunc_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(3, 560);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(127, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Supprimer";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // flowLayoutPanel4
             // 
             this.flowLayoutPanel4.Controls.Add(this.label7);
@@ -533,6 +523,15 @@
             this.keyColor.UseVisualStyleBackColor = true;
             this.keyColor.Click += new System.EventHandler(this.keyColor_Click);
             // 
+            // ColFunc
+            // 
+            this.ColFunc.Location = new System.Drawing.Point(133, 3);
+            this.ColFunc.Name = "ColFunc";
+            this.ColFunc.Size = new System.Drawing.Size(41, 33);
+            this.ColFunc.TabIndex = 13;
+            this.ColFunc.UseVisualStyleBackColor = true;
+            this.ColFunc.Click += new System.EventHandler(this.ColFunc_Click);
+            // 
             // flowLayoutPanel5
             // 
             this.flowLayoutPanel5.Controls.Add(this.label8);
@@ -563,6 +562,15 @@
             this.keyOColor.TabIndex = 1;
             this.keyOColor.UseVisualStyleBackColor = true;
             this.keyOColor.Click += new System.EventHandler(this.keyOColor_Click);
+            // 
+            // OColFunc
+            // 
+            this.OColFunc.Location = new System.Drawing.Point(171, 3);
+            this.OColFunc.Name = "OColFunc";
+            this.OColFunc.Size = new System.Drawing.Size(41, 33);
+            this.OColFunc.TabIndex = 13;
+            this.OColFunc.UseVisualStyleBackColor = true;
+            this.OColFunc.Click += new System.EventHandler(this.OColFunc_Click);
             // 
             // flowLayoutPanel6
             // 
@@ -610,24 +618,6 @@
             this.keyOTh.TabIndex = 1;
             this.keyOTh.ValueChanged += new System.EventHandler(this.keyOTh_ValueChanged);
             // 
-            // ColFunc
-            // 
-            this.ColFunc.Location = new System.Drawing.Point(133, 3);
-            this.ColFunc.Name = "ColFunc";
-            this.ColFunc.Size = new System.Drawing.Size(41, 33);
-            this.ColFunc.TabIndex = 13;
-            this.ColFunc.UseVisualStyleBackColor = true;
-            this.ColFunc.Click += new System.EventHandler(this.ColFunc_Click);
-            // 
-            // OColFunc
-            // 
-            this.OColFunc.Location = new System.Drawing.Point(171, 3);
-            this.OColFunc.Name = "OColFunc";
-            this.OColFunc.Size = new System.Drawing.Size(41, 33);
-            this.OColFunc.TabIndex = 13;
-            this.OColFunc.UseVisualStyleBackColor = true;
-            this.OColFunc.Click += new System.EventHandler(this.OColFunc_Click);
-            // 
             // OThFunc
             // 
             this.OThFunc.Location = new System.Drawing.Point(183, 3);
@@ -636,6 +626,16 @@
             this.OThFunc.TabIndex = 13;
             this.OThFunc.UseVisualStyleBackColor = true;
             this.OThFunc.Click += new System.EventHandler(this.OThFunc_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(3, 560);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(127, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Supprimer";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // KeyProperties
             // 

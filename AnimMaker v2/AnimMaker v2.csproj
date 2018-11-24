@@ -50,6 +50,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>AnimMaker_v2.Program</StartupObject>
@@ -125,12 +126,20 @@
     <Compile Include="DrawingSurface.Designer.cs">
       <DependentUpon>DrawingSurface.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditResource.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditResource.Designer.cs">
+      <DependentUpon>EditResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Finishable.cs" />
     <Compile Include="FunctionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FunctionDialog.Designer.cs">
       <DependentUpon>FunctionDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gizmo.cs" />
     <Compile Include="KeyControl.cs" />
     <Compile Include="KeyListProperties.cs">
       <SubType>UserControl</SubType>
@@ -159,6 +168,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceStep1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResourceStep1.Designer.cs">
+      <DependentUpon>ResourceStep1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceStep12.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResourceStep12.Designer.cs">
+      <DependentUpon>ResourceStep12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceStep2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResourceStep2.Designer.cs">
+      <DependentUpon>ResourceStep2.cs</DependentUpon>
+    </Compile>
     <Compile Include="ResProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -186,6 +213,9 @@
     <EmbeddedResource Include="DrawingSurface.resx">
       <DependentUpon>DrawingSurface.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditResource.resx">
+      <DependentUpon>EditResource.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FunctionDialog.resx">
       <DependentUpon>FunctionDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -211,6 +241,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ResourceStep1.resx">
+      <DependentUpon>ResourceStep1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceStep12.resx">
+      <DependentUpon>ResourceStep12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceStep2.resx">
+      <DependentUpon>ResourceStep2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ResProperties.resx">
       <DependentUpon>ResProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -250,12 +289,22 @@
     <Content Include="icons\bin.png" />
     <Content Include="icons\gauss.png" />
     <Content Include="icons\linear.png" />
+    <Content Include="icons\majDown.png" />
+    <Content Include="icons\majUp.png" />
+    <Content Include="icons\origin.png" />
     <Content Include="icons\play_pause.png" />
+    <Content Include="icons\position.png" />
     <Content Include="icons\pow.png" />
     <Content Include="icons\removeAnim.png" />
     <Content Include="icons\removeBone.png" />
     <Content Include="icons\removeRes.png" />
     <Content Include="icons\root.png" />
+    <Content Include="icons\rotation.png" />
+    <Content Include="icons\scale.png" />
+    <Content Include="icons\xDown.png" />
+    <Content Include="icons\xUp.png" />
+    <Content Include="icons\yDown.png" />
+    <Content Include="icons\yUp.png" />
     <Content Include="logo.ico" />
     <None Include="logox64.png" />
   </ItemGroup>

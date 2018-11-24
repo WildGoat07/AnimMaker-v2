@@ -17,6 +17,8 @@ namespace AnimMaker_v2
 {
     public partial class AskForScaling : Form
     {
+        #region Public Constructors
+
         public AskForScaling()
         {
             InitializeComponent();
@@ -34,12 +36,9 @@ namespace AnimMaker_v2
             }
         }
 
-        private void newTime_ValueChanged(object sender, EventArgs e)
-        {
-            var anim = (Animation)Program.selection;
-            if (anim.Duration != Time.Zero)
-                NewFactor.Text = ((float)newTime.Value / anim.Duration.AsSeconds() * 100).ToString("F") + "%";
-        }
+        #endregion Public Constructors
+
+        #region Private Methods
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -75,5 +74,14 @@ namespace AnimMaker_v2
                 Close();
             }
         }
+
+        private void newTime_ValueChanged(object sender, EventArgs e)
+        {
+            var anim = (Animation)Program.selection;
+            if (anim.Duration != Time.Zero)
+                NewFactor.Text = ((float)newTime.Value / anim.Duration.AsSeconds() * 100).ToString("F") + "%";
+        }
+
+        #endregion Private Methods
     }
 }
