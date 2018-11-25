@@ -124,6 +124,7 @@ namespace AnimMaker_v2
             var anim = (Animation)selection;
             DynamicObject.Animations.Remove(anim);
             selection = null;
+            selectedAnim = null;
             DynamicObject.ResetAnimation();
 
             form.UpdateInterface();

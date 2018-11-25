@@ -163,6 +163,16 @@ namespace AnimMaker_v2.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap noAdd {
+            get {
+                object obj = ResourceManager.GetObject("noAdd", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap origin {
             get {
                 object obj = ResourceManager.GetObject("origin", resourceCulture);
@@ -256,6 +266,16 @@ namespace AnimMaker_v2.Properties {
         internal static System.Drawing.Bitmap scale {
             get {
                 object obj = ResourceManager.GetObject("scale", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap toAdd {
+            get {
+                object obj = ResourceManager.GetObject("toAdd", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

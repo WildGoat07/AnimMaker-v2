@@ -21,6 +21,7 @@ namespace AnimMaker_v2
         public int fpsCount;
         public Vector2i[] pos;
         public Vector2i size;
+        private int numberOfImages;
 
         #endregion Public Fields
 
@@ -29,6 +30,9 @@ namespace AnimMaker_v2
         private DrawingSurface Disp;
 
         private Texture img;
+        private Texture toAddTexture;
+        private Texture noAddTexture;
+        private RectangleShape hint;
 
         #endregion Private Fields
 
@@ -38,13 +42,37 @@ namespace AnimMaker_v2
         {
             fpsCount = frames;
             size = s;
+            numberOfImages = res.FramesPosition.Length;
             Finished = false;
             InitializeComponent();
             Dock = DockStyle.Fill;
-            img = new Texture(res.BaseImage);
+            toAddTexture = new Texture((SFML.Graphics.Image)Properties.Resources.toAdd) { Smooth = true };
+            noAddTexture = new Texture((SFML.Graphics.Image)Properties.Resources.noAdd) { Smooth = true };
+            hint = new RectangleShape();
+            img = new Texture(res.BaseImage) { Smooth = true };
+            img.GenerateMipmap();
             SizeX.Value = (decimal)size.X;
             SizeY.Value = (decimal)size.Y;
             fps.Value = (decimal)fpsCount;
+            {
+                int x = 0, y = 0;
+                int positions = 0;
+                if (size.X > 0 && size.Y > 0)
+                {
+                    do
+                    {
+                        x = 0;
+                        do
+                        {
+                            positions++;
+                            x += size.X;
+                        } while (x + size.X <= img.Size.X);
+                        y += size.Y;
+                    } while (y + size.Y <= img.Size.Y);
+                }
+                nbImages.Maximum = (decimal)positions;
+            }
+            nbImages.Value = (decimal)numberOfImages;
             var thread = new System.Threading.Thread(UpdateDisp);
             Disp = new DrawingSurface();
             Disp.Dock = DockStyle.Fill;
@@ -106,6 +134,9 @@ namespace AnimMaker_v2
                     {
                         Center = (Vector2f)img.Size / 2
                     });
+
+                    float minS = Utilities.Min((float)toAddTexture.Size.X * (rectView.Width / Disp.Size.Width), size.X / 3, size.Y / 3);
+                    hint.Size = new Vector2f(minS, minS);
                 }
                 int x = 0, y = 0;
                 positions.Clear();
@@ -122,7 +153,8 @@ namespace AnimMaker_v2
                         y += size.Y;
                     } while (y + size.Y <= img.Size.Y);
                 }
-                pos = positions.ToArray();
+                pos = positions.Take(numberOfImages).ToArray();
+                nbImages.Maximum = positions.Count;
                 vertices.Clear();
                 foreach (var p in positions)
                 {
@@ -137,10 +169,31 @@ namespace AnimMaker_v2
                 Disp.Target.Draw(sprite);
                 Disp.Target.Draw(vertices.ToArray(), PrimitiveType.Lines, new RenderStates(new BlendMode(BlendMode.Factor.OneMinusDstColor, BlendMode.Factor.OneMinusSrcColor)));
 
+                for (int i = 0; i < positions.Count; i++)
+                {
+                    var item = positions[i];
+                    hint.Position = (Vector2f)item + (Vector2f)size - hint.Size;
+                    if (i < numberOfImages)
+                        hint.Texture = toAddTexture;
+                    else
+                        hint.Texture = noAddTexture;
+                    Disp.Target.Draw(hint);
+                }
+
                 Disp.Target.Display();
             }
         }
 
         #endregion Private Methods
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            nbImages.Value = nbImages.Maximum;
+        }
+
+        private void nbImages_ValueChanged(object sender, EventArgs e)
+        {
+            numberOfImages = (int)nbImages.Value;
+        }
     }
 }

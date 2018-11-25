@@ -291,6 +291,7 @@
     <Content Include="icons\linear.png" />
     <Content Include="icons\majDown.png" />
     <Content Include="icons\majUp.png" />
+    <Content Include="icons\noAdd.png" />
     <Content Include="icons\origin.png" />
     <Content Include="icons\play_pause.png" />
     <Content Include="icons\position.png" />
@@ -301,6 +302,7 @@
     <Content Include="icons\root.png" />
     <Content Include="icons\rotation.png" />
     <Content Include="icons\scale.png" />
+    <Content Include="icons\toAdd.png" />
     <Content Include="icons\xDown.png" />
     <Content Include="icons\xUp.png" />
     <Content Include="icons\yDown.png" />

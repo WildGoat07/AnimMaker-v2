@@ -80,7 +80,7 @@ namespace setup
 
                 reg.CreateSubKey(@"Software\Classes\.wgdot").SetValue("", "AnimMakerV2.wgdot");
 
-                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.wgdot").SetValue("", "fichier d'objet dynamique");
+                reg.CreateSubKey(@"Software\Classes\AnimMakerV2.wgdot").SetValue("", "fichier de modèle dynamique");
                 reg.CreateSubKey(@"Software\Classes\AnimMakerV2").SetValue("Path", Path);
 
                 reg.CreateSubKey(@"Software\Classes\AnimMakerV2.wgdot\DefaultIcon").SetValue("", System.IO.Path.Combine(Path, "wgdo.ico"));

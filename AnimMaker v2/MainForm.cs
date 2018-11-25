@@ -667,6 +667,59 @@ namespace AnimMaker_v2
         }
 
         #endregion Private Methods
+
+        private void importerUneSéquenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openTexture.ShowDialog() == DialogResult.OK)
+            {
+                var name = Path.GetFileNameWithoutExtension(openTexture.FileName);
+                while (char.IsDigit(name[name.Length - 1]))
+                    name = name.Substring(0, name.Length - 1);
+                var list = openTexture.FileNames.ToList();
+                list.Sort();
+                var imgs = list.ConvertAll((s) => new SFML.Graphics.Image(s));
+                Vector2u size = imgs[0].Size;
+                if (!imgs.All((img) => img.Size == size))
+                {
+                    MessageBox.Show(this, "Les images ne font pas toutes la même taille.", "Erreur lors de la compilation d'images", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                Vector2i matrixSize = default;
+                {
+                    var root = Math.Sqrt(imgs.Count);
+                    matrixSize.X = (int)Math.Ceiling(root);
+                    if (root - Math.Truncate(root) < .5)
+                        matrixSize.Y = (int)Math.Floor(root);
+                    else
+                        matrixSize.Y = (int)Math.Ceiling(root);
+                }
+                var globalImg = new SFML.Graphics.Image((uint)(size.X * matrixSize.X), (uint)(size.Y * matrixSize.Y), SFML.Graphics.Color.Transparent);
+                Vector2i offset = default;
+                foreach (var img in imgs)
+                {
+                    for (uint x = 0; x < size.X; x++)
+                    {
+                        for (uint y = 0; y < size.Y; y++)
+                        {
+                            globalImg.SetPixel(x + (uint)offset.X, y + (uint)offset.Y, img.GetPixel(x, y));
+                        }
+                    }
+                    offset.X += (int)size.X;
+                    if (offset.X >= globalImg.Size.X)
+                    {
+                        offset.X = 0;
+                        offset.Y += (int)size.Y;
+                    }
+                }
+                var res = new Resource();
+                res.Name = name;
+                res.Smooth = true;
+                res.ChangeBaseImage(globalImg);
+                res.ChangeFrames((Vector2i)globalImg.Size, new Vector2i());
+                Program.DynamicObject.UsedResources.Add(res);
+                UpdateInterface();
+            }
+        }
     }
 }
 

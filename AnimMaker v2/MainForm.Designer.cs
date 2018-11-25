@@ -102,6 +102,7 @@
             this.openObject = new System.Windows.Forms.OpenFileDialog();
             this.saveObject = new System.Windows.Forms.SaveFileDialog();
             this.openTexture = new System.Windows.Forms.OpenFileDialog();
+            this.importerUneSéquenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -629,7 +630,8 @@
             // 
             this.ressourceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ajouterToolStripMenuItem,
-            this.stripRemoveRes});
+            this.stripRemoveRes,
+            this.importerUneSéquenceToolStripMenuItem});
             this.ressourceToolStripMenuItem.Name = "ressourceToolStripMenuItem";
             this.ressourceToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.ressourceToolStripMenuItem.Text = "Ressource";
@@ -638,7 +640,7 @@
             // 
             this.ajouterToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addRes;
             this.ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            this.ajouterToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.ajouterToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.ajouterToolStripMenuItem.Text = "Ajouter";
             this.ajouterToolStripMenuItem.Click += new System.EventHandler(this.ajouterToolStripMenuItem_Click);
             // 
@@ -646,7 +648,7 @@
             // 
             this.stripRemoveRes.Image = global::AnimMaker_v2.Properties.Resources.removeRes;
             this.stripRemoveRes.Name = "stripRemoveRes";
-            this.stripRemoveRes.Size = new System.Drawing.Size(129, 22);
+            this.stripRemoveRes.Size = new System.Drawing.Size(196, 22);
             this.stripRemoveRes.Text = "Supprimer";
             this.stripRemoveRes.Click += new System.EventHandler(this.supprimerToolStripMenuItem1_Click);
             // 
@@ -823,6 +825,13 @@
             this.openTexture.Multiselect = true;
             this.openTexture.Title = "Charger la texture";
             // 
+            // importerUneSéquenceToolStripMenuItem
+            // 
+            this.importerUneSéquenceToolStripMenuItem.Name = "importerUneSéquenceToolStripMenuItem";
+            this.importerUneSéquenceToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.importerUneSéquenceToolStripMenuItem.Text = "Importer une séquence";
+            this.importerUneSéquenceToolStripMenuItem.Click += new System.EventHandler(this.importerUneSéquenceToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -930,5 +939,6 @@
         private System.Windows.Forms.ToolStripMenuItem aProposToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paramètresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sauvegarderSousToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importerUneSéquenceToolStripMenuItem;
     }
 }
