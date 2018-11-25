@@ -115,7 +115,7 @@ namespace setup
                         shortcut.Save();
                     }
                 }
-                MessageBox.Show(this, "AnimMaker v2 a été sinstallé avec succès", "Installation terminée", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(this, "AnimMaker v2 a été installé avec succès", "Installation terminée", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Environment.Exit(0);
             }
             catch (System.IO.DirectoryNotFoundException)
