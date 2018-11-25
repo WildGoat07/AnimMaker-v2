@@ -1,4 +1,6 @@
-# AnimMaker-v2
+ ![logo](https://github.com/WildGoat07/AnimMaker-v2/blob/master/setup/logox64.png)
+ 
+ # AnimMaker-v2
 
 An app to create animations for the WGP.NET-SFDynamicObject API
 
