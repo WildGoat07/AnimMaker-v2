@@ -141,27 +141,28 @@ namespace AnimMaker_v2
             {
                 hierarchy.Items.Clear();
                 foreach (var bone in Program.DynamicObject.BonesHierarchy.AsEnumerable().Reverse())
-                    hierarchy.Items.Add(bone.Name);
+                    hierarchy.Items.Add(new OrderedDisplayer(bone));
                 if (Program.selection is Bone)
-                    hierarchy.SelectedIndex = hierarchy.Items.IndexOf(((Bone)Program.selection).Name);
+                    hierarchy.SelectedIndex = hierarchy.Items.IndexOf(new OrderedDisplayer(Program.selection));
                 else
                     hierarchy.SelectedIndex = -1;
             }
             {
                 res.Items.Clear();
                 foreach (var resource in Program.DynamicObject.UsedResources)
-                    res.Items.Add(resource.Name);
+                    res.Items.Add(new OrderedDisplayer(resource));
                 if (Program.selection is Resource)
-                    res.SelectedIndex = res.Items.IndexOf(((Resource)Program.selection).Name);
+                    res.SelectedIndex = res.Items.IndexOf(new OrderedDisplayer(Program.selection));
                 else
                     res.SelectedIndex = -1;
             }
             {
                 animations.Items.Clear();
+                int i = 0;
                 foreach (var animation in Program.DynamicObject.Animations)
-                    animations.Items.Add(animation.Name);
+                    animations.Items.Add(new OrderedDisplayer(animation));
                 if (Program.selection is Animation)
-                    animations.SelectedIndex = animations.Items.IndexOf(((Animation)Program.selection).Name);
+                    animations.SelectedIndex = animations.Items.IndexOf(new OrderedDisplayer(Program.selection));
                 else
                     animations.SelectedIndex = -1;
             }
@@ -212,7 +213,7 @@ namespace AnimMaker_v2
                     toolRemoveBone.Enabled = true;
                     stripTopBone.Enabled = true;
                     stripBotBone.Enabled = true;
-                    var tmp = hierarchy.Items.IndexOf(bone.Name);
+                    var tmp = hierarchy.Items.IndexOf(new OrderedDisplayer(bone));
                     if (tmp > 0)
                         moveUpHierarchy.Enabled = true;
                     if (tmp < hierarchy.Items.Count - 1)
@@ -317,7 +318,7 @@ namespace AnimMaker_v2
             if (animations.SelectedIndex == -1)
                 Program.selection = null;
             else
-                Program.selection = Program.DynamicObject.Animations.Find((anim) => anim.Name == animations.Items[animations.SelectedIndex].ToString());
+                Program.selection = Program.DynamicObject.Animations.Find((anim) => anim.ID == ((dynamic)animations.Items[animations.SelectedIndex]).ID);
             UpdateProp();
         }
 
@@ -480,7 +481,7 @@ namespace AnimMaker_v2
             if (hierarchy.SelectedIndex == -1)
                 Program.selection = null;
             else
-                Program.selection = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.Name == hierarchy.Items[hierarchy.SelectedIndex].ToString());
+                Program.selection = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.ID == ((dynamic)hierarchy.Items[hierarchy.SelectedIndex]).ID);
             Program.selectedBone = (Bone)Program.selection;
             UpdateProp();
         }
@@ -502,7 +503,7 @@ namespace AnimMaker_v2
         private void moveDownHierarchy_Click(object sender, EventArgs e)
         {
             var selection = (Bone)Program.selection;
-            var target = Program.DynamicObject.BonesHierarchy.FindIndex((bone) => bone.Name == selection.Name) - 1;
+            var target = Program.DynamicObject.BonesHierarchy.FindIndex((bone) => bone.ID == selection.ID) - 1;
             Program.DynamicObject.BonesHierarchy.Remove(selection);
             Program.DynamicObject.BonesHierarchy.Insert(target, selection);
 
@@ -512,7 +513,7 @@ namespace AnimMaker_v2
         private void moveUpHierarchy_Click(object sender, EventArgs e)
         {
             var selection = (Bone)Program.selection;
-            var target = Program.DynamicObject.BonesHierarchy.FindIndex((bone) => bone.Name == selection.Name) + 1;
+            var target = Program.DynamicObject.BonesHierarchy.FindIndex((bone) => bone.ID == selection.ID) + 1;
             Program.DynamicObject.BonesHierarchy.Remove(selection);
             Program.DynamicObject.BonesHierarchy.Insert(target, selection);
 
@@ -569,7 +570,7 @@ namespace AnimMaker_v2
             if (res.SelectedIndex == -1)
                 Program.selection = null;
             else
-                Program.selection = Program.DynamicObject.UsedResources.Find((r) => r.Name == res.Items[res.SelectedIndex].ToString());
+                Program.selection = Program.DynamicObject.UsedResources.Find((r) => r.ID == ((dynamic)res.Items[res.SelectedIndex]).ID);
             UpdateProp();
         }
 

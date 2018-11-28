@@ -32,15 +32,19 @@ namespace AnimMaker_v2
 
                 animName.Text = anim.Name;
                 Duration.Value = (decimal)anim.Duration.AsSeconds();
-                List<string> contained = new List<string>();
+                List<OrderedDisplayer> contained = new List<OrderedDisplayer>();
                 foreach (var couple in anim.Bones)
                 {
-                    bones.Items.Add(couple.Key.Name);
-                    contained.Add(couple.Key.Name);
+                    bones.Items.Add(new OrderedDisplayer(couple.Key));
+                    contained.Add(new OrderedDisplayer(couple.Key));
                 }
                 bonesList.Items.Add("Selectionner un os");
                 bonesList.SelectedIndex = 0;
-                bonesList.Items.AddRange(Program.DynamicObject.BonesHierarchy.ConvertAll((b) => b.Name).Except(contained).ToArray());
+                foreach (var item in Program.DynamicObject.BonesHierarchy)
+                {
+                    if (!contained.Exists((od) => od.ID == item.ID))
+                        bonesList.Items.Add(new OrderedDisplayer(item));
+                }
             }
         }
 
@@ -52,7 +56,7 @@ namespace AnimMaker_v2
         {
             var anim = (Animation)Program.selection;
 
-            anim.Bones.Add(new Couple<Bone, List<Animation.Key>>(Program.DynamicObject.BonesHierarchy.Find((b) => b.Name == bonesList.Items[bonesList.SelectedIndex].ToString()), new List<Animation.Key>()));
+            anim.Bones.Add(new Couple<Bone, List<Animation.Key>>(Program.DynamicObject.BonesHierarchy.Find((b) => b.ID == ((dynamic)bonesList.Items[bonesList.SelectedIndex]).ID), new List<Animation.Key>()));
 
             Program.form.UpdateProp();
         }
@@ -79,7 +83,7 @@ namespace AnimMaker_v2
                 selectKeys.Enabled = bones.SelectedIndex != -1;
                 removeBone.Enabled = bones.SelectedIndex != -1;
 
-                Program.selectedBone = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.Name == bones.Items[bones.SelectedIndex].ToString());
+                Program.selectedBone = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.ID == ((dynamic)bones.Items[bones.SelectedIndex]).ID);
             }
         }
 
@@ -99,7 +103,7 @@ namespace AnimMaker_v2
         {
             var anim = (Animation)Program.selection;
 
-            anim.Bones.RemoveAll((couple) => couple.Key.Name == bones.Items[bones.SelectedIndex].ToString());
+            anim.Bones.RemoveAll((couple) => couple.Key.ID == ((dynamic)bones.Items[bones.SelectedIndex]).ID);
 
             Program.form.UpdateProp();
         }
@@ -108,7 +112,7 @@ namespace AnimMaker_v2
         {
             var anim = (Animation)Program.selection;
 
-            Program.selection = anim.Bones.Find((couple) => couple.Key.Name == bones.Items[bones.SelectedIndex].ToString()).Value;
+            Program.selection = anim.Bones.Find((couple) => couple.Key.ID == ((dynamic)bones.Items[bones.SelectedIndex]).ID).Value;
 
             Program.form.UpdateProp();
         }

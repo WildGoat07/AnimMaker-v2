@@ -43,7 +43,7 @@ namespace AnimMaker_v2
                 int i = 1;
                 foreach (var item in Program.DynamicObject.UsedResources)
                 {
-                    selectedRes.Items.Add(item.Name);
+                    selectedRes.Items.Add(new OrderedDisplayer(item));
                     if (sprite.Resource != null && sprite.Resource.ID == item.ID)
                         selectedRes.SelectedIndex = i;
                     i++;
@@ -90,8 +90,8 @@ namespace AnimMaker_v2
                 }
                 else
                 {
-                    var selection = (string)selectedRes.Items[selectedRes.SelectedIndex];
-                    var res = Program.DynamicObject.UsedResources.Find((r) => r.Name == selection);
+                    var selection = (dynamic)selectedRes.Items[selectedRes.SelectedIndex];
+                    var res = Program.DynamicObject.UsedResources.Find((r) => r.ID == selection.ID);
                     sprite.Resource = res;
                     sprite.InternalRect.Size = (Vector2f)sprite.Resource.FrameSize;
                     sprite.InternalRect.TextureRect = new IntRect(default, sprite.Resource.FrameSize);

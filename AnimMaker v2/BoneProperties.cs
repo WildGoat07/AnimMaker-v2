@@ -78,7 +78,7 @@ namespace AnimMaker_v2
                 children.Items.Clear();
                 foreach (var child in bone.Children)
                 {
-                    children.Items.Add(child.Name);
+                    children.Items.Add(new OrderedDisplayer(child));
                 }
                 addChildList.Items.Clear();
                 addChildList.Items.Add("Selectionner un enfant");
@@ -88,7 +88,7 @@ namespace AnimMaker_v2
                     if (globalBone != bone)
                     {
                         if (!boneContainChild(globalBone, bone))
-                            addChildList.Items.Add(globalBone.Name);
+                            addChildList.Items.Add(new OrderedDisplayer(globalBone));
                     }
                 }
             }
@@ -162,7 +162,7 @@ namespace AnimMaker_v2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var child = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.Name == addChildList.Items[addChildList.SelectedIndex].ToString());
+            var child = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.ID == ((dynamic)addChildList.Items[addChildList.SelectedIndex]).ID);
             Program.DynamicObject.MasterBones.Remove(child);
             var selectedBone = (Bone)Program.selection;
             selectedBone.Children.Add(child);
@@ -216,7 +216,7 @@ namespace AnimMaker_v2
         private void removeChild_Click(object sender, EventArgs e)
         {
             var bone = (Bone)Program.selection;
-            var target = bone.Children.Find((child) => child.Name == children.Items[children.SelectedIndex].ToString());
+            var target = bone.Children.Find((child) => child.ID == ((dynamic)children.Items[children.SelectedIndex]).ID);
             bone.Children.Remove(target);
             Program.DynamicObject.MasterBones.Add(target);
 
