@@ -40,6 +40,7 @@
             this.repeated = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.exportPng = new System.Windows.Forms.SaveFileDialog();
+            this.dispId = new System.Windows.Forms.Label();
             this.panel.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -49,6 +50,7 @@
             // panel
             // 
             this.panel.AutoScroll = true;
+            this.panel.Controls.Add(this.dispId);
             this.panel.Controls.Add(this.flowLayoutPanel3);
             this.panel.Controls.Add(this.groupBox1);
             this.panel.Controls.Add(this.smooth);
@@ -65,7 +67,7 @@
             // 
             this.flowLayoutPanel3.Controls.Add(this.label2);
             this.flowLayoutPanel3.Controls.Add(this.name);
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(224, 30);
             this.flowLayoutPanel3.TabIndex = 3;
@@ -93,7 +95,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.flowLayoutPanel2);
-            this.groupBox1.Location = new System.Drawing.Point(3, 39);
+            this.groupBox1.Location = new System.Drawing.Point(3, 52);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(224, 69);
             this.groupBox1.TabIndex = 2;
@@ -133,7 +135,7 @@
             // smooth
             // 
             this.smooth.AutoSize = true;
-            this.smooth.Location = new System.Drawing.Point(3, 114);
+            this.smooth.Location = new System.Drawing.Point(3, 127);
             this.smooth.Name = "smooth";
             this.smooth.Size = new System.Drawing.Size(56, 17);
             this.smooth.TabIndex = 4;
@@ -144,7 +146,7 @@
             // repeated
             // 
             this.repeated.AutoSize = true;
-            this.repeated.Location = new System.Drawing.Point(3, 137);
+            this.repeated.Location = new System.Drawing.Point(3, 150);
             this.repeated.Name = "repeated";
             this.repeated.Size = new System.Drawing.Size(67, 17);
             this.repeated.TabIndex = 5;
@@ -154,7 +156,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(3, 160);
+            this.button2.Location = new System.Drawing.Point(3, 173);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(164, 23);
             this.button2.TabIndex = 6;
@@ -166,6 +168,15 @@
             // 
             this.exportPng.AutoUpgradeEnabled = false;
             this.exportPng.Filter = "Images PNG (*.png)|*.png";
+            // 
+            // dispId
+            // 
+            this.dispId.AutoSize = true;
+            this.dispId.Location = new System.Drawing.Point(3, 0);
+            this.dispId.Name = "dispId";
+            this.dispId.Size = new System.Drawing.Size(35, 13);
+            this.dispId.TabIndex = 7;
+            this.dispId.Text = "label1";
             // 
             // ResProperties
             // 
@@ -199,5 +210,6 @@
         private System.Windows.Forms.CheckBox repeated;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.SaveFileDialog exportPng;
+        private System.Windows.Forms.Label dispId;
     }
 }

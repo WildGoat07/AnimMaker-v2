@@ -10,7 +10,7 @@ namespace AnimMaker_v2
     {
         #region Public Constructors
 
-        public OrderedDisplayer(dynamic obj)
+        public OrderedDisplayer(WGP.SFDynamicObject.IBaseElement obj)
         {
             ID = obj.ID;
             Name = obj.Name;

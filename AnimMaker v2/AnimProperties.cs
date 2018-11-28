@@ -29,6 +29,7 @@ namespace AnimMaker_v2
                 addBone.Enabled = false;
                 removeBone.Enabled = false;
                 selectKeys.Enabled = false;
+                dispId.Text = "ID : " + anim.ID.ToString("D");
 
                 animName.Text = anim.Name;
                 Duration.Value = (decimal)anim.Duration.AsSeconds();
@@ -38,6 +39,8 @@ namespace AnimMaker_v2
                     bones.Items.Add(new OrderedDisplayer(couple.Key));
                     contained.Add(new OrderedDisplayer(couple.Key));
                 }
+                foreach (var ev in anim.Triggers)
+                    events.Items.Add(new OrderedDisplayer(ev));
                 bonesList.Items.Add("Selectionner un os");
                 bonesList.SelectedIndex = 0;
                 foreach (var item in Program.DynamicObject.BonesHierarchy)
@@ -45,6 +48,8 @@ namespace AnimMaker_v2
                     if (!contained.Exists((od) => od.ID == item.ID))
                         bonesList.Items.Add(new OrderedDisplayer(item));
                 }
+                modEv.Enabled = false;
+                delEv.Enabled = false;
             }
         }
 
@@ -118,5 +123,43 @@ namespace AnimMaker_v2
         }
 
         #endregion Private Methods
+
+        private void events_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (events.SelectedIndex > -1)
+            {
+                modEv.Enabled = true;
+                delEv.Enabled = true;
+            }
+            else
+            {
+                modEv.Enabled = false;
+                delEv.Enabled = false;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var ev = new EventTrigger();
+            ev.Name = "ev" + Program.createdEvents;
+            ev.Time = Program.DynamicObject.CurrentTime;
+            Program.createdEvents++;
+            Program.selectedAnim.Triggers.Add(ev);
+            Program.form.UpdateProp();
+        }
+
+        private void modEv_Click(object sender, EventArgs e)
+        {
+            Program.selection = Program.selectedAnim.Triggers.Find((tr) => tr.ID == ((OrderedDisplayer)events.Items[events.SelectedIndex]).ID);
+            Program.form.UpdateProp();
+            Program.Chronometer.Paused = true;
+            Program.DynamicObject.CurrentTime = ((EventTrigger)Program.selection).Time;
+        }
+
+        private void delEv_Click(object sender, EventArgs e)
+        {
+            Program.selectedAnim.Triggers.Remove(Program.selectedAnim.Triggers.Find((tr) => tr.ID == ((OrderedDisplayer)events.Items[events.SelectedIndex]).ID));
+            Program.form.UpdateProp();
+        }
     }
 }

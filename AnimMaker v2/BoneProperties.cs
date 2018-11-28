@@ -27,7 +27,7 @@ namespace AnimMaker_v2
                 var bone = (Bone)Program.selection;
 
                 boneName.Text = bone.Name;
-
+                dispId.Text = "ID : " + bone.ID.ToString("D");
                 PosX.Value = (decimal)bone.Position.X;
                 PosY.Value = (decimal)bone.Position.Y;
                 OriginX.Value = (decimal)bone.Origin.X;

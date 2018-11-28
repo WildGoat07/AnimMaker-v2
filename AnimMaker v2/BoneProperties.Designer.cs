@@ -64,6 +64,7 @@
             this.multMode = new System.Windows.Forms.RadioButton();
             this.subsMode = new System.Windows.Forms.RadioButton();
             this.addMode = new System.Windows.Forms.RadioButton();
+            this.dispId = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -86,7 +87,7 @@
             // statut
             // 
             this.statut.AutoSize = true;
-            this.statut.Location = new System.Drawing.Point(3, 677);
+            this.statut.Location = new System.Drawing.Point(3, 690);
             this.statut.Name = "statut";
             this.statut.Size = new System.Drawing.Size(0, 13);
             this.statut.TabIndex = 2;
@@ -94,7 +95,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.flowLayoutPanel2);
-            this.groupBox2.Location = new System.Drawing.Point(3, 202);
+            this.groupBox2.Location = new System.Drawing.Point(3, 215);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(214, 214);
             this.groupBox2.TabIndex = 4;
@@ -178,7 +179,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox1.Location = new System.Drawing.Point(3, 55);
+            this.groupBox1.Location = new System.Drawing.Point(3, 68);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox1.Size = new System.Drawing.Size(214, 141);
@@ -413,7 +414,7 @@
             // boneStatut
             // 
             this.boneStatut.AutoSize = true;
-            this.boneStatut.Location = new System.Drawing.Point(3, 39);
+            this.boneStatut.Location = new System.Drawing.Point(3, 52);
             this.boneStatut.Name = "boneStatut";
             this.boneStatut.Size = new System.Drawing.Size(33, 13);
             this.boneStatut.TabIndex = 5;
@@ -421,7 +422,7 @@
             // 
             // boneName
             // 
-            this.boneName.Location = new System.Drawing.Point(3, 16);
+            this.boneName.Location = new System.Drawing.Point(3, 29);
             this.boneName.Name = "boneName";
             this.boneName.Size = new System.Drawing.Size(214, 20);
             this.boneName.TabIndex = 1;
@@ -431,7 +432,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Location = new System.Drawing.Point(3, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 13);
             this.label1.TabIndex = 0;
@@ -440,6 +441,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.Controls.Add(this.dispId);
             this.flowLayoutPanel1.Controls.Add(this.label1);
             this.flowLayoutPanel1.Controls.Add(this.boneName);
             this.flowLayoutPanel1.Controls.Add(this.boneStatut);
@@ -458,7 +460,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.flowLayoutPanel3);
-            this.groupBox3.Location = new System.Drawing.Point(3, 422);
+            this.groupBox3.Location = new System.Drawing.Point(3, 435);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(214, 116);
             this.groupBox3.TabIndex = 7;
@@ -510,7 +512,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.flowLayoutPanel4);
-            this.groupBox4.Location = new System.Drawing.Point(3, 544);
+            this.groupBox4.Location = new System.Drawing.Point(3, 557);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(214, 130);
             this.groupBox4.TabIndex = 6;
@@ -577,6 +579,15 @@
             this.addMode.Text = "Additif";
             this.addMode.UseVisualStyleBackColor = true;
             this.addMode.CheckedChanged += new System.EventHandler(this.addMode_CheckedChanged);
+            // 
+            // dispId
+            // 
+            this.dispId.AutoSize = true;
+            this.dispId.Location = new System.Drawing.Point(3, 0);
+            this.dispId.Name = "dispId";
+            this.dispId.Size = new System.Drawing.Size(35, 13);
+            this.dispId.TabIndex = 8;
+            this.dispId.Text = "label6";
             // 
             // BoneProperties
             // 
@@ -648,5 +659,6 @@
         private System.Windows.Forms.Button spriteButton;
         private System.Windows.Forms.Button addSprite;
         private System.Windows.Forms.Button removeSprite;
+        private System.Windows.Forms.Label dispId;
     }
 }

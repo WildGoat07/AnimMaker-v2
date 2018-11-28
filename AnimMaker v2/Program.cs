@@ -19,6 +19,7 @@ namespace AnimMaker_v2
         public static Chronometer Chronometer;
         public static int createdAnimations;
         public static int createdBones;
+        public static int createdEvents;
         public static Guid CurrentID;
         public static string currentPath;
         public static RenderWindow Display;

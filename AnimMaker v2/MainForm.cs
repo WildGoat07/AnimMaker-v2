@@ -68,6 +68,7 @@ namespace AnimMaker_v2
             Program.DynamicObject.Chronometer = Program.Chronometer;
             Program.createdAnimations = 0;
             Program.createdBones = 0;
+            Program.createdEvents = 0;
             Program.selection = null;
 
             UpdateInterface();
@@ -89,6 +90,7 @@ namespace AnimMaker_v2
                     Program.CurrentID = Guid.NewGuid();
                     Program.createdAnimations = 0;
                     Program.createdBones = 0;
+                    Program.createdEvents = 0;
                     Program.DynamicObject.Chronometer = Program.Chronometer;
                     Program.currentPath = (string)openObject.FileName.Clone();
                     UpdateInterface();
@@ -116,6 +118,7 @@ namespace AnimMaker_v2
             Program.CurrentID = Guid.NewGuid();
             Program.createdAnimations = 0;
             Program.createdBones = 0;
+            Program.createdEvents = 0;
             Program.DynamicObject.Chronometer = Program.Chronometer;
             UpdateInterface();
         }
@@ -142,8 +145,8 @@ namespace AnimMaker_v2
                 hierarchy.Items.Clear();
                 foreach (var bone in Program.DynamicObject.BonesHierarchy.AsEnumerable().Reverse())
                     hierarchy.Items.Add(new OrderedDisplayer(bone));
-                if (Program.selection is Bone)
-                    hierarchy.SelectedIndex = hierarchy.Items.IndexOf(new OrderedDisplayer(Program.selection));
+                if (Program.selection is Bone b)
+                    hierarchy.SelectedIndex = hierarchy.Items.IndexOf(new OrderedDisplayer(b));
                 else
                     hierarchy.SelectedIndex = -1;
             }
@@ -151,8 +154,8 @@ namespace AnimMaker_v2
                 res.Items.Clear();
                 foreach (var resource in Program.DynamicObject.UsedResources)
                     res.Items.Add(new OrderedDisplayer(resource));
-                if (Program.selection is Resource)
-                    res.SelectedIndex = res.Items.IndexOf(new OrderedDisplayer(Program.selection));
+                if (Program.selection is Resource r)
+                    res.SelectedIndex = res.Items.IndexOf(new OrderedDisplayer(r));
                 else
                     res.SelectedIndex = -1;
             }
@@ -161,8 +164,8 @@ namespace AnimMaker_v2
                 int i = 0;
                 foreach (var animation in Program.DynamicObject.Animations)
                     animations.Items.Add(new OrderedDisplayer(animation));
-                if (Program.selection is Animation)
-                    animations.SelectedIndex = animations.Items.IndexOf(new OrderedDisplayer(Program.selection));
+                if (Program.selection is Animation a)
+                    animations.SelectedIndex = animations.Items.IndexOf(new OrderedDisplayer(a));
                 else
                     animations.SelectedIndex = -1;
             }
@@ -225,7 +228,7 @@ namespace AnimMaker_v2
                     }
                 }
                 if (Program.selection is Animation anim)
-                {/***/
+                {
                     Program.selectedKeys = null;
                     Program.selectedBone = null;
                     removeAnim.Enabled = true;
@@ -239,6 +242,16 @@ namespace AnimMaker_v2
                         properties.Controls.Add(tmp2);
                     }
                     Program.DynamicObject.LoadAnimation(anim.Name);
+                }
+                if (Program.selection is EventTrigger trigger)
+                {
+                    Program.selectedKeys = null;
+                    Program.selectedBone = null;
+                    {
+                        var tmp2 = new EventProperties();
+                        tmp2.Dock = DockStyle.Fill;
+                        properties.Controls.Add(tmp2);
+                    }
                 }
                 if (Program.selection is Resource)
                 {

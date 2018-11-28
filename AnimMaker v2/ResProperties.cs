@@ -34,7 +34,7 @@ namespace AnimMaker_v2
             if (Program.selection != null)
             {
                 var selectRes = (Resource)Program.selection;
-
+                dispId.Text = "ID : " + selectRes.ID.ToString("D");
                 name.Text = selectRes.Name;
                 if (selectRes.FramesPosition.Length > 1)
                     resourceMode.Text = "Texture animée";

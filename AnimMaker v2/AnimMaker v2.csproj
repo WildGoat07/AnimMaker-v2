@@ -132,6 +132,12 @@
     <Compile Include="EditResource.Designer.cs">
       <DependentUpon>EditResource.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EventProperties.Designer.cs">
+      <DependentUpon>EventProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Finishable.cs" />
     <Compile Include="FunctionDialog.cs">
       <SubType>Form</SubType>
@@ -216,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditResource.resx">
       <DependentUpon>EditResource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EventProperties.resx">
+      <DependentUpon>EventProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FunctionDialog.resx">
       <DependentUpon>FunctionDialog.cs</DependentUpon>
