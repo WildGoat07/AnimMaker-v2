@@ -145,7 +145,7 @@ namespace AnimMaker_v2
             var ev = new EventTrigger();
             ev.Name = "ev" + Program.createdEvents;
             ev.Time = Program.DynamicObject.CurrentTime;
-            ev.Trigger = () => Program.Notifications.Insert(0, new Notification() { Description = ev.Name });
+            ev.Trigger = () => Program.Notifications.Enqueue(new Notification() { Description = ev.Name });
             Program.createdEvents++;
             Program.selectedAnim.Triggers.Add(ev);
             Program.form.UpdateProp();

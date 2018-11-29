@@ -74,6 +74,10 @@ namespace AnimMaker_v2
             Program.createdEvents = 0;
             Program.createdCategories = 0;
             Program.selection = null;
+            Program.selectedAnim = null;
+            Program.selectedBone = null;
+            Program.selectedEvent = null;
+            Program.selectedKeys = null;
 
             UpdateInterface();
         }

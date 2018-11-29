@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -32,7 +33,7 @@ namespace AnimMaker_v2
         public static Gizmo Gizmo;
         public static List<KeyControl> keyControls;
         public static DynamicObjectBuilder Manager;
-        public static List<Notification> Notifications;
+        public static ConcurrentQueue<Notification> Notifications;
         public static bool seeking;
         public static Animation selectedAnim;
         public static Bone selectedBone;
@@ -576,6 +577,7 @@ namespace AnimMaker_v2
                 }
                 {
                     Vector2f offset = Display.MapPixelToCoords(new Vector2i(0, 0));
+                    bool removeFirst = false;
                     foreach (var item in Notifications)
                     {
                         backNotif.FillColor = new Color(255, (byte)Utilities.Interpolation(Utilities.Percent(item.Chronometer.ElapsedTime, Time.Zero, item.LivingTime), 255f, 0f), 0);
@@ -586,12 +588,12 @@ namespace AnimMaker_v2
                         backNotif.Size = new Vector2f(10 + textNotif.GetGlobalBounds().Width, 10 + textNotif.Font.CharSize);
                         Display.Draw(backNotif);
                         Display.Draw(textNotif);
+                        if (item.Chronometer.ElapsedTime > item.LivingTime || Notifications.Count > 10)
+                            removeFirst = true;
                     }
-                    for (int i = Notifications.Count - 1; i >= 0; i--)
-                    {
-                        if (Notifications[i].Chronometer.ElapsedTime > Notifications[i].LivingTime)
-                            Notifications.RemoveAt(i);
-                    }
+                    Notification notif;
+                    if (removeFirst)
+                        Notifications.TryDequeue(out notif);
                 }
 
                 Display.Draw(segs);
@@ -629,7 +631,7 @@ namespace AnimMaker_v2
                     Settings = Options.Default;
                 }
                 ChangingEventArea = false;
-                Notifications = new List<Notification>();
+                Notifications = new ConcurrentQueue<Notification>();
                 askForUpdate = false;
                 Clock autoSaveClock = new Clock();
                 Application.EnableVisualStyles();
@@ -641,6 +643,7 @@ namespace AnimMaker_v2
                 selection = null;
                 selectedKeys = null;
                 selectedBone = null;
+                selectedEvent = null;
                 selectedAnim = null;
                 DynamicObject.Chronometer = Chronometer;
                 font = new WGP.TEXT.Font(Properties.Resources.font, 16);
@@ -670,6 +673,7 @@ namespace AnimMaker_v2
                 form.Show();
                 ResizeTimeline();
                 dispThread.Start();
+                RectangleShape eventPosition = new RectangleShape(new Vector2f(10, 9999)) { Origin = new Vector2f(5, 0), FillColor = Color.Red };
                 while (form.Visible)
                 {
                     Application.DoEvents();
@@ -698,6 +702,13 @@ namespace AnimMaker_v2
                         };
                         System.Threading.Thread autoSaveThread = new System.Threading.Thread(save);
                         autoSaveThread.Start();
+                    }
+                    if (selectedEvent != null)
+                    {
+                        eventPosition.Position = new Vector2f(Utilities.Interpolation(
+                            Utilities.Percent(selectedEvent.Time, Time.Zero, selectedAnim.Duration),
+                            0,
+                            timeLineDrawRect.Width), 30);
                     }
 
                     if (selectedAnim != null)
@@ -743,6 +754,9 @@ namespace AnimMaker_v2
                     if (!Mouse.IsButtonPressed(Mouse.Button.Left)) seeking = false;
 
                     Timeline.Clear(Color.White);
+
+                    if (selectedEvent != null)
+                        Timeline.Draw(eventPosition);
 
                     if (selectedAnim != null)
                     {

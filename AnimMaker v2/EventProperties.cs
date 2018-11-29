@@ -83,5 +83,13 @@ namespace AnimMaker_v2
         {
             Program.ChangingEventArea = true;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var trigger = (EventTrigger)Program.selection;
+            trigger.Time = Program.DynamicObject.CurrentTime;
+
+            Program.form.UpdateProp();
+        }
     }
 }

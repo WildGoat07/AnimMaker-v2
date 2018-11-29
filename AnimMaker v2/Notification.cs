@@ -23,5 +23,12 @@ namespace AnimMaker_v2
             LivingTime = Time.FromSeconds(2);
             Description = "";
         }
+
+        public Notification(string str)
+        {
+            Chronometer = new Chronometer();
+            LivingTime = Time.FromSeconds(2);
+            Description = str;
+        }
     }
 }
