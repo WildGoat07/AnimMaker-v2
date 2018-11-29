@@ -578,7 +578,7 @@ namespace AnimMaker_v2
                 {
                     Vector2f offset = Display.MapPixelToCoords(new Vector2i(0, 0));
                     bool removeFirst = false;
-                    foreach (var item in Notifications)
+                    foreach (var item in Notifications.Reverse())
                     {
                         backNotif.FillColor = new Color(255, (byte)Utilities.Interpolation(Utilities.Percent(item.Chronometer.ElapsedTime, Time.Zero, item.LivingTime), 255f, 0f), 0);
                         backNotif.Position = offset;
