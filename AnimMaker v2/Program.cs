@@ -206,13 +206,13 @@ namespace AnimMaker_v2
             backNotif.OutlineColor = Color.Black;
             backNotif.OutlineThickness = -1;
             WGP.TEXT.Text textNotif = new WGP.TEXT.Text("", smallFont, Color.Black);
-            Func<Bone, Transform> GetParentTransform = (bone) => bone.ComputedTransform * bone.InverseTransform;
-            Func<Bone, Animation.Key, Transform> GetParentTransformWithKey = (bone, key) => bone.ComputedTransform * new Transformable()
+            Transform GetParentTransform(Bone bone) => bone.ComputedTransform * bone.InverseTransform;
+            Transform GetParentTransformWithKey(Bone bone, Animation.Key key) => bone.ComputedTransform * new Transformable()
             { Position = bone.Position + key.Transform.Position, Origin = bone.Origin + key.Transform.Origin, Rotation = bone.Rotation + key.Transform.Rotation, Scale = bone.Scale * key.Transform.Scale }.InverseTransform;
-            Func<Bone, Transform> TransformWithoutOri = (bone) => bone.ComputedTransform * new Transformable() { Origin = -bone.Origin }.Transform;
-            Func<Bone, Animation.Key, Transform> TransformWithoutOriWithKey = (bone, key) => bone.ComputedTransform * new Transformable() { Origin = -bone.Origin - key.Transform.Origin }.Transform;
-            Func<Bone, Transform> GetPositionTransform = (bone) => bone.ComputedTransform * bone.InverseTransform * new Transformable() { Position = bone.Position }.Transform;
-            Func<Bone, Animation.Key, Transform> GetPositionTransformWithKey = (bone, key) => bone.ComputedTransform * new Transformable()
+            Transform TransformWithoutOri(Bone bone) => bone.ComputedTransform * new Transformable() { Origin = -bone.Origin }.Transform;
+            Transform TransformWithoutOriWithKey(Bone bone, Animation.Key key) => bone.ComputedTransform * new Transformable() { Origin = -bone.Origin - key.Transform.Origin }.Transform;
+            Transform GetPositionTransform(Bone bone) => bone.ComputedTransform * bone.InverseTransform * new Transformable() { Position = bone.Position }.Transform;
+            Transform GetPositionTransformWithKey(Bone bone, Animation.Key key) => bone.ComputedTransform * new Transformable()
             { Position = bone.Position + key.Transform.Position, Origin = bone.Origin + key.Transform.Origin, Rotation = bone.Rotation + key.Transform.Rotation, Scale = bone.Scale * key.Transform.Scale }.InverseTransform
             * new Transformable() { Position = bone.Position + key.Transform.Position }.Transform;
             Display.SetActive();
@@ -688,7 +688,7 @@ namespace AnimMaker_v2
                         autoSaveClock.Restart();
                         if (!System.IO.Directory.Exists(Settings.AutoFilePath))
                             System.IO.Directory.CreateDirectory(Settings.AutoFilePath);
-                        System.Threading.ThreadStart save = () =>
+                        void save()
                         {
                             System.IO.Stream stream = null;
                             try
@@ -699,7 +699,7 @@ namespace AnimMaker_v2
                             catch (Exception) { }
                             if (stream != null)
                                 stream.Close();
-                        };
+                        }
                         System.Threading.Thread autoSaveThread = new System.Threading.Thread(save);
                         autoSaveThread.Start();
                     }

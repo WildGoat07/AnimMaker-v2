@@ -289,11 +289,14 @@ namespace AnimMaker_v2
 
         private void affectedCateg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var bone = (Bone)Program.selection;
-            if (affectedCateg.SelectedIndex == 0)
-                bone.Category = Program.DynamicObject.DefaultCategory;
-            else
-                bone.Category = Program.DynamicObject.CustomCategories.Find((c) => c.ID == ((OrderedDisplayer)affectedCateg.SelectedItem).ID);
+            if (!init)
+            {
+                var bone = (Bone)Program.selection;
+                if (affectedCateg.SelectedIndex == 0)
+                    bone.Category = Program.DynamicObject.DefaultCategory;
+                else
+                    bone.Category = Program.DynamicObject.CustomCategories.Find((c) => c.ID == ((OrderedDisplayer)affectedCateg.SelectedItem).ID);
+            }
         }
     }
 }

@@ -120,8 +120,6 @@
     <Content Include="Resources\csfml-graphics-2.dll" />
     <Content Include="Resources\csfml-system-2.dll" />
     <Content Include="Resources\csfml-window-2.dll" />
-    <Content Include="Resources\Newtonsoft.Json.dll" />
-    <Content Include="Resources\sfmlnet-audio-2.dll" />
     <Content Include="Resources\sfmlnet-graphics-2.dll" />
     <Content Include="Resources\sfmlnet-system-2.dll" />
     <Content Include="Resources\sfmlnet-window-2.dll" />
@@ -129,7 +127,6 @@
     <Content Include="Resources\WGP.NET-SFDynamicObject.dll" />
     <Content Include="Resources\WGP.NET-TEXT.dll" />
     <Content Include="Resources\WildGoatPackage.NET.dll" />
-    <None Include="Resources\resm" />
     <None Include="Resources\wgdo" />
   </ItemGroup>
   <ItemGroup>
