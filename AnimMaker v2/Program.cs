@@ -16,6 +16,7 @@ namespace AnimMaker_v2
         #region Public Fields
 
         public static bool askForUpdate;
+        public static bool ChangingEventArea;
         public static Chronometer Chronometer;
         public static int createdAnimations;
         public static int createdBones;
@@ -25,13 +26,16 @@ namespace AnimMaker_v2
         public static RenderWindow Display;
         public static SFDynamicObject DynamicObject;
         public static WGP.TEXT.Font font;
+        public static WGP.TEXT.Font smallFont;
         public static MainForm form;
         public static Gizmo Gizmo;
         public static List<KeyControl> keyControls;
         public static DynamicObjectBuilder Manager;
+        public static List<Notification> Notifications;
         public static bool seeking;
         public static Animation selectedAnim;
         public static Bone selectedBone;
+        public static EventTrigger selectedEvent;
         public static List<Animation.Key> selectedKeys;
         public static object selection;
         public static Options Settings;
@@ -184,6 +188,19 @@ namespace AnimMaker_v2
 
         private static void DisplLoop()
         {
+            Vector2f areaPt1 = default, areaPt2 = default;
+            bool clickedOnce = false;
+            RectangleShape EventAreaDisp = new RectangleShape() { FillColor = new Color(255, 0, 0, 128) };
+            VertexArray DrawnArea = new VertexArray(PrimitiveType.LineStrip);
+            DrawnArea.Append(new Vertex(default, Color.White));
+            DrawnArea.Append(new Vertex(default, Color.White));
+            DrawnArea.Append(new Vertex(default, Color.White));
+            DrawnArea.Append(new Vertex(default, Color.White));
+            DrawnArea.Append(new Vertex(default, Color.White));
+            RectangleShape backNotif = new RectangleShape();
+            backNotif.OutlineColor = Color.Black;
+            backNotif.OutlineThickness = -1;
+            WGP.TEXT.Text textNotif = new WGP.TEXT.Text("", smallFont, Color.Black);
             Func<Bone, Transform> GetParentTransform = (bone) => bone.ComputedTransform * bone.InverseTransform;
             Func<Bone, Animation.Key, Transform> GetParentTransformWithKey = (bone, key) => bone.ComputedTransform * new Transformable()
             { Position = bone.Position + key.Transform.Position, Origin = bone.Origin + key.Transform.Origin, Rotation = bone.Rotation + key.Transform.Rotation, Scale = bone.Scale * key.Transform.Scale }.InverseTransform;
@@ -301,15 +318,29 @@ namespace AnimMaker_v2
                         baseRotK = key.Transform.Rotation;
                     }
                 }
+                if (ChangingEventArea)
+                {
+                    clickedOnce = true;
+                    areaPt1 = msPos;
+                }
             };
             Display.MouseButtonReleased += (sender, e) =>
             {
+                var msPos = Display.MapPixelToCoords(Mouse.GetPosition(Display));
                 grabbing = false;
                 askForUpdate = true;
 
                 if (wasPlaying && grabbingAnim)
                     Chronometer.Paused = false;
                 grabbingAnim = false;
+                if (ChangingEventArea)
+                {
+                    ChangingEventArea = false;
+                    areaPt2 = msPos;
+                    if (clickedOnce)
+                        ((EventTrigger)selection).Area = Utilities.CreateRect(areaPt1, areaPt2);
+                    clickedOnce = false;
+                }
             };
             Texture backTexture;
             {
@@ -511,12 +542,53 @@ namespace AnimMaker_v2
 
                     form.resDispl.Target.Display();
                 }
+                if (selectedEvent != null)
+                {
+                    EventAreaDisp.Position = selectedEvent.Area.TopLeft();
+                    EventAreaDisp.Size = selectedEvent.Area.Size();
+                }
+                if (clickedOnce)
+                {
+                    DrawnArea[0] = new Vertex(areaPt1, Color.White);
+                    DrawnArea[1] = new Vertex(mousePosition.OnlyX() + areaPt1.OnlyY(), Color.White);
+                    DrawnArea[2] = new Vertex(mousePosition, Color.White);
+                    DrawnArea[3] = new Vertex(mousePosition.OnlyY() + areaPt1.OnlyX(), Color.White);
+                    DrawnArea[4] = new Vertex(areaPt1, Color.White);
+                }
 
                 Display.Clear(Color.White);
 
                 Display.Draw(backRect);
 
                 Display.Draw(DynamicObject);
+
+                if (selectedEvent != null)
+                {
+                    Display.Draw(EventAreaDisp);
+                }
+                if (clickedOnce)
+                {
+                    Display.Draw(DrawnArea, new RenderStates(new BlendMode(BlendMode.Factor.OneMinusDstColor, BlendMode.Factor.OneMinusSrcColor)));
+                }
+                {
+                    Vector2f offset = Display.MapPixelToCoords(new Vector2i(0, 0));
+                    foreach (var item in Notifications)
+                    {
+                        backNotif.FillColor = new Color(255, (byte)Utilities.Interpolation(Utilities.Percent(item.Chronometer.ElapsedTime, Time.Zero, item.LivingTime), 255f, 0f), 0);
+                        backNotif.Position = offset;
+                        textNotif.Position = new Vector2f(5, 5 + textNotif.Font.CharSize) + offset;
+                        offset.Y += 10 + textNotif.Font.CharSize;
+                        textNotif.String = item.Description;
+                        backNotif.Size = new Vector2f(10 + textNotif.GetGlobalBounds().Width, 10 + textNotif.Font.CharSize);
+                        Display.Draw(backNotif);
+                        Display.Draw(textNotif);
+                    }
+                    for (int i = Notifications.Count - 1; i >= 0; i--)
+                    {
+                        if (Notifications[i].Chronometer.ElapsedTime > Notifications[i].LivingTime)
+                            Notifications.RemoveAt(i);
+                    }
+                }
 
                 Display.Draw(segs);
 
@@ -552,6 +624,8 @@ namespace AnimMaker_v2
                 {
                     Settings = Options.Default;
                 }
+                ChangingEventArea = false;
+                Notifications = new List<Notification>();
                 askForUpdate = false;
                 Clock autoSaveClock = new Clock();
                 Application.EnableVisualStyles();
@@ -566,6 +640,7 @@ namespace AnimMaker_v2
                 selectedAnim = null;
                 DynamicObject.Chronometer = Chronometer;
                 font = new WGP.TEXT.Font(Properties.Resources.font, 16);
+                smallFont = new WGP.TEXT.Font(Properties.Resources.font, 11);
                 textTimer = new WGP.TEXT.Text("", font, Color.Black);
                 textTimer.Position = new Vector2f(10, 26);
                 timeLineSegs = new VertexArray(PrimitiveType.Lines, 4);

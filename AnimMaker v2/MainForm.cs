@@ -22,6 +22,7 @@ namespace AnimMaker_v2
     {
         #region Public Fields
 
+        public DrawingSurface Displayer;
         public DrawingSurface resDispl;
         public DynamicSprite resSprite;
 
@@ -45,6 +46,7 @@ namespace AnimMaker_v2
                 Program.Display.SetView(view);
             };
             tmp = new DrawingSurface();
+            Displayer = tmp;
             tmp.Dock = DockStyle.Fill;
             Program.Timeline = tmp.Target;
             TimelinePanel.Controls.Add(tmp);
@@ -211,6 +213,7 @@ namespace AnimMaker_v2
                     Program.DynamicObject.ResetAnimation();
                     Program.selectedKeys = null;
                     Program.selectedAnim = null;
+                    Program.selectedEvent = null;
                     removeBone.Enabled = true;
                     stripRemoveBone.Enabled = true;
                     toolRemoveBone.Enabled = true;
@@ -229,6 +232,7 @@ namespace AnimMaker_v2
                 }
                 if (Program.selection is Animation anim)
                 {
+                    Program.selectedEvent = null;
                     Program.selectedKeys = null;
                     Program.selectedBone = null;
                     removeAnim.Enabled = true;
@@ -259,6 +263,7 @@ namespace AnimMaker_v2
                     Program.selectedKeys = null;
                     Program.selectedBone = null;
                     Program.selectedAnim = null;
+                    Program.selectedEvent = null;
                     removeResource.Enabled = true;
                     stripRemoveRes.Enabled = true;
                     toolRemoveRes.Enabled = true;
@@ -269,10 +274,11 @@ namespace AnimMaker_v2
                     }
                 }
                 if (Program.selection is DynamicSprite)
-                {/***/
+                {
                     Program.DynamicObject.ResetAnimation();
                     Program.selectedKeys = null;
                     Program.selectedAnim = null;
+                    Program.selectedEvent = null;
                     {
                         var tmp2 = new SpriteProperties();
                         tmp2.Dock = DockStyle.Fill;
@@ -281,6 +287,7 @@ namespace AnimMaker_v2
                 }
                 if (Program.selection is List<Animation.Key>)
                 {
+                    Program.selectedEvent = null;
                     Program.selectedKeys = (List<Animation.Key>)Program.selection;
                     foreach (var ani in Program.DynamicObject.Animations)
                     {
@@ -298,6 +305,7 @@ namespace AnimMaker_v2
                 }
                 if (Program.selection is Animation.Key)
                 {
+                    Program.selectedEvent = null;
                     {
                         var tmp2 = new KeyProperties();
                         tmp2.Dock = DockStyle.Fill;

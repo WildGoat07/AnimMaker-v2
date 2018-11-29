@@ -78,5 +78,10 @@ namespace AnimMaker_v2
             trigger.Name = evName.Text;
             Program.form.UpdateProp();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Program.ChangingEventArea = true;
+        }
     }
 }

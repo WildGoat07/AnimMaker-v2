@@ -126,10 +126,12 @@ namespace AnimMaker_v2
 
         private void events_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var anim = (Animation)Program.selection;
             if (events.SelectedIndex > -1)
             {
                 modEv.Enabled = true;
                 delEv.Enabled = true;
+                Program.selectedEvent = anim.Triggers.Find((t) => t.ID == ((OrderedDisplayer)events.Items[events.SelectedIndex]).ID);
             }
             else
             {
@@ -143,6 +145,7 @@ namespace AnimMaker_v2
             var ev = new EventTrigger();
             ev.Name = "ev" + Program.createdEvents;
             ev.Time = Program.DynamicObject.CurrentTime;
+            ev.Trigger = () => Program.Notifications.Insert(0, new Notification() { Description = ev.Name });
             Program.createdEvents++;
             Program.selectedAnim.Triggers.Add(ev);
             Program.form.UpdateProp();
