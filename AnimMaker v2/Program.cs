@@ -21,6 +21,7 @@ namespace AnimMaker_v2
         public static int createdAnimations;
         public static int createdBones;
         public static int createdEvents;
+        public static int createdCategories;
         public static Guid CurrentID;
         public static string currentPath;
         public static RenderWindow Display;
@@ -140,10 +141,13 @@ namespace AnimMaker_v2
             var bone = (Bone)selection;
             DynamicObject.BonesHierarchy.Remove(bone);
             DynamicObject.MasterBones.Remove(bone);
-            DynamicObject.BonesHierarchy.Remove(bone);
-            var par = DynamicObject.BonesHierarchy.Find((parent) => parent.Children.Contains(bone));
-            if (par != null)
-                par.Children.Remove(bone);
+            try
+            {
+                var par = DynamicObject.BonesHierarchy.First((parent) => parent.Children.Contains(bone));
+                if (par != null)
+                    par.Children.Remove(bone);
+            }
+            catch (Exception) { }
             foreach (var child in bone.Children)
             {
                 DynamicObject.MasterBones.Add(child);

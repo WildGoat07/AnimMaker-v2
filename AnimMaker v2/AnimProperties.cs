@@ -61,7 +61,7 @@ namespace AnimMaker_v2
         {
             var anim = (Animation)Program.selection;
 
-            anim.Bones.Add(new Couple<Bone, List<Animation.Key>>(Program.DynamicObject.BonesHierarchy.Find((b) => b.ID == ((dynamic)bonesList.Items[bonesList.SelectedIndex]).ID), new List<Animation.Key>()));
+            anim.Bones.Add(new Couple<Bone, List<Animation.Key>>(Program.DynamicObject.BonesHierarchy.First((b) => b.ID == ((dynamic)bonesList.Items[bonesList.SelectedIndex]).ID), new List<Animation.Key>()));
 
             Program.form.UpdateProp();
         }
@@ -88,7 +88,7 @@ namespace AnimMaker_v2
                 selectKeys.Enabled = bones.SelectedIndex != -1;
                 removeBone.Enabled = bones.SelectedIndex != -1;
 
-                Program.selectedBone = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.ID == ((dynamic)bones.Items[bones.SelectedIndex]).ID);
+                Program.selectedBone = Program.DynamicObject.BonesHierarchy.First((bone) => bone.ID == ((dynamic)bones.Items[bones.SelectedIndex]).ID);
             }
         }
 

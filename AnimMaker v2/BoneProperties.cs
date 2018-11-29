@@ -19,9 +19,12 @@ namespace AnimMaker_v2
     {
         #region Public Constructors
 
+        private bool init;
+
         public BoneProperties()
         {
             InitializeComponent();
+            init = false;
             if (Program.selection != null)
             {
                 var bone = (Bone)Program.selection;
@@ -91,6 +94,20 @@ namespace AnimMaker_v2
                             addChildList.Items.Add(new OrderedDisplayer(globalBone));
                     }
                 }
+                int index = 0;
+                affectedCateg.Items.Add(new OrderedDisplayer(Program.DynamicObject.DefaultCategory));
+                if (bone.Category == Program.DynamicObject.DefaultCategory)
+                    affectedCateg.SelectedIndex = index;
+                index++;
+                foreach (var item in Program.DynamicObject.CustomCategories)
+                {
+                    affectedCateg.Items.Add(new OrderedDisplayer(item));
+                    if (bone.Category == item)
+                        affectedCateg.SelectedIndex = index;
+                    index++;
+                }
+
+                init = true;
             }
         }
 
@@ -162,7 +179,7 @@ namespace AnimMaker_v2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var child = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.ID == ((dynamic)addChildList.Items[addChildList.SelectedIndex]).ID);
+            var child = Program.DynamicObject.BonesHierarchy.First((bone) => bone.ID == ((dynamic)addChildList.Items[addChildList.SelectedIndex]).ID);
             Program.DynamicObject.MasterBones.Remove(child);
             var selectedBone = (Bone)Program.selection;
             selectedBone.Children.Add(child);
@@ -269,5 +286,14 @@ namespace AnimMaker_v2
         }
 
         #endregion Private Methods
+
+        private void affectedCateg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var bone = (Bone)Program.selection;
+            if (affectedCateg.SelectedIndex == 0)
+                bone.Category = Program.DynamicObject.DefaultCategory;
+            else
+                bone.Category = Program.DynamicObject.CustomCategories.Find((c) => c.ID == ((OrderedDisplayer)affectedCateg.SelectedItem).ID);
+        }
     }
 }

@@ -51,16 +51,9 @@
             this.animations = new System.Windows.Forms.ListBox();
             this.DisplayPanel = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolAddBone = new System.Windows.Forms.ToolStripButton();
-            this.toolRemoveBone = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolAddRes = new System.Windows.Forms.ToolStripButton();
-            this.toolRemoveRes = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolAddAnim = new System.Windows.Forms.ToolStripButton();
-            this.toolRemoveAnim = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.TimelinePanel = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,16 +65,12 @@
             this.aProposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fermerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.osToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nouveauToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stripRemoveBone = new System.Windows.Forms.ToolStripMenuItem();
             this.stripTopBone = new System.Windows.Forms.ToolStripMenuItem();
             this.stripBotBone = new System.Windows.Forms.ToolStripMenuItem();
             this.ressourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ajouterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stripRemoveRes = new System.Windows.Forms.ToolStripMenuItem();
+            this.importerUneSéquenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.animationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nouveauToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.videToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copieDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stripCopyListAnim = new System.Windows.Forms.ToolStripComboBox();
             this.stripCreateCopyAnim = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,14 +84,30 @@
             this.stripBetweenBListAnim = new System.Windows.Forms.ToolStripComboBox();
             this.stripBetweenAListAnim = new System.Windows.Forms.ToolStripComboBox();
             this.stripCreateBetweenAnim = new System.Windows.Forms.ToolStripMenuItem();
-            this.stripRemoveAnim = new System.Windows.Forms.ToolStripMenuItem();
             this.stripScaleAnim = new System.Windows.Forms.ToolStripMenuItem();
             this.properties = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.openObject = new System.Windows.Forms.OpenFileDialog();
             this.saveObject = new System.Windows.Forms.SaveFileDialog();
             this.openTexture = new System.Windows.Forms.OpenFileDialog();
-            this.importerUneSéquenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.createCateg = new System.Windows.Forms.Button();
+            this.removeCateg = new System.Windows.Forms.Button();
+            this.categories = new System.Windows.Forms.ListBox();
+            this.toolAddBone = new System.Windows.Forms.ToolStripButton();
+            this.toolRemoveBone = new System.Windows.Forms.ToolStripButton();
+            this.toolAddRes = new System.Windows.Forms.ToolStripButton();
+            this.toolRemoveRes = new System.Windows.Forms.ToolStripButton();
+            this.toolAddAnim = new System.Windows.Forms.ToolStripButton();
+            this.toolRemoveAnim = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.nouveauToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stripRemoveBone = new System.Windows.Forms.ToolStripMenuItem();
+            this.ajouterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stripRemoveRes = new System.Windows.Forms.ToolStripMenuItem();
+            this.videToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stripRemoveAnim = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -113,6 +118,8 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -145,6 +152,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 51);
             this.tabControl1.Name = "tabControl1";
@@ -402,96 +410,20 @@
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolAddBone
-            // 
-            this.toolAddBone.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolAddBone.Image = global::AnimMaker_v2.Properties.Resources.addBone;
-            this.toolAddBone.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolAddBone.Name = "toolAddBone";
-            this.toolAddBone.Size = new System.Drawing.Size(23, 21);
-            this.toolAddBone.Text = "toolStripButton1";
-            this.toolAddBone.ToolTipText = "Ajouter un os";
-            this.toolAddBone.Click += new System.EventHandler(this.toolAddBone_Click);
-            // 
-            // toolRemoveBone
-            // 
-            this.toolRemoveBone.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolRemoveBone.Image = global::AnimMaker_v2.Properties.Resources.removeBone;
-            this.toolRemoveBone.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolRemoveBone.Name = "toolRemoveBone";
-            this.toolRemoveBone.Size = new System.Drawing.Size(23, 21);
-            this.toolRemoveBone.Text = "toolStripButton2";
-            this.toolRemoveBone.ToolTipText = "Supprimer un os";
-            this.toolRemoveBone.Click += new System.EventHandler(this.toolRemoveBone_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 24);
-            // 
-            // toolAddRes
-            // 
-            this.toolAddRes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolAddRes.Image = global::AnimMaker_v2.Properties.Resources.addRes;
-            this.toolAddRes.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolAddRes.Name = "toolAddRes";
-            this.toolAddRes.Size = new System.Drawing.Size(23, 21);
-            this.toolAddRes.Text = "toolStripButton3";
-            this.toolAddRes.ToolTipText = "Ajouter une ressource";
-            this.toolAddRes.Click += new System.EventHandler(this.toolAddRes_Click);
-            // 
-            // toolRemoveRes
-            // 
-            this.toolRemoveRes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolRemoveRes.Image = global::AnimMaker_v2.Properties.Resources.removeRes;
-            this.toolRemoveRes.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolRemoveRes.Name = "toolRemoveRes";
-            this.toolRemoveRes.Size = new System.Drawing.Size(23, 21);
-            this.toolRemoveRes.Text = "toolStripButton4";
-            this.toolRemoveRes.ToolTipText = "Supprimer une ressource";
-            this.toolRemoveRes.Click += new System.EventHandler(this.toolRemoveRes_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 24);
             // 
-            // toolAddAnim
-            // 
-            this.toolAddAnim.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolAddAnim.Image = global::AnimMaker_v2.Properties.Resources.addAnim;
-            this.toolAddAnim.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolAddAnim.Name = "toolAddAnim";
-            this.toolAddAnim.Size = new System.Drawing.Size(23, 21);
-            this.toolAddAnim.Text = "toolStripButton1";
-            this.toolAddAnim.ToolTipText = "Ajouter une animation";
-            this.toolAddAnim.Click += new System.EventHandler(this.toolAddAnim_Click);
-            // 
-            // toolRemoveAnim
-            // 
-            this.toolRemoveAnim.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolRemoveAnim.Image = global::AnimMaker_v2.Properties.Resources.removeAnim;
-            this.toolRemoveAnim.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolRemoveAnim.Name = "toolRemoveAnim";
-            this.toolRemoveAnim.Size = new System.Drawing.Size(23, 21);
-            this.toolRemoveAnim.Text = "toolStripButton1";
-            this.toolRemoveAnim.ToolTipText = "Supprimer une animation";
-            this.toolRemoveAnim.Click += new System.EventHandler(this.toolRemoveAnim_Click);
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 24);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::AnimMaker_v2.Properties.Resources.play_pause;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 21);
-            this.toolStripButton1.Text = "Jouer / mettre en pause l\'animation";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // TimelinePanel
             // 
@@ -596,22 +528,6 @@
             this.osToolStripMenuItem.Size = new System.Drawing.Size(33, 20);
             this.osToolStripMenuItem.Text = "Os";
             // 
-            // nouveauToolStripMenuItem
-            // 
-            this.nouveauToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addBone;
-            this.nouveauToolStripMenuItem.Name = "nouveauToolStripMenuItem";
-            this.nouveauToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.nouveauToolStripMenuItem.Text = "Nouveau";
-            this.nouveauToolStripMenuItem.Click += new System.EventHandler(this.nouveauToolStripMenuItem_Click);
-            // 
-            // stripRemoveBone
-            // 
-            this.stripRemoveBone.Image = global::AnimMaker_v2.Properties.Resources.removeBone;
-            this.stripRemoveBone.Name = "stripRemoveBone";
-            this.stripRemoveBone.Size = new System.Drawing.Size(131, 22);
-            this.stripRemoveBone.Text = "Supprimer";
-            this.stripRemoveBone.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
-            // 
             // stripTopBone
             // 
             this.stripTopBone.Name = "stripTopBone";
@@ -636,21 +552,12 @@
             this.ressourceToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.ressourceToolStripMenuItem.Text = "Ressource";
             // 
-            // ajouterToolStripMenuItem
+            // importerUneSéquenceToolStripMenuItem
             // 
-            this.ajouterToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addRes;
-            this.ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            this.ajouterToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.ajouterToolStripMenuItem.Text = "Ajouter";
-            this.ajouterToolStripMenuItem.Click += new System.EventHandler(this.ajouterToolStripMenuItem_Click);
-            // 
-            // stripRemoveRes
-            // 
-            this.stripRemoveRes.Image = global::AnimMaker_v2.Properties.Resources.removeRes;
-            this.stripRemoveRes.Name = "stripRemoveRes";
-            this.stripRemoveRes.Size = new System.Drawing.Size(196, 22);
-            this.stripRemoveRes.Text = "Supprimer";
-            this.stripRemoveRes.Click += new System.EventHandler(this.supprimerToolStripMenuItem1_Click);
+            this.importerUneSéquenceToolStripMenuItem.Name = "importerUneSéquenceToolStripMenuItem";
+            this.importerUneSéquenceToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.importerUneSéquenceToolStripMenuItem.Text = "Importer une séquence";
+            this.importerUneSéquenceToolStripMenuItem.Click += new System.EventHandler(this.importerUneSéquenceToolStripMenuItem_Click);
             // 
             // animationToolStripMenuItem
             // 
@@ -673,14 +580,6 @@
             this.nouveauToolStripMenuItem1.Name = "nouveauToolStripMenuItem1";
             this.nouveauToolStripMenuItem1.Size = new System.Drawing.Size(154, 22);
             this.nouveauToolStripMenuItem1.Text = "Nouveau";
-            // 
-            // videToolStripMenuItem
-            // 
-            this.videToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addAnim;
-            this.videToolStripMenuItem.Name = "videToolStripMenuItem";
-            this.videToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.videToolStripMenuItem.Text = "Vide";
-            this.videToolStripMenuItem.Click += new System.EventHandler(this.videToolStripMenuItem_Click);
             // 
             // copieDeToolStripMenuItem
             // 
@@ -782,14 +681,6 @@
             this.stripCreateBetweenAnim.Text = "Créer";
             this.stripCreateBetweenAnim.Click += new System.EventHandler(this.créerToolStripMenuItem3_Click);
             // 
-            // stripRemoveAnim
-            // 
-            this.stripRemoveAnim.Image = global::AnimMaker_v2.Properties.Resources.removeAnim;
-            this.stripRemoveAnim.Name = "stripRemoveAnim";
-            this.stripRemoveAnim.Size = new System.Drawing.Size(154, 22);
-            this.stripRemoveAnim.Text = "Supprimer";
-            this.stripRemoveAnim.Click += new System.EventHandler(this.supprimerToolStripMenuItem2_Click);
-            // 
             // stripScaleAnim
             // 
             this.stripScaleAnim.Name = "stripScaleAnim";
@@ -825,12 +716,192 @@
             this.openTexture.Multiselect = true;
             this.openTexture.Title = "Charger la texture";
             // 
-            // importerUneSéquenceToolStripMenuItem
+            // tabPage4
             // 
-            this.importerUneSéquenceToolStripMenuItem.Name = "importerUneSéquenceToolStripMenuItem";
-            this.importerUneSéquenceToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.importerUneSéquenceToolStripMenuItem.Text = "Importer une séquence";
-            this.importerUneSéquenceToolStripMenuItem.Click += new System.EventHandler(this.importerUneSéquenceToolStripMenuItem_Click);
+            this.tabPage4.Controls.Add(this.tableLayoutPanel5);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(266, 704);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Catégories";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.createCateg, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.removeCateg, 1, 1);
+            this.tableLayoutPanel5.Controls.Add(this.categories, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(260, 698);
+            this.tableLayoutPanel5.TabIndex = 1;
+            // 
+            // createCateg
+            // 
+            this.createCateg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.createCateg.Location = new System.Drawing.Point(3, 666);
+            this.createCateg.Name = "createCateg";
+            this.createCateg.Size = new System.Drawing.Size(124, 29);
+            this.createCateg.TabIndex = 0;
+            this.createCateg.Text = "Ajouter";
+            this.toolTip1.SetToolTip(this.createCateg, "Créé une nouvelle catégorie");
+            this.createCateg.UseVisualStyleBackColor = true;
+            this.createCateg.Click += new System.EventHandler(this.createCateg_Click);
+            // 
+            // removeCateg
+            // 
+            this.removeCateg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.removeCateg.Location = new System.Drawing.Point(133, 666);
+            this.removeCateg.Name = "removeCateg";
+            this.removeCateg.Size = new System.Drawing.Size(124, 29);
+            this.removeCateg.TabIndex = 1;
+            this.removeCateg.Text = "Supprimer";
+            this.toolTip1.SetToolTip(this.removeCateg, "Supprime la catégorie selectionnée");
+            this.removeCateg.UseVisualStyleBackColor = true;
+            this.removeCateg.Click += new System.EventHandler(this.removeCateg_Click);
+            // 
+            // categories
+            // 
+            this.tableLayoutPanel5.SetColumnSpan(this.categories, 2);
+            this.categories.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.categories.FormattingEnabled = true;
+            this.categories.Location = new System.Drawing.Point(3, 3);
+            this.categories.Name = "categories";
+            this.categories.Size = new System.Drawing.Size(254, 657);
+            this.categories.TabIndex = 2;
+            this.categories.SelectedIndexChanged += new System.EventHandler(this.categories_SelectedIndexChanged);
+            // 
+            // toolAddBone
+            // 
+            this.toolAddBone.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolAddBone.Image = global::AnimMaker_v2.Properties.Resources.addBone;
+            this.toolAddBone.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolAddBone.Name = "toolAddBone";
+            this.toolAddBone.Size = new System.Drawing.Size(23, 21);
+            this.toolAddBone.Text = "toolStripButton1";
+            this.toolAddBone.ToolTipText = "Ajouter un os";
+            this.toolAddBone.Click += new System.EventHandler(this.toolAddBone_Click);
+            // 
+            // toolRemoveBone
+            // 
+            this.toolRemoveBone.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolRemoveBone.Image = global::AnimMaker_v2.Properties.Resources.removeBone;
+            this.toolRemoveBone.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolRemoveBone.Name = "toolRemoveBone";
+            this.toolRemoveBone.Size = new System.Drawing.Size(23, 21);
+            this.toolRemoveBone.Text = "toolStripButton2";
+            this.toolRemoveBone.ToolTipText = "Supprimer un os";
+            this.toolRemoveBone.Click += new System.EventHandler(this.toolRemoveBone_Click);
+            // 
+            // toolAddRes
+            // 
+            this.toolAddRes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolAddRes.Image = global::AnimMaker_v2.Properties.Resources.addRes;
+            this.toolAddRes.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolAddRes.Name = "toolAddRes";
+            this.toolAddRes.Size = new System.Drawing.Size(23, 21);
+            this.toolAddRes.Text = "toolStripButton3";
+            this.toolAddRes.ToolTipText = "Ajouter une ressource";
+            this.toolAddRes.Click += new System.EventHandler(this.toolAddRes_Click);
+            // 
+            // toolRemoveRes
+            // 
+            this.toolRemoveRes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolRemoveRes.Image = global::AnimMaker_v2.Properties.Resources.removeRes;
+            this.toolRemoveRes.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolRemoveRes.Name = "toolRemoveRes";
+            this.toolRemoveRes.Size = new System.Drawing.Size(23, 21);
+            this.toolRemoveRes.Text = "toolStripButton4";
+            this.toolRemoveRes.ToolTipText = "Supprimer une ressource";
+            this.toolRemoveRes.Click += new System.EventHandler(this.toolRemoveRes_Click);
+            // 
+            // toolAddAnim
+            // 
+            this.toolAddAnim.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolAddAnim.Image = global::AnimMaker_v2.Properties.Resources.addAnim;
+            this.toolAddAnim.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolAddAnim.Name = "toolAddAnim";
+            this.toolAddAnim.Size = new System.Drawing.Size(23, 21);
+            this.toolAddAnim.Text = "toolStripButton1";
+            this.toolAddAnim.ToolTipText = "Ajouter une animation";
+            this.toolAddAnim.Click += new System.EventHandler(this.toolAddAnim_Click);
+            // 
+            // toolRemoveAnim
+            // 
+            this.toolRemoveAnim.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolRemoveAnim.Image = global::AnimMaker_v2.Properties.Resources.removeAnim;
+            this.toolRemoveAnim.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolRemoveAnim.Name = "toolRemoveAnim";
+            this.toolRemoveAnim.Size = new System.Drawing.Size(23, 21);
+            this.toolRemoveAnim.Text = "toolStripButton1";
+            this.toolRemoveAnim.ToolTipText = "Supprimer une animation";
+            this.toolRemoveAnim.Click += new System.EventHandler(this.toolRemoveAnim_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::AnimMaker_v2.Properties.Resources.play_pause;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 21);
+            this.toolStripButton1.Text = "Jouer / mettre en pause l\'animation";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // nouveauToolStripMenuItem
+            // 
+            this.nouveauToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addBone;
+            this.nouveauToolStripMenuItem.Name = "nouveauToolStripMenuItem";
+            this.nouveauToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.nouveauToolStripMenuItem.Text = "Nouveau";
+            this.nouveauToolStripMenuItem.Click += new System.EventHandler(this.nouveauToolStripMenuItem_Click);
+            // 
+            // stripRemoveBone
+            // 
+            this.stripRemoveBone.Image = global::AnimMaker_v2.Properties.Resources.removeBone;
+            this.stripRemoveBone.Name = "stripRemoveBone";
+            this.stripRemoveBone.Size = new System.Drawing.Size(131, 22);
+            this.stripRemoveBone.Text = "Supprimer";
+            this.stripRemoveBone.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
+            // 
+            // ajouterToolStripMenuItem
+            // 
+            this.ajouterToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addRes;
+            this.ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
+            this.ajouterToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.ajouterToolStripMenuItem.Text = "Ajouter";
+            this.ajouterToolStripMenuItem.Click += new System.EventHandler(this.ajouterToolStripMenuItem_Click);
+            // 
+            // stripRemoveRes
+            // 
+            this.stripRemoveRes.Image = global::AnimMaker_v2.Properties.Resources.removeRes;
+            this.stripRemoveRes.Name = "stripRemoveRes";
+            this.stripRemoveRes.Size = new System.Drawing.Size(196, 22);
+            this.stripRemoveRes.Text = "Supprimer";
+            this.stripRemoveRes.Click += new System.EventHandler(this.supprimerToolStripMenuItem1_Click);
+            // 
+            // videToolStripMenuItem
+            // 
+            this.videToolStripMenuItem.Image = global::AnimMaker_v2.Properties.Resources.addAnim;
+            this.videToolStripMenuItem.Name = "videToolStripMenuItem";
+            this.videToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.videToolStripMenuItem.Text = "Vide";
+            this.videToolStripMenuItem.Click += new System.EventHandler(this.videToolStripMenuItem_Click);
+            // 
+            // stripRemoveAnim
+            // 
+            this.stripRemoveAnim.Image = global::AnimMaker_v2.Properties.Resources.removeAnim;
+            this.stripRemoveAnim.Name = "stripRemoveAnim";
+            this.stripRemoveAnim.Size = new System.Drawing.Size(154, 22);
+            this.stripRemoveAnim.Text = "Supprimer";
+            this.stripRemoveAnim.Click += new System.EventHandler(this.supprimerToolStripMenuItem2_Click);
             // 
             // MainForm
             // 
@@ -860,6 +931,8 @@
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -940,5 +1013,10 @@
         private System.Windows.Forms.ToolStripMenuItem paramètresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sauvegarderSousToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importerUneSéquenceToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Button createCateg;
+        private System.Windows.Forms.Button removeCateg;
+        private System.Windows.Forms.ListBox categories;
     }
 }

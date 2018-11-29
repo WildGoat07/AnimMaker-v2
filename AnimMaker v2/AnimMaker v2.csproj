@@ -120,6 +120,12 @@
     <Compile Include="BoneProperties.Designer.cs">
       <DependentUpon>BoneProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="CategoryProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CategoryProperties.Designer.cs">
+      <DependentUpon>CategoryProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="DrawingSurface.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -217,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BoneProperties.resx">
       <DependentUpon>BoneProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CategoryProperties.resx">
+      <DependentUpon>CategoryProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DrawingSurface.resx">
       <DependentUpon>DrawingSurface.cs</DependentUpon>

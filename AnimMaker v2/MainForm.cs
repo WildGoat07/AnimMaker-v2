@@ -67,10 +67,12 @@ namespace AnimMaker_v2
             Program.CurrentID = Guid.NewGuid();
             Program.Manager = new DynamicObjectBuilder();
             Program.DynamicObject = new SFDynamicObject();
+            Program.DynamicObject.DefaultCategory.Name = "Défaut";
             Program.DynamicObject.Chronometer = Program.Chronometer;
             Program.createdAnimations = 0;
             Program.createdBones = 0;
             Program.createdEvents = 0;
+            Program.createdCategories = 0;
             Program.selection = null;
 
             UpdateInterface();
@@ -93,6 +95,8 @@ namespace AnimMaker_v2
                     Program.createdAnimations = 0;
                     Program.createdBones = 0;
                     Program.createdEvents = 0;
+                    Program.createdCategories = 0;
+                    Program.DynamicObject.DefaultCategory.Name = "Défaut";
                     Program.DynamicObject.Chronometer = Program.Chronometer;
                     Program.currentPath = (string)openObject.FileName.Clone();
                     UpdateInterface();
@@ -121,6 +125,8 @@ namespace AnimMaker_v2
             Program.createdAnimations = 0;
             Program.createdBones = 0;
             Program.createdEvents = 0;
+            Program.createdCategories = 0;
+            Program.DynamicObject.DefaultCategory.Name = "Défaut";
             Program.DynamicObject.Chronometer = Program.Chronometer;
             UpdateInterface();
         }
@@ -163,13 +169,22 @@ namespace AnimMaker_v2
             }
             {
                 animations.Items.Clear();
-                int i = 0;
                 foreach (var animation in Program.DynamicObject.Animations)
                     animations.Items.Add(new OrderedDisplayer(animation));
                 if (Program.selection is Animation a)
                     animations.SelectedIndex = animations.Items.IndexOf(new OrderedDisplayer(a));
                 else
                     animations.SelectedIndex = -1;
+            }
+            {
+                categories.Items.Clear();
+                categories.Items.Add(new OrderedDisplayer(Program.DynamicObject.DefaultCategory));
+                foreach (var categ in Program.DynamicObject.CustomCategories)
+                    categories.Items.Add(new OrderedDisplayer(categ));
+                if (Program.selection is Category c)
+                    categories.SelectedIndex = categories.Items.IndexOf(new OrderedDisplayer(c));
+                else
+                    categories.SelectedIndex = -1;
             }
             stripCopyListAnim.Items.Clear();
             stripBeforeListAnim.Items.Clear();
@@ -190,6 +205,7 @@ namespace AnimMaker_v2
 
         public void UpdateProp()
         {
+            removeCateg.Enabled = false;
             removeAnim.Enabled = false;
             removeResource.Enabled = false;
             removeBone.Enabled = false;
@@ -226,6 +242,21 @@ namespace AnimMaker_v2
                         moveDownHierarchy.Enabled = true;
                     {
                         var tmp2 = new BoneProperties();
+                        tmp2.Dock = DockStyle.Fill;
+                        properties.Controls.Add(tmp2);
+                    }
+                }
+                if (Program.selection is Category categ)
+                {
+                    Program.DynamicObject.ResetAnimation();
+                    Program.selectedKeys = null;
+                    Program.selectedAnim = null;
+                    Program.selectedEvent = null;
+                    Program.selectedBone = null;
+                    if (categ != Program.DynamicObject.DefaultCategory)
+                        removeCateg.Enabled = true;
+                    {
+                        var tmp2 = new CategoryProperties();
                         tmp2.Dock = DockStyle.Fill;
                         properties.Controls.Add(tmp2);
                     }
@@ -502,7 +533,7 @@ namespace AnimMaker_v2
             if (hierarchy.SelectedIndex == -1)
                 Program.selection = null;
             else
-                Program.selection = Program.DynamicObject.BonesHierarchy.Find((bone) => bone.ID == ((dynamic)hierarchy.Items[hierarchy.SelectedIndex]).ID);
+                Program.selection = Program.DynamicObject.BonesHierarchy.First((bone) => bone.ID == ((dynamic)hierarchy.Items[hierarchy.SelectedIndex]).ID);
             Program.selectedBone = (Bone)Program.selection;
             UpdateProp();
         }
@@ -524,7 +555,7 @@ namespace AnimMaker_v2
         private void moveDownHierarchy_Click(object sender, EventArgs e)
         {
             var selection = (Bone)Program.selection;
-            var target = Program.DynamicObject.BonesHierarchy.FindIndex((bone) => bone.ID == selection.ID) - 1;
+            var target = Program.DynamicObject.BonesHierarchy.IndexOf(selection) - 1;
             Program.DynamicObject.BonesHierarchy.Remove(selection);
             Program.DynamicObject.BonesHierarchy.Insert(target, selection);
 
@@ -534,7 +565,7 @@ namespace AnimMaker_v2
         private void moveUpHierarchy_Click(object sender, EventArgs e)
         {
             var selection = (Bone)Program.selection;
-            var target = Program.DynamicObject.BonesHierarchy.FindIndex((bone) => bone.ID == selection.ID) + 1;
+            var target = Program.DynamicObject.BonesHierarchy.IndexOf(selection) + 1;
             Program.DynamicObject.BonesHierarchy.Remove(selection);
             Program.DynamicObject.BonesHierarchy.Insert(target, selection);
 
@@ -741,6 +772,40 @@ namespace AnimMaker_v2
                 Program.DynamicObject.UsedResources.Add(res);
                 UpdateInterface();
             }
+        }
+
+        private void categories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (categories.SelectedIndex == -1)
+                Program.selection = null;
+            else if (((OrderedDisplayer)categories.SelectedItem).ID == Program.DynamicObject.DefaultCategory.ID)
+                Program.selection = Program.DynamicObject.DefaultCategory;
+            else
+                Program.selection = Program.DynamicObject.CustomCategories.First((c) => c.ID == ((OrderedDisplayer)categories.SelectedItem).ID);
+            UpdateProp();
+        }
+
+        private void createCateg_Click(object sender, EventArgs e)
+        {
+            var tmp = new Category();
+            tmp.Name = "catégorie" + Program.createdCategories;
+            Program.createdCategories++;
+            Program.selection = tmp;
+            Program.DynamicObject.CustomCategories.Add(tmp);
+            UpdateInterface();
+        }
+
+        private void removeCateg_Click(object sender, EventArgs e)
+        {
+            var categ = (Category)Program.selection;
+            Program.DynamicObject.CustomCategories.Remove(categ);
+            foreach (var b in Program.DynamicObject.BonesHierarchy)
+            {
+                if (b.Category == categ)
+                    b.Category = Program.DynamicObject.DefaultCategory;
+            }
+            Program.selection = null;
+            UpdateInterface();
         }
     }
 }
