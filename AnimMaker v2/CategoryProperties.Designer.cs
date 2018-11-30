@@ -85,6 +85,7 @@
             this.categName.Name = "categName";
             this.categName.Size = new System.Drawing.Size(189, 20);
             this.categName.TabIndex = 1;
+            this.categName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.categName_KeyDown);
             this.categName.Validated += new System.EventHandler(this.categName_Validated);
             // 
             // categEnabled

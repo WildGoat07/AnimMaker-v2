@@ -23,6 +23,10 @@ namespace AnimMaker_v2
                 categName.Text = category.Name;
                 categID.Text = "ID : " + category.ID.ToString("D");
                 categEnabled.Checked = category.Enabled;
+                if (categEnabled.Checked)
+                    categEnabled.Text = "Affichée";
+                else
+                    categEnabled.Text = "Cachée";
             }
         }
 
@@ -43,6 +47,12 @@ namespace AnimMaker_v2
             categ.Name = categName.Text;
 
             Program.form.UpdateInterface();
+        }
+
+        private void categName_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (!e.Alt && !e.Shift && !e.Control && e.KeyCode == Keys.Return)
+                Program.form.DisplayPanel.Focus();
         }
     }
 }
