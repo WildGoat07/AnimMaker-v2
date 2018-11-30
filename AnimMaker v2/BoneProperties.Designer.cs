@@ -65,7 +65,10 @@
             this.multMode = new System.Windows.Forms.RadioButton();
             this.subsMode = new System.Windows.Forms.RadioButton();
             this.addMode = new System.Windows.Forms.RadioButton();
+            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label6 = new System.Windows.Forms.Label();
             this.affectedCateg = new System.Windows.Forms.ComboBox();
+            this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox2.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -83,12 +86,14 @@
             this.flowLayoutPanel3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
+            this.flowLayoutPanel5.SuspendLayout();
+            this.flowLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // statut
             // 
             this.statut.AutoSize = true;
-            this.statut.Location = new System.Drawing.Point(3, 717);
+            this.statut.Location = new System.Drawing.Point(3, 728);
             this.statut.Name = "statut";
             this.statut.Size = new System.Drawing.Size(0, 13);
             this.statut.TabIndex = 2;
@@ -96,7 +101,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.flowLayoutPanel2);
-            this.groupBox2.Location = new System.Drawing.Point(3, 215);
+            this.groupBox2.Location = new System.Drawing.Point(3, 214);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(214, 214);
             this.groupBox2.TabIndex = 4;
@@ -180,7 +185,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox1.Location = new System.Drawing.Point(3, 68);
+            this.groupBox1.Location = new System.Drawing.Point(3, 67);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox1.Size = new System.Drawing.Size(214, 141);
@@ -415,7 +420,7 @@
             // boneStatut
             // 
             this.boneStatut.AutoSize = true;
-            this.boneStatut.Location = new System.Drawing.Point(3, 52);
+            this.boneStatut.Location = new System.Drawing.Point(3, 51);
             this.boneStatut.Name = "boneStatut";
             this.boneStatut.Size = new System.Drawing.Size(33, 13);
             this.boneStatut.TabIndex = 5;
@@ -423,9 +428,9 @@
             // 
             // boneName
             // 
-            this.boneName.Location = new System.Drawing.Point(3, 29);
+            this.boneName.Location = new System.Drawing.Point(44, 3);
             this.boneName.Name = "boneName";
-            this.boneName.Size = new System.Drawing.Size(214, 20);
+            this.boneName.Size = new System.Drawing.Size(167, 20);
             this.boneName.TabIndex = 1;
             this.boneName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.boneName_KeyDown);
             this.boneName.Validated += new System.EventHandler(this.boneName_Validated);
@@ -433,24 +438,25 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 13);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.Size = new System.Drawing.Size(35, 26);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Nom";
+            this.label1.Text = "Nom :";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Controls.Add(this.dispId);
-            this.flowLayoutPanel1.Controls.Add(this.label1);
-            this.flowLayoutPanel1.Controls.Add(this.boneName);
+            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel6);
             this.flowLayoutPanel1.Controls.Add(this.boneStatut);
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
             this.flowLayoutPanel1.Controls.Add(this.groupBox2);
             this.flowLayoutPanel1.Controls.Add(this.groupBox3);
             this.flowLayoutPanel1.Controls.Add(this.groupBox4);
-            this.flowLayoutPanel1.Controls.Add(this.affectedCateg);
+            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel5);
             this.flowLayoutPanel1.Controls.Add(this.statut);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -471,7 +477,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.flowLayoutPanel3);
-            this.groupBox3.Location = new System.Drawing.Point(3, 435);
+            this.groupBox3.Location = new System.Drawing.Point(3, 434);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(214, 116);
             this.groupBox3.TabIndex = 7;
@@ -523,7 +529,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.flowLayoutPanel4);
-            this.groupBox4.Location = new System.Drawing.Point(3, 557);
+            this.groupBox4.Location = new System.Drawing.Point(3, 556);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(214, 130);
             this.groupBox4.TabIndex = 6;
@@ -591,15 +597,44 @@
             this.addMode.UseVisualStyleBackColor = true;
             this.addMode.CheckedChanged += new System.EventHandler(this.addMode_CheckedChanged);
             // 
+            // flowLayoutPanel5
+            // 
+            this.flowLayoutPanel5.Controls.Add(this.label6);
+            this.flowLayoutPanel5.Controls.Add(this.affectedCateg);
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 692);
+            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(237, 33);
+            this.flowLayoutPanel5.TabIndex = 10;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(58, 27);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Catégorie :";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // affectedCateg
             // 
             this.affectedCateg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.affectedCateg.FormattingEnabled = true;
-            this.affectedCateg.Location = new System.Drawing.Point(3, 693);
+            this.affectedCateg.Location = new System.Drawing.Point(67, 3);
             this.affectedCateg.Name = "affectedCateg";
-            this.affectedCateg.Size = new System.Drawing.Size(214, 21);
+            this.affectedCateg.Size = new System.Drawing.Size(144, 21);
             this.affectedCateg.TabIndex = 9;
             this.affectedCateg.SelectedIndexChanged += new System.EventHandler(this.affectedCateg_SelectedIndexChanged);
+            // 
+            // flowLayoutPanel6
+            // 
+            this.flowLayoutPanel6.Controls.Add(this.label1);
+            this.flowLayoutPanel6.Controls.Add(this.boneName);
+            this.flowLayoutPanel6.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel6.Name = "flowLayoutPanel6";
+            this.flowLayoutPanel6.Size = new System.Drawing.Size(214, 32);
+            this.flowLayoutPanel6.TabIndex = 11;
             // 
             // BoneProperties
             // 
@@ -630,6 +665,10 @@
             this.groupBox4.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel4.PerformLayout();
+            this.flowLayoutPanel5.ResumeLayout(false);
+            this.flowLayoutPanel5.PerformLayout();
+            this.flowLayoutPanel6.ResumeLayout(false);
+            this.flowLayoutPanel6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -673,5 +712,8 @@
         private System.Windows.Forms.Button removeSprite;
         private System.Windows.Forms.Label dispId;
         private System.Windows.Forms.ComboBox affectedCateg;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel6;
     }
 }

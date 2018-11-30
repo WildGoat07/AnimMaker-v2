@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.categID = new System.Windows.Forms.Label();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.categName = new System.Windows.Forms.TextBox();
             this.categEnabled = new System.Windows.Forms.CheckBox();
@@ -50,15 +50,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(519, 600);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.label2);
-            this.flowLayoutPanel2.Controls.Add(this.categName);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(296, 29);
-            this.flowLayoutPanel2.TabIndex = 0;
-            // 
             // categID
             // 
             this.categID.AutoSize = true;
@@ -67,6 +58,15 @@
             this.categID.Size = new System.Drawing.Size(15, 13);
             this.categID.TabIndex = 0;
             this.categID.Text = "id";
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.label2);
+            this.flowLayoutPanel2.Controls.Add(this.categName);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(296, 29);
+            this.flowLayoutPanel2.TabIndex = 0;
             // 
             // label2
             // 
