@@ -111,6 +111,7 @@
             this.evName.Name = "evName";
             this.evName.Size = new System.Drawing.Size(190, 20);
             this.evName.TabIndex = 1;
+            this.evName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.evName_KeyDown);
             this.evName.Validated += new System.EventHandler(this.evName_Validated);
             // 
             // groupBox1

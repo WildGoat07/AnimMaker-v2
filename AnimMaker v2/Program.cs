@@ -161,17 +161,16 @@ namespace AnimMaker_v2
         public static void RemoveResource()
         {
             var res = (Resource)selection;
+            foreach (var item in DynamicObject.BonesHierarchy)
+            {
+                if (item.AttachedSprite != null && item.AttachedSprite.Resource != null && item.AttachedSprite.Resource == res)
+                {
+                    item.AttachedSprite.Resource = null;
+                }
+            }
             DynamicObject.UsedResources.Remove(res);
             res.ChangeBaseImage(null);
             res.ChangeFrames(default, new Vector2i());
-            foreach (var item in DynamicObject.BonesHierarchy)
-            {
-                if (item.AttachedSprite != null && item.AttachedSprite.Resource != null && item.AttachedSprite.Resource.ID == res.ID)
-                {
-                    item.AttachedSprite.Resource = null;
-                    item.AttachedSprite.InternalRect.Texture = null;
-                }
-            }
             res.Dispose();
 
             selection = null;
@@ -591,9 +590,8 @@ namespace AnimMaker_v2
                         if (item.Chronometer.ElapsedTime > item.LivingTime || Notifications.Count > 10)
                             removeFirst = true;
                     }
-                    Notification notif;
                     if (removeFirst)
-                        Notifications.TryDequeue(out notif);
+                        Notifications.TryDequeue(out Notification n);
                 }
 
                 Display.Draw(segs);

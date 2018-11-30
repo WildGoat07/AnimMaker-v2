@@ -91,5 +91,11 @@ namespace AnimMaker_v2
 
             Program.form.UpdateProp();
         }
+
+        private void evName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!e.Alt && !e.Shift && !e.Control && e.KeyCode == Keys.Return)
+                Program.form.DisplayPanel.Focus();
+        }
     }
 }
