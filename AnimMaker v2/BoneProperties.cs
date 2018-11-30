@@ -289,7 +289,7 @@ namespace AnimMaker_v2
 
         private void affectedCateg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!init)
+            if (init)
             {
                 var bone = (Bone)Program.selection;
                 if (affectedCateg.SelectedIndex == 0)
