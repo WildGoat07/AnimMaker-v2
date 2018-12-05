@@ -374,7 +374,7 @@ namespace AnimMaker_v2
             if (animations.SelectedIndex == -1)
                 Program.selection = null;
             else
-                Program.selection = Program.DynamicObject.Animations.Find((anim) => anim.ID == ((dynamic)animations.Items[animations.SelectedIndex]).ID);
+                Program.selection = Program.DynamicObject.Animations.FirstOrDefault((anim) => anim.ID == ((dynamic)animations.Items[animations.SelectedIndex]).ID);
             UpdateProp();
         }
 
@@ -382,6 +382,17 @@ namespace AnimMaker_v2
         {
             var dialog = new AboutForm();
             dialog.ShowDialog();
+        }
+
+        private void categories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (categories.SelectedIndex == -1)
+                Program.selection = null;
+            else if (((OrderedDisplayer)categories.SelectedItem).ID == Program.DynamicObject.DefaultCategory.ID)
+                Program.selection = Program.DynamicObject.DefaultCategory;
+            else
+                Program.selection = Program.DynamicObject.CustomCategories.First((c) => c.ID == ((OrderedDisplayer)categories.SelectedItem).ID);
+            UpdateProp();
         }
 
         private void createAnim_Click(object sender, EventArgs e)
@@ -394,14 +405,23 @@ namespace AnimMaker_v2
             Program.AddBone();
         }
 
+        private void createCateg_Click(object sender, EventArgs e)
+        {
+            var tmp = Program.DynamicObject.CreateCustomCategory();
+            tmp.Name = "catégorie" + Program.createdCategories;
+            Program.createdCategories++;
+            Program.selection = tmp;
+            UpdateInterface();
+        }
+
         private void créerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (stripCopyListAnim.SelectedIndex == -1)
                 Program.AddAnimation();
             else
             {
-                var baseAnim = Program.DynamicObject.Animations.Find((a) => a.Name == stripCopyListAnim.SelectedItem.ToString());
-                var anim = new Animation();
+                var baseAnim = Program.DynamicObject.Animations.FirstOrDefault((a) => a.Name == stripCopyListAnim.SelectedItem.ToString());
+                var anim = Program.DynamicObject.CreateAnimation();
                 foreach (var bone in baseAnim.Bones)
                 {
                     var couple = new Couple<Bone, List<Animation.Key>>();
@@ -418,7 +438,7 @@ namespace AnimMaker_v2
                 }
                 anim.Name = "Copie de " + baseAnim.Name;
                 anim.Duration = baseAnim.Duration;
-                Program.AddAnimation(anim);
+                Program.selection = anim;
             }
         }
 
@@ -428,8 +448,8 @@ namespace AnimMaker_v2
                 Program.AddAnimation();
             else
             {
-                var baseAnim = Program.DynamicObject.Animations.Find((a) => a.Name == stripAfterListAnim.SelectedItem.ToString());
-                var anim = new Animation();
+                var baseAnim = Program.DynamicObject.Animations.FirstOrDefault((a) => a.Name == stripAfterListAnim.SelectedItem.ToString());
+                var anim = Program.DynamicObject.CreateAnimation();
                 foreach (var bone in baseAnim.Bones)
                 {
                     var couple = new Couple<Bone, List<Animation.Key>>();
@@ -448,7 +468,7 @@ namespace AnimMaker_v2
                 }
                 anim.Name = "Après " + baseAnim.Name;
                 anim.Duration = Time.FromSeconds(1);
-                Program.AddAnimation(anim);
+                Program.selection = anim;
             }
         }
 
@@ -458,8 +478,8 @@ namespace AnimMaker_v2
                 Program.AddAnimation();
             else
             {
-                var baseAnim = Program.DynamicObject.Animations.Find((a) => a.Name == stripBeforeListAnim.SelectedItem.ToString());
-                var anim = new Animation();
+                var baseAnim = Program.DynamicObject.Animations.FirstOrDefault((a) => a.Name == stripBeforeListAnim.SelectedItem.ToString());
+                var anim = Program.DynamicObject.CreateAnimation();
                 foreach (var bone in baseAnim.Bones)
                 {
                     var couple = new Couple<Bone, List<Animation.Key>>();
@@ -474,7 +494,7 @@ namespace AnimMaker_v2
                 }
                 anim.Name = "Avant " + baseAnim.Name;
                 anim.Duration = Time.FromSeconds(1);
-                Program.AddAnimation(anim);
+                Program.selection = anim;
             }
         }
 
@@ -484,9 +504,9 @@ namespace AnimMaker_v2
                 Program.AddAnimation();
             else
             {
-                var baseAnimB = Program.DynamicObject.Animations.Find((a) => a.Name == stripBetweenBListAnim.SelectedItem.ToString());
-                var baseAnimA = Program.DynamicObject.Animations.Find((a) => a.Name == stripBetweenAListAnim.SelectedItem.ToString());
-                var anim = new Animation();
+                var baseAnimB = Program.DynamicObject.Animations.FirstOrDefault((a) => a.Name == stripBetweenBListAnim.SelectedItem.ToString());
+                var baseAnimA = Program.DynamicObject.Animations.FirstOrDefault((a) => a.Name == stripBetweenAListAnim.SelectedItem.ToString());
+                var anim = Program.DynamicObject.CreateAnimation();
 
                 List<Bone> toCompute = new List<Bone>();
 
@@ -518,7 +538,7 @@ namespace AnimMaker_v2
 
                 anim.Name = "Entre " + baseAnimB.Name + " et " + baseAnimA.Name;
                 anim.Duration = Time.FromSeconds(1);
-                Program.AddAnimation(anim);
+                Program.selection = anim;
             }
         }
 
@@ -542,6 +562,59 @@ namespace AnimMaker_v2
             UpdateProp();
         }
 
+        private void importerUneSéquenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openTexture.ShowDialog() == DialogResult.OK)
+            {
+                var name = Path.GetFileNameWithoutExtension(openTexture.FileName);
+                while (char.IsDigit(name[name.Length - 1]))
+                    name = name.Substring(0, name.Length - 1);
+                var list = openTexture.FileNames.ToList();
+                list.Sort();
+                var imgs = list.ConvertAll((s) => new SFML.Graphics.Image(s));
+                Vector2u size = imgs[0].Size;
+                if (!imgs.All((img) => img.Size == size))
+                {
+                    MessageBox.Show(this, "Les images ne font pas toutes la même taille.", "Erreur lors de la compilation d'images", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                Vector2i matrixSize = default;
+                {
+                    var root = Math.Sqrt(imgs.Count);
+                    matrixSize.X = (int)Math.Ceiling(root);
+                    if (root - Math.Truncate(root) < .5)
+                        matrixSize.Y = (int)Math.Floor(root);
+                    else
+                        matrixSize.Y = (int)Math.Ceiling(root);
+                }
+                var globalImg = new SFML.Graphics.Image((uint)(size.X * matrixSize.X), (uint)(size.Y * matrixSize.Y), SFML.Graphics.Color.Transparent);
+                Vector2i offset = default;
+                foreach (var img in imgs)
+                {
+                    for (uint x = 0; x < size.X; x++)
+                    {
+                        for (uint y = 0; y < size.Y; y++)
+                        {
+                            globalImg.SetPixel(x + (uint)offset.X, y + (uint)offset.Y, img.GetPixel(x, y));
+                        }
+                    }
+                    offset.X += (int)size.X;
+                    if (offset.X >= globalImg.Size.X)
+                    {
+                        offset.X = 0;
+                        offset.Y += (int)size.Y;
+                    }
+                }
+                var res = new Resource();
+                res.Name = name;
+                res.Smooth = true;
+                res.ChangeBaseImage(globalImg);
+                res.ChangeFrames((Vector2i)globalImg.Size, new Vector2i());
+                Program.DynamicObject.AddResource(res);
+                UpdateInterface();
+            }
+        }
+
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.O)
@@ -560,8 +633,7 @@ namespace AnimMaker_v2
         {
             var selection = (Bone)Program.selection;
             var target = Program.DynamicObject.BonesHierarchy.IndexOf(selection) - 1;
-            Program.DynamicObject.BonesHierarchy.Remove(selection);
-            Program.DynamicObject.BonesHierarchy.Insert(target, selection);
+            Program.DynamicObject.MoveBone(selection, Program.DynamicObject.BonesHierarchy[target]);
 
             UpdateInterface();
         }
@@ -570,8 +642,7 @@ namespace AnimMaker_v2
         {
             var selection = (Bone)Program.selection;
             var target = Program.DynamicObject.BonesHierarchy.IndexOf(selection) + 1;
-            Program.DynamicObject.BonesHierarchy.Remove(selection);
-            Program.DynamicObject.BonesHierarchy.Insert(target, selection);
+            Program.DynamicObject.MoveBone(selection, Program.DynamicObject.BonesHierarchy[target]);
 
             UpdateInterface();
         }
@@ -616,6 +687,19 @@ namespace AnimMaker_v2
             Program.RemoveAnimation();
         }
 
+        private void removeCateg_Click(object sender, EventArgs e)
+        {
+            var categ = (Category)Program.selection;
+            Program.DynamicObject.RemoveCustomCategory(categ);
+            foreach (var b in Program.DynamicObject.BonesHierarchy)
+            {
+                if (b.Category == categ)
+                    b.Category = Program.DynamicObject.DefaultCategory;
+            }
+            Program.selection = null;
+            UpdateInterface();
+        }
+
         private void removeResource_Click(object sender, EventArgs e)
         {
             Program.RemoveResource();
@@ -626,7 +710,7 @@ namespace AnimMaker_v2
             if (res.SelectedIndex == -1)
                 Program.selection = null;
             else
-                Program.selection = Program.DynamicObject.UsedResources.Find((r) => r.ID == ((dynamic)res.Items[res.SelectedIndex]).ID);
+                Program.selection = Program.DynamicObject.UsedResources.FirstOrDefault((r) => r.ID == ((dynamic)res.Items[res.SelectedIndex]).ID);
             UpdateProp();
         }
 
@@ -643,8 +727,7 @@ namespace AnimMaker_v2
         private void stripBotBone_Click(object sender, EventArgs e)
         {
             var selection = (Bone)Program.selection;
-            Program.DynamicObject.BonesHierarchy.Remove(selection);
-            Program.DynamicObject.BonesHierarchy.Insert(0, selection);
+            Program.DynamicObject.MoveBone(selection, Program.DynamicObject.BonesHierarchy.First());
 
             UpdateInterface();
         }
@@ -658,8 +741,7 @@ namespace AnimMaker_v2
         private void stripTopBone_Click(object sender, EventArgs e)
         {
             var selection = (Bone)Program.selection;
-            Program.DynamicObject.BonesHierarchy.Remove(selection);
-            Program.DynamicObject.BonesHierarchy.Insert(Program.DynamicObject.BonesHierarchy.Count, selection);
+            Program.DynamicObject.MoveBone(selection, null);
 
             UpdateInterface();
         }
@@ -724,93 +806,6 @@ namespace AnimMaker_v2
         }
 
         #endregion Private Methods
-
-        private void importerUneSéquenceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (openTexture.ShowDialog() == DialogResult.OK)
-            {
-                var name = Path.GetFileNameWithoutExtension(openTexture.FileName);
-                while (char.IsDigit(name[name.Length - 1]))
-                    name = name.Substring(0, name.Length - 1);
-                var list = openTexture.FileNames.ToList();
-                list.Sort();
-                var imgs = list.ConvertAll((s) => new SFML.Graphics.Image(s));
-                Vector2u size = imgs[0].Size;
-                if (!imgs.All((img) => img.Size == size))
-                {
-                    MessageBox.Show(this, "Les images ne font pas toutes la même taille.", "Erreur lors de la compilation d'images", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                Vector2i matrixSize = default;
-                {
-                    var root = Math.Sqrt(imgs.Count);
-                    matrixSize.X = (int)Math.Ceiling(root);
-                    if (root - Math.Truncate(root) < .5)
-                        matrixSize.Y = (int)Math.Floor(root);
-                    else
-                        matrixSize.Y = (int)Math.Ceiling(root);
-                }
-                var globalImg = new SFML.Graphics.Image((uint)(size.X * matrixSize.X), (uint)(size.Y * matrixSize.Y), SFML.Graphics.Color.Transparent);
-                Vector2i offset = default;
-                foreach (var img in imgs)
-                {
-                    for (uint x = 0; x < size.X; x++)
-                    {
-                        for (uint y = 0; y < size.Y; y++)
-                        {
-                            globalImg.SetPixel(x + (uint)offset.X, y + (uint)offset.Y, img.GetPixel(x, y));
-                        }
-                    }
-                    offset.X += (int)size.X;
-                    if (offset.X >= globalImg.Size.X)
-                    {
-                        offset.X = 0;
-                        offset.Y += (int)size.Y;
-                    }
-                }
-                var res = new Resource();
-                res.Name = name;
-                res.Smooth = true;
-                res.ChangeBaseImage(globalImg);
-                res.ChangeFrames((Vector2i)globalImg.Size, new Vector2i());
-                Program.DynamicObject.UsedResources.Add(res);
-                UpdateInterface();
-            }
-        }
-
-        private void categories_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (categories.SelectedIndex == -1)
-                Program.selection = null;
-            else if (((OrderedDisplayer)categories.SelectedItem).ID == Program.DynamicObject.DefaultCategory.ID)
-                Program.selection = Program.DynamicObject.DefaultCategory;
-            else
-                Program.selection = Program.DynamicObject.CustomCategories.First((c) => c.ID == ((OrderedDisplayer)categories.SelectedItem).ID);
-            UpdateProp();
-        }
-
-        private void createCateg_Click(object sender, EventArgs e)
-        {
-            var tmp = new Category();
-            tmp.Name = "catégorie" + Program.createdCategories;
-            Program.createdCategories++;
-            Program.selection = tmp;
-            Program.DynamicObject.CustomCategories.Add(tmp);
-            UpdateInterface();
-        }
-
-        private void removeCateg_Click(object sender, EventArgs e)
-        {
-            var categ = (Category)Program.selection;
-            Program.DynamicObject.CustomCategories.Remove(categ);
-            foreach (var b in Program.DynamicObject.BonesHierarchy)
-            {
-                if (b.Category == categ)
-                    b.Category = Program.DynamicObject.DefaultCategory;
-            }
-            Program.selection = null;
-            UpdateInterface();
-        }
     }
 }
 

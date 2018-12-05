@@ -17,9 +17,13 @@ namespace AnimMaker_v2
 {
     public partial class BoneProperties : UserControl
     {
-        #region Public Constructors
+        #region Private Fields
 
         private bool init;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public BoneProperties()
         {
@@ -154,6 +158,18 @@ namespace AnimMaker_v2
             Program.form.UpdateProp();
         }
 
+        private void affectedCateg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (init)
+            {
+                var bone = (Bone)Program.selection;
+                if (affectedCateg.SelectedIndex == 0)
+                    bone.Category = Program.DynamicObject.DefaultCategory;
+                else
+                    bone.Category = Program.DynamicObject.CustomCategories.FirstOrDefault((c) => c.ID == ((OrderedDisplayer)affectedCateg.SelectedItem).ID);
+            }
+        }
+
         private void alphaMode_CheckedChanged(object sender, EventArgs e)
         {
             var bone = (Bone)Program.selection;
@@ -180,7 +196,7 @@ namespace AnimMaker_v2
         private void button1_Click(object sender, EventArgs e)
         {
             var child = Program.DynamicObject.BonesHierarchy.First((bone) => bone.ID == ((dynamic)addChildList.Items[addChildList.SelectedIndex]).ID);
-            Program.DynamicObject.MasterBones.Remove(child);
+            Program.DynamicObject.RemoveMasterBone(child);
             var selectedBone = (Bone)Program.selection;
             selectedBone.Children.Add(child);
 
@@ -235,7 +251,7 @@ namespace AnimMaker_v2
             var bone = (Bone)Program.selection;
             var target = bone.Children.Find((child) => child.ID == ((dynamic)children.Items[children.SelectedIndex]).ID);
             bone.Children.Remove(target);
-            Program.DynamicObject.MasterBones.Add(target);
+            Program.DynamicObject.SetMasterBone(target);
 
             Program.form.UpdateInterface();
         }
@@ -286,17 +302,5 @@ namespace AnimMaker_v2
         }
 
         #endregion Private Methods
-
-        private void affectedCateg_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (init)
-            {
-                var bone = (Bone)Program.selection;
-                if (affectedCateg.SelectedIndex == 0)
-                    bone.Category = Program.DynamicObject.DefaultCategory;
-                else
-                    bone.Category = Program.DynamicObject.CustomCategories.Find((c) => c.ID == ((OrderedDisplayer)affectedCateg.SelectedItem).ID);
-            }
-        }
     }
 }

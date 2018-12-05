@@ -21,14 +21,13 @@ namespace AnimMaker_v2
         public static Chronometer Chronometer;
         public static int createdAnimations;
         public static int createdBones;
-        public static int createdEvents;
         public static int createdCategories;
+        public static int createdEvents;
         public static Guid CurrentID;
         public static string currentPath;
         public static RenderWindow Display;
         public static SFDynamicObject DynamicObject;
         public static WGP.TEXT.Font font;
-        public static WGP.TEXT.Font smallFont;
         public static MainForm form;
         public static Gizmo Gizmo;
         public static List<KeyControl> keyControls;
@@ -41,6 +40,7 @@ namespace AnimMaker_v2
         public static List<Animation.Key> selectedKeys;
         public static object selection;
         public static Options Settings;
+        public static WGP.TEXT.Font smallFont;
         public static WGP.TEXT.Text textTimer;
         public static RenderWindow Timeline;
         public static FloatRect timeLineDrawRect;
@@ -52,20 +52,10 @@ namespace AnimMaker_v2
 
         public static void AddAnimation()
         {
-            var anim = new Animation();
+            var anim = DynamicObject.CreateAnimation();
             anim.Name = "anim" + createdAnimations;
             anim.Duration = Time.FromSeconds(1);
             createdAnimations++;
-            DynamicObject.Animations.Add(anim);
-            selection = anim;
-
-            form.UpdateInterface();
-        }
-
-        public static void AddAnimation(Animation anim)
-        {
-            createdAnimations++;
-            DynamicObject.Animations.Add(anim);
             selection = anim;
 
             form.UpdateInterface();
@@ -73,11 +63,9 @@ namespace AnimMaker_v2
 
         public static void AddBone()
         {
-            var bone = new Bone();
+            var bone = DynamicObject.CreateBone(true);
             bone.Name = "os" + createdBones;
             createdBones++;
-            DynamicObject.BonesHierarchy.Add(bone);
-            DynamicObject.MasterBones.Add(bone);
             selection = bone;
 
             form.UpdateInterface();
@@ -96,7 +84,7 @@ namespace AnimMaker_v2
                     res.Name = key;
                     res.ChangeBaseImage(new Image(file));
                     res.AdaptFrameSize();
-                    DynamicObject.UsedResources.Add(res);
+                    DynamicObject.AddResource(res);
                     selection = res;
                 }
                 form.UpdateInterface();
@@ -129,7 +117,7 @@ namespace AnimMaker_v2
         public static void RemoveAnimation()
         {
             var anim = (Animation)selection;
-            DynamicObject.Animations.Remove(anim);
+            DynamicObject.RemoveAnimation(anim);
             selection = null;
             selectedAnim = null;
             DynamicObject.ResetAnimation();
@@ -140,8 +128,7 @@ namespace AnimMaker_v2
         public static void RemoveBone()
         {
             var bone = (Bone)selection;
-            DynamicObject.BonesHierarchy.Remove(bone);
-            DynamicObject.MasterBones.Remove(bone);
+            DynamicObject.RemoveBone(bone);
             try
             {
                 var par = DynamicObject.BonesHierarchy.First((parent) => parent.Children.Contains(bone));
@@ -151,7 +138,7 @@ namespace AnimMaker_v2
             catch (Exception) { }
             foreach (var child in bone.Children)
             {
-                DynamicObject.MasterBones.Add(child);
+                DynamicObject.SetMasterBone(child);
             }
             selection = null;
 
@@ -168,7 +155,7 @@ namespace AnimMaker_v2
                     item.AttachedSprite.Resource = null;
                 }
             }
-            DynamicObject.UsedResources.Remove(res);
+            DynamicObject.RemoveResource(res);
             res.ChangeBaseImage(null);
             res.ChangeFrames(default, new Vector2i());
             res.Dispose();

@@ -10,7 +10,7 @@ namespace AnimMaker_v2
     {
         #region Public Constructors
 
-        public OrderedDisplayer(WGP.SFDynamicObject.IBaseElement obj)
+        public OrderedDisplayer(dynamic obj)
         {
             ID = obj.ID;
             Name = obj.Name;
@@ -24,12 +24,12 @@ namespace AnimMaker_v2
 
         #endregion Public Constructors
 
-        #region Private Properties
+        #region Public Properties
 
         public Guid ID { get; set; }
         public string Name { get; set; }
 
-        #endregion Private Properties
+        #endregion Public Properties
 
         #region Public Methods
 
